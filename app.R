@@ -19,8 +19,11 @@ rm(list = ls())
 #                "xlsx", "magick")
 #
 # # This command installs and loads the FishToxTranslator Package from the local tar.gz file
-# # install.packages("FishToxTranslator_0.1.11.tar.gz",type="source")
+install.packages("FishToxTranslator_0.1.11.tar.gz",type="source")
 # library(FishToxTranslator)
+
+#library(FishToxTranslator)
+#devtools::install_github('npollesch/FishToxTranslator', upgrade="never")
 
 #### Web hosted package management ####
 library("shiny")
@@ -43,13 +46,10 @@ library("shinybusy")
 library("readxl")
 library("writexl")
 library("xlsx")
-library("magick") #not in use
+#library("magick") #not in use
 library("devtools")
 
 library(FishToxTranslator)
-#devtools::install_github('npollesch/FishToxTranslator', upgrade="never")
-
-
 
 # This loads the local App Source Files
 source("Initialize_Lists.R")
@@ -63,7 +63,7 @@ source("Visualize_Tab_Functions_Server.R")
 source("Run_Tab_Functions_Server_NP.R") ####
 source("Results_Tab_Functions_Server.R")
 source("widgets.R")
-source("FT_UI.R", local = TRUE)
+source("FT_UI.R")
 source("FT_Server.R")
 
 # This runs the Shiny App!
