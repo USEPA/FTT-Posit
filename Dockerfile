@@ -1,5 +1,5 @@
 # Base image https://hub.docker.com/u/rocker/
-FROM rocker/shiny:latest
+FROM rocker/shiny:4.2.0
 
 WORKDIR /home/app/
 
