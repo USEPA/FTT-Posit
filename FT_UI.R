@@ -3,6 +3,13 @@ source("tabsPanel.R")
 FT_UI <- function(req) {
   fluidPage(
     useShinyjs(),
+    tags$style(id = "antiClickjack", HTML("body{display:none !important;}")),
+
+
+    fn <- "anti-clickjacking.js",
+    fnpath <- list.files(pattern = fn, full.names = TRUE, recursive = TRUE),
+    includeScript(fnpath, type = "text/javascript"),
+
     tags$script("$(document).on('shiny:connected', function(event) {
                 var myWidth = $(window).width();
                 Shiny.onInputChange('shiny_width',myWidth)});"),
