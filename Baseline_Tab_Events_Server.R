@@ -476,7 +476,7 @@ observeEvent(input$hyperlink_newtab,
 
 observeEvent(input$hyperlink_visualization_newtab,
              {
-               newtab <- "Visualize Built Scenario(s)"
+               newtab <- "Visualize Scenarios"
                updateNavbarPage(session, "fish_toxicity_app", newtab)
              }
 )
