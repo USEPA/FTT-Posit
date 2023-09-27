@@ -48,6 +48,7 @@ library("writexl")
 library("xlsx")
 #library("magick") #not in use
 library("devtools")
+library("shiny.pwa")
 
 library(FishToxTranslator)
 
@@ -60,7 +61,7 @@ source("DeleteResults_Tab_Functions_Server.R")
 source("ImportScenario_Tab_Functions_Server.R")
 source("ImportResults_Tab_Functions_Server.R")
 source("Visualize_Tab_Functions_Server.R")
-source("Run_Tab_Functions_Server_NP.R") ####
+source("Run_Tab_Functions_Server_NP.R")
 source("Results_Tab_Functions_Server.R")
 source("widgets.R")
 source("FT_UI.R")
