@@ -118,14 +118,21 @@ generate_ExposureConcentration_Template <- function()
   return(expDF)
 }
  
-assign_exposure_concentrations <- function(scenario, input_file)
+assign_exposure_concentrations <- function(scenario, input_file, input_name)
 {
   upload_scenario <- read.csv(file = input_file, 
                               header = TRUE, 
                               stringsAsFactors = FALSE, 
                               check.names = FALSE)
-  
+  print(input_name)
+  input_filename <- basename(input_name)
+  ExposureConcentrations[[input_filename]] <<- upload_scenario
   parameters[[scenario]]$exp_concentrations <<- upload_scenario$exp_concentrations
+}
+
+assign_old_exposure_concentration <- function(scenario, input_file)
+{
+  parameters[[scenario]]$exp_concentrations <<- ExposureConcentrations[[input_file]]$exp_concentrations
 }
 
 plot_exposure_concentrations <- function(scenario)

@@ -110,10 +110,14 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                         ),
                         h4(""),
                         shinyjs::hidden(div(id = "baseline_selection_name",
+                                            shinyjs::hidden(div(id = "upload_new_exposure_concentration",
+                                                                choose_Exposure_Concentration_dropdownmenu)),
+                                            h4(""),
                                             shinyjs::hidden(div(id = "exposure_conc",
                                                                 fluidRow(
                                                                   column(width = 8, upload_exposure_concentration),
                                                                   column(width = 2, offset = 1, download_exposure_concentration)))),
+                                            
                                             bs_download_exposure_concentration_button,
                                             bs_upload_exposure_concentration_button,
                                             h4(""),
@@ -318,6 +322,8 @@ subtab41 <- tabPanel("Visualize Results",
                        (
                          shinyjs::hidden(
                            div(id = "Results_Options",
+                               check_boxes_all_results,
+                               h4(""),
                                check_boxes_scenarios_results,
                                hr(),
                                h4("Comparison of Scenario Results"),

@@ -1,4 +1,12 @@
 # Observe Events associated with the Results tab
+observe({
+  updateCheckboxGroupInput(session,
+                           "Check_Scenario_Names_Results",
+                           choices = as.list(names(unlist(modelRuns, recursive = F))),
+                           selected = if(input$All_Results) as.list(names(unlist(modelRuns, recursive = F))))
+})
+
+
 observeEvent(input$summary_results_table,
   {
     

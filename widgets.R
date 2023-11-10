@@ -199,6 +199,10 @@ bs_stressor_type_button <- bsTooltip("stressor_type",
                                      "Select type of stressor",
                                      "right", options = list(container = "body"))
 
+choose_Exposure_Concentration_dropdownmenu <- selectInput(inputId = "expconc_profile",
+                                                          label = "Choose Exposure Concentration Profile",
+                                                          choices = c("None Selected","New"))
+
 download_exposure_concentration <-  downloadButton(outputId = "download_exposure_concentration",
                                                    label = "Get template",
                                                    width = '125px',
@@ -428,6 +432,8 @@ run_stressor_text_out <- textOutput("text_run_stressor")
 ##################################################################################################
 # Visualize Scenario(s) buttons/widgets
 ##################################################################################################
+check_boxes_all_scenarios <- checkboxInput("All", "Select All/None", value = FALSE)
+
 list_scenarios <- list()
 check_boxes_Scenarios <- checkboxGroupInput("Check_Scenario_Names", "Select name(s):",
                                             width = '400px',
@@ -655,6 +661,8 @@ add_simulation_run_button <- actionButton(inputId = "add_SimulationRun",
                                           width = '250px',
                                           style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
+check_boxes_all_runs <- checkboxInput("All_Runs", "Select All/None", value = FALSE)
+
 list_scenarios_runs <- list()
 check_boxes_Scenarios_Run <- checkboxGroupInput("Check_Scenario_Names_Run", "Select name(s):",
                                                 width = '400px',
@@ -752,6 +760,8 @@ run_simulations_text <- textOutput("run_simulations_message")
 ####################################################################################################
 #  Results
 ####################################################################################################
+check_boxes_all_results <- checkboxInput("All_Results", "Select All/None", value = FALSE)
+
 list_scenarios_results <- list()
 check_boxes_scenarios_results <- checkboxGroupInput("Check_Scenario_Names_Results", "Select name(s):",
                                                     width = '400px',

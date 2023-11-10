@@ -100,6 +100,7 @@ observeEvent(
     shinyjs::hide(id = "life_history_table_main")
     shinyjs::hide(id = "Spawning_Prob_main")
     shinyjs::hide(id = "baseline_selection_name")
+    shinyjs::hide(id = "upload_new_exposure_concentration")
     shinyjs::hide(id = "exposure_conc")
     shinyjs::hide(id = "chemicalEffectType")
     shinyjs::hide(id = "chemicalID")
@@ -257,6 +258,9 @@ observeEvent(input$spawn_algorithm,
                # updateCheckboxGroupInput(session, "Check_Scenario_Names_Run",
                #                          choices = as.list(scenario_names))
                
+               updateCheckboxInput(session, 
+                                   inputId = "All_Runs",
+                                   value = FALSE)
                
                subElement1 <- paste("#Check_Scenario_Names_Results input[value=", scenario_names,"]")
                delay(1, shinyjs::disable(selector = subElement1))

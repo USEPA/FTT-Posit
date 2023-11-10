@@ -1,5 +1,6 @@
 ## Intialize data.frames and lists used throughout code
 parameters <- list() #list to store parameters for different scenarios
+ExposureConcentrations <- list()  # list used to store exposure concentration profiles.
 scenario_names <- vector() # Vector for storing scenario names
 CurrentBaselineScenarioName <- NA
 CurrentStressorScenarioName <- NA
