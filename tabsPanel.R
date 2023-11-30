@@ -45,6 +45,8 @@ tab2 <- tabPanel("Visualize Scenarios",
                       (
                         shinyjs::hidden(
                           div(id = "Visualization_GRS",
+                              check_boxes_all_scenarios,
+                              h4(""),
                               check_boxes_Scenarios,
                               h4(""),
                               hr(),
@@ -178,6 +180,8 @@ tab3 <- tabPanel("Run Scenarios",
 
                      shinyjs::hidden(
                        div(id = "Run_Scenarios_Options",
+                           check_boxes_all_runs,
+                           h4(""),
                            check_boxes_Scenarios_Run,
                            h4(""),
                            runid_textBox,

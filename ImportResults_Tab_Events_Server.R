@@ -41,6 +41,10 @@ observeEvent(input$importResults,
                  updateCheckboxGroupInput(session, "Check_Scenario_Names_Results",
                                           choices = names(unlist(modelRuns, recursive = F)))
                  
+                 updateCheckboxInput(session, 
+                                     inputId = "All_Results",
+                                     value = FALSE)
+                 
                  updateSelectInput(session, "selectRunID",
                                    choices = c("None Selected", as.list(runID)),
                                    selected = "None Selected")
@@ -101,6 +105,10 @@ observeEvent(input$submit_ImportedResults_ScenarioName,
                 
                  updateCheckboxGroupInput(session, "Check_Scenario_Names_Results",
                                           choices = names(unlist(modelRuns, recursive = F)))
+                 
+                 updateCheckboxInput(session, 
+                                     inputId = "All_Results",
+                                     value = FALSE)
                  
                  updateSelectInput(session, "selectRunID",
                                    choices = c("None Selected", as.list(runID)),
@@ -169,6 +177,10 @@ observeEvent(input$submit_ImportedResults_runID,
                  
                  updateCheckboxGroupInput(session, "Check_Scenario_Names_Results",
                                           choices = names(unlist(modelRuns, recursive = F)))
+                 
+                 updateCheckboxInput(session, 
+                                     inputId = "All_Results",
+                                     value = FALSE)
                  
                  updateSelectInput(session, "selectRunID",
                                    choices = c("None Selected", as.list(runID)),
@@ -246,6 +258,10 @@ observeEvent(input$submit_ImportedResults_NameRunID,
                  
                  updateCheckboxGroupInput(session, "Check_Scenario_Names_Results",
                                           choices = names(unlist(modelRuns, recursive = F)))
+                 
+                 updateCheckboxInput(session, 
+                                     inputId = "All_Results",
+                                     value = FALSE)
                  
                  updateSelectInput(session, "selectRunID",
                                    choices = c("None Selected", as.list(runID)),

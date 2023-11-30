@@ -7,6 +7,10 @@ observeEvent(input$add_SimulationRun,
                updateCheckboxGroupInput(session, "Check_Scenario_Names_Run",
                                         choices = as.list(scenario_names))
                
+               updateCheckboxInput(session, 
+                                   inputId = "All_Runs",
+                                   value = FALSE)
+               
                updateTextInput(session,
                                inputId = "runid",
                                value = "")
@@ -30,6 +34,7 @@ observeEvent(input$add_SimulationRun,
                                  selected = "None Selected")
                
                shinyjs::enable(id = "Check_Scenario_Names_Run")
+               shinyjs::enable((id = "All_Runs"))
                shinyjs::enable(id = "runid")
                shinyjs::enable(id = "enter_runid")
                shinyjs::enable(id = "num_size_classes")
@@ -166,6 +171,7 @@ observeEvent(input$run_simulations,
     remove_modal_spinner()
     # removeModal(session)
     shinyjs::disable(id = "Check_Scenario_Names_Run")
+    shinyjs::disable(id = "All_Runs")
     shinyjs::disable(id = "runid")
     shinyjs::disable(id = "enter_runid")
     shinyjs::disable(id = "num_size_classes")
@@ -192,6 +198,10 @@ observeEvent(input$run_simulations,
                              inputId = "Check_Scenario_Names_Results",
                              choices = names(unlist(modelRuns, recursive = F)),
                              selected = NULL)
+    
+    updateCheckboxInput(session, 
+                        inputId = "All_Results",
+                        value = FALSE)
     
     updateSelectInput(session, "selectRunID",
                       choices = c("None Selected", as.list(runID)),
@@ -256,6 +266,13 @@ observeEvent(input$run_simulations,
 
 )
 
+observe({
+  updateCheckboxGroupInput(session,
+                           "Check_Scenario_Names_Run",
+                           choices = as.list(scenario_names),
+                           selected = if(input$All_Runs) choices = as.list(scenario_names))
+})
+
 observeEvent(input$Check_Scenario_Names_Run,
   {
     selectedScenarios <- input$Check_Scenario_Names_Run
@@ -265,6 +282,10 @@ observeEvent(input$Check_Scenario_Names_Run,
       updateCheckboxGroupInput(session, inputId = "Check_Scenario_Names_Results",
                                choices = names(unlist(modelRuns, recursive = F)),
                                selected = NULL)
+      
+      updateCheckboxInput(session, 
+                          inputId = "All_Results",
+                          value = FALSE)
 
       subElement1 <- paste("#Check_Scenario_Names_Results input[value=", notSelected,"]")
       delay(1, shinyjs::disable(selector = subElement1))
@@ -278,6 +299,10 @@ observeEvent(input$Check_Scenario_Names_Run,
       updateCheckboxGroupInput(session, inputId = "Check_Scenario_Names_Results",
                                choices = names(unlist(modelRuns, recursive = F)),
                                selected = NULL)
+      
+      updateCheckboxInput(session, 
+                          inputId = "All_Results",
+                          value = FALSE)
 
       subElement2 <- paste("#Check_Scenario_Names_Results input[value=", selectedScenarios,"]")
       delay(1, shinyjs::enable(selector = subElement2))

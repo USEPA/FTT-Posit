@@ -157,6 +157,13 @@ observeEvent(input$plot_exposure_concs,
              }
 )
 
+observe({
+  updateCheckboxGroupInput(session,
+                           "Check_Scenario_Names",
+                            choices = as.list(scenario_names),
+                            selected = if(input$All) as.list(scenario_names))
+})
+
 observeEvent(input$Check_Scenario_Names,
   {
     inputScenariosToVis <- input$Check_Scenario_Names

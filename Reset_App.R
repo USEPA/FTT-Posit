@@ -28,8 +28,14 @@ observeEvent(input$reset_clear_app,
                updateCheckboxGroupInput(session, "Check_Scenario_Names_Run",
                                         choices = "")
                
+               updateCheckboxInput(session, 
+                                   inputId = "All_Runs",
+                                   value = FALSE)
+               
                updateCheckboxGroupInput(session, "Check_Scenario_Names",
                                         choices = "")
+               
+               shinyjs::hide(id = "All")
                shinyjs::hide(id = "Visualization_GRS")
                shinyjs::hide(id = "Visualization_SPB")
                shinyjs::hide(id = "Visualization_SDEC")
@@ -62,6 +68,7 @@ observeEvent(input$reset_clear_app,
                shinyjs::hide(id = "Winter_Options")
                shinyjs::hide(id = "Density_Dependence_Options")
                shinyjs::hide(id = "predetermined_growth_effects")
+               shinyjs::hide(id = "upload_new_exposure_concentration")
                shinyjs::hide(id = "exposure_conc")
                shinyjs::hide(id = "chemicalEffectType")
                shinyjs::hide(id = "chemicalID")
@@ -107,6 +114,10 @@ observeEvent(input$reset_clear_app,
                
                updateCheckboxGroupInput(session, "Check_Scenario_Names_Results",
                                         choices = "")
+               
+               updateCheckboxInput(session, 
+                                   inputId = "All_Results",
+                                   value = FALSE)
                
                updateSelectInput(session, "downloadResults",
                                  choices = "")
