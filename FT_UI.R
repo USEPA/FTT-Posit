@@ -21,8 +21,8 @@ FT_UI <- function(req) {
     tags$style(HTML("hr {border-top: 2px solid #000000;}"))
   ),
   navbarPage(title = "Fish Toxicity Translator v0.1",
-             pwa("https://rstudio-connect.dmap-stage.aws.epa.gov/content/7ea0a234-6b7f-4694-a6db-194fca3ff1aa",
-                 title = "Fish_Toxicity_Translator", 
+             pwa("https://ccte-fishtoxtranslator-dev.epa.gov",
+                 title = "Fish Toxicity Translator v0.1", 
                  output = "www",
                  icon = "/www/FTT_PWA_512x512.png"),
              tabHome,
