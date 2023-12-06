@@ -25,6 +25,8 @@ submittedResultsName <- c()
 runID_Exists <- FALSE
 scenarioName_Exists <- FALSE
 
+summaryMatrix_flag <- FALSE
+
 # Initialize lists to store model output
 # temp List stores the most recent model runs
 tempOutputs <- list()

@@ -74,17 +74,12 @@ plot_Transitional_Kernel <- function(inputScenariosForResults)
 
 plot_Summary_Matrix <- function(inputScenariosForResults)
 {
-  if (is.null(inputScenariosForResults))
+  if (length(inputScenariosForResults) < 2)
   {
-    return(10)
-    
-  }else if (length(inputScenariosForResults) < 2)
-  {
-    return(10)
+    return(PlotSummaryMatrix(unlist(modelRuns,recursive=F)[inputScenariosForResults]))
     
   }else
   {
     PlotSummaryMatrix(unlist(modelRuns,recursive=F)[inputScenariosForResults])
-    # PlotSummaryMatrix(modelOutputs[inputScenariosForResults])
   }
 }

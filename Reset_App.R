@@ -115,6 +115,8 @@ observeEvent(input$reset_clear_app,
                updateCheckboxGroupInput(session, "Check_Scenario_Names_Results",
                                         choices = "")
                
+               summaryMatrix_flag <- FALSE
+               
                updateCheckboxInput(session, 
                                    inputId = "All_Results",
                                    value = FALSE)
