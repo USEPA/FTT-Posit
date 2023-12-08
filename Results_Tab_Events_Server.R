@@ -10,14 +10,14 @@ observeEvent(input$Check_Scenario_Names_Results,
              {
                if (length(input$Check_Scenario_Names_Results) < 2)
                {
+                 shinyjs::hide(id = "summaryMatrix_out_Main")
                  if (summaryMatrix_flag == TRUE)
                  {
                    shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
                    summaryMatrix_flag <- FALSE
                  }
                }
-             },
-             ignoreInit = TRUE
+             }
 )
 
 observeEvent(input$summary_results_table,
@@ -138,10 +138,9 @@ observeEvent(input$plot_summaryMatrix,
                  
                }else
                {
-                 
+                 shinyjs::hide(id = "summaryMatrix_out_Main")
                  error_message <- "You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix."
                  shinyjs::info(error_message)
-                 shinyjs::hide(id = "summaryMatrix_out_Main")
                }
              }
 )
@@ -150,10 +149,11 @@ output$summaryMatrix_out <- renderPlot(
   {
     if (length(input$Check_Scenario_Names_Results) < 2)
     {
-      shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
       shinyjs::hide(id = "summaryMatrix_out_Main")
+      shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
+    }else{
+      plot_Summary_Matrix(input$Check_Scenario_Names_Results)
     }
-    plot_Summary_Matrix(input$Check_Scenario_Names_Results)
   }
 )
 
