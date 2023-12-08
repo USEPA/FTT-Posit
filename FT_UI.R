@@ -5,6 +5,12 @@ fnpath <- list.files(pattern = fn, full.names = TRUE, recursive = TRUE)
 
 FT_UI <- function(req) {
   fluidPage(
+    tags$head(
+      tags$link(rel = "shortcut icon", href = "www/favicon.ico"),
+      tags$link(rel = "apple-touch-icon", sizes = "180x180", href = "www/apple-touch-icon.png"),
+      tags$link(rel = "icon", type = "image/png", sizes = "32x32", href = "www/favicon-32x32.png"),
+      tags$link(rel = "icon", type = "image/png", sizes = "16x16", href = "www/favicon-16x16.png")),
+    
     useShinyjs(),
     tags$style(id = "antiClickjack", HTML("body{display:none !important;}")),
 
