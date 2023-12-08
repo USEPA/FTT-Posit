@@ -6,6 +6,19 @@ observe({
                            selected = if(input$All_Results) as.list(names(unlist(modelRuns, recursive = F))))
 })
 
+observeEvent(input$Check_Scenario_Names_Results,
+             {
+               if (length(input$Check_Scenario_Names_Results) < 2)
+               {
+                 shinyjs::hide(id = "summaryMatrix_out_Main")
+                 if (summaryMatrix_flag == TRUE)
+                 {
+                   shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
+                   summaryMatrix_flag <- FALSE
+                 }
+               }
+             }
+)
 
 observeEvent(input$summary_results_table,
   {
@@ -115,26 +128,35 @@ observeEvent(input$plot_transitionalKernel,
              }
 )
 
-observeEvent(input$plot_summaryMatrix,
+
+observeEvent(input$plot_summaryMatrix, 
              {
-               if (is.null(input$Check_Scenario_Names_Results))
+               if (length(input$Check_Scenario_Names_Results) >= 2)
                {
-                 shinyjs::info("Please select one or more scenarios.")
                  
-               }else if (length(input$Check_Scenario_Names_Results) < 2)
-               {
-                 shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
+                 shinyjs::show(id = "summaryMatrix_out_Main")
+                 
                }else
                {
-                 output$summaryMatrix_out <- renderPlot(
-                   {
-                     plot_Summary_Matrix(input$Check_Scenario_Names_Results)
-                   }
-                 )
-                 shinyjs::show(id = "summaryMatrix_out_Main")
+                 shinyjs::hide(id = "summaryMatrix_out_Main")
+                 error_message <- "You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix."
+                 shinyjs::info(error_message)
                }
              }
 )
+
+output$summaryMatrix_out <- renderPlot(
+  {
+    if (length(input$Check_Scenario_Names_Results) < 2)
+    {
+      shinyjs::hide(id = "summaryMatrix_out_Main")
+      shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
+    }else{
+      plot_Summary_Matrix(input$Check_Scenario_Names_Results)
+    }
+  }
+)
+
 
 #####################################################################################################
 # Clear plots events
@@ -178,6 +200,7 @@ observeEvent(input$clear_transitionalKernel,
 observeEvent(input$clear_matrix,
              {
                shinyjs::hide(id = "summaryMatrix_out_Main")
+               summaryMatrix_flag <- FALSE
              }
 )
 
@@ -258,15 +281,17 @@ observeEvent(input$export_summaryMatrix_modal,
                  output$plotSummaryMatrix <- NULL
                  output$textMessageSummaryMatrix <- renderText(
                    {
-                     paste("Please select one or more scenarios before attempting to export a plot.", 
+                     paste("Please select two or more scenarios before attempting to export a plot.", 
                            "To close this window click the 'Close' button below.")
                    }
                  )
                  shinyjs::disable(id = "downloadPlotSummaryMatrix")
+                 summaryMatrix_flag <- FALSE
                  
                }else if (length(input$Check_Scenario_Names_Results) < 2)
                {
                  output$plotSummaryMatrix <- NULL
+                 summaryMatrix_flag <- FALSE
                  output$textMessageSummaryMatrix <- renderText(
                    {
                      paste("You must select at least 2 scenarios.",
@@ -277,6 +302,7 @@ observeEvent(input$export_summaryMatrix_modal,
                }else
                {
                  output$textMessageSummaryMatrix <- NULL
+                 summaryMatrix_flag <- TRUE
                  shinyjs::enable(id = "downloadPlotSummaryMatrix")
                  output$plotSummaryMatrix <- renderPlot(
                    plot_Summary_Matrix(input$Check_Scenario_Names_Results)
