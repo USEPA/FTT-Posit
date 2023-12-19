@@ -12,6 +12,9 @@ FT_Server <- function(input, output, session) {
   source("Run_Tab_Events_Server.R", local = TRUE)
   source("Results_Tab_Events_Server.R", local = TRUE)
   source("Reset_App.R", local = TRUE)
+
+  keep_alive <- shiny::reactiveTimer(intervalMs = 10000, session = shiny::getDefaultReactiveDomain())
+  shiny::observe({keep_alive()})
   
 }
 
