@@ -15,12 +15,6 @@ FT_Server <- function(input, output, session) {
   
 }
 
-autoInvalidate <- reactiveTimer(10000)
-  observe({
-    autoInvalidate()
-    cat(".")
-  })
-
     
   
     
