@@ -67,31 +67,5 @@ source("widgets.R")
 source("FT_UI.R")
 source("FT_Server.R")
 
-ui <- fluidPage(
-  "Am I losing connection?",
-  tags$div(style = "position: absolute; top: -100px;",
-    textOutput("clock")
-  )
-)
-server <- function(input, output) {
-  output$clock <- renderText({
-    invalidateLater(5000)
-    Sys.time()
-  })
-}
-
-ui <- fluidPage(
-  "Am I losing connection?",
-  tags$div(style = "position: absolute; top: -100px;",
-    textOutput("clock")
-  )
-)
-server <- function(input, output) {
-  output$clock <- renderText({
-    invalidateLater(5000)
-    Sys.time()
-  })
-}
-
 # This runs the Shiny App!
 shinyApp(ui <- FT_UI, server <- FT_Server)
