@@ -14,6 +14,13 @@ FT_Server <- function(input, output, session) {
   source("Reset_App.R", local = TRUE)
   
 }
+
+autoInvalidate <- reactiveTimer(10000)
+  observe({
+    autoInvalidate()
+    cat(".")
+  })
+
     
   
     
