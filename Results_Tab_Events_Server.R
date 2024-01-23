@@ -4,6 +4,16 @@ observe({
                            "Check_Scenario_Names_Results",
                            choices = as.list(names(unlist(modelRuns, recursive = F))),
                            selected = if(input$All_Results) as.list(names(unlist(modelRuns, recursive = F))))
+  
+  })
+
+observe({
+  if (is.null(input$Check_Scenario_Names_Results)){
+    shinyjs::disable(id = "Download_Results_Report")
+  }else
+  {
+    shinyjs::enable(id = "Download_Results_Report")
+  }
 })
 
 observeEvent(input$Check_Scenario_Names_Results,
@@ -16,6 +26,7 @@ observeEvent(input$Check_Scenario_Names_Results,
                    summaryMatrix_flag <- FALSE
                  }
                }
+               
              }
 )
 
