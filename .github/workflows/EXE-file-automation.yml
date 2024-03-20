@@ -19,13 +19,13 @@ jobs:
           curl -sSL -o dist/GoogleChromePortable_114.0.5735.199.paf.exe https://portableapps.com/apps/internet/google_chrome_portable
 
           # Unblock R-Portable installation
-          Unblock-File -Path dist/R-Portable_4.2.0.paf.exe
+          # Unblock-File -Path dist/R-Portable_4.2.0.paf.exe
 
           # Install R-Portable
           dist/R-Portable_4.2.0.paf.exe /VERYSILENT /DIR=dist/R-Portable
 
           # Unblock Google Chrome Portable installation
-          Unblock-File -Path dist/GoogleChromePortable_114.0.5735.199.paf.exe
+          #Unblock-File -Path dist/GoogleChromePortable_114.0.5735.199.paf.exe
 
           # Install Google Chrome Portable
           dist/GoogleChromePortable_114.0.5735.199.paf.exe /VERYSILENT /DIR=dist/GoogleChromePortable
