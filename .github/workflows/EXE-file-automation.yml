@@ -1,0 +1,64 @@
+name: Shiny App Build
+
+on:
+  push:
+    branches: dev-762
+  release:
+    types:
+      - created
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up R and Chrome Portable
+        run: |
+          mkdir dist
+          curl -sSL -o dist/R-Portable_4.2.0.paf.exe https://sourceforge.net/projects/rportable/files/latest/download
+          curl -sSL -o dist/GoogleChromePortable_114.0.5735.199.paf.exe https://portableapps.com/apps/internet/google_chrome_portable
+
+          # Unblock R-Portable installation
+          Unblock-File -Path dist/R-Portable_4.2.0.paf.exe
+
+          # Install R-Portable
+          dist/R-Portable_4.2.0.paf.exe /VERYSILENT /DIR=dist/R-Portable
+
+          # Unblock Google Chrome Portable installation
+          Unblock-File -Path dist/GoogleChromePortable_114.0.5735.199.paf.exe
+
+          # Install Google Chrome Portable
+          dist/GoogleChromePortable_114.0.5735.199.paf.exe /VERYSILENT /DIR=dist/GoogleChromePortable
+
+      - name: Install R packages
+        run: |
+          dist/R-Portable/App/R-Portable/bin/Rscript.exe -e 'install.packages(c("shiny", "shinyjs", "plotly", "lubridate", "readr", "DT", "shinyWidgets", "shinydashboard", "shinyBS", "purrr", "stringr", "Matrix", "statmod", "truncnorm", "tibble", "plot.matrix", "shinybusy", "readxl", "writexl", "xlsx", "magick", "devtools", "shiny.pwa", "tidyverse"), repos = "https://cran.rstudio.com")'
+
+      - name: Install local R package
+        run: |
+          dist/R-Portable/App/R-Portable/bin/Rscript.exe -e 'install.packages("./FishToxTranslator.tar.gz", repos = NULL, type = "source")'
+
+      - name: Create shiny folder
+        run: |
+          mkdir dist/shiny
+
+      - name: Modify Rprofile.site
+        run: |
+          echo ".First = function() {" >> dist/R-Portable/App/R-Portable/etc/Rprofile.site
+          echo "    .libPaths(.Library)" >> dist/R-Portable/App/R-Portable/etc/Rprofile.site
+          echo "}" >> dist/R-Portable/App/R-Portable/etc/Rprofile.site
+
+     # - name: Generate standalone executable
+      #  run: |
+          # Use Inno Setup Compiler or any other tool to generate the executable
+          # Place the generated .exe file in the dist directory
+
+     # - name: Upload artifact
+      #  uses: actions/upload-artifact@v2
+       # with:
+       #   name: StandaloneApp
+        #  path: dist/*.exe
+
