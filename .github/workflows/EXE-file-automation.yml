@@ -21,7 +21,7 @@ jobs:
         run: |
           pwd
           ls -latr
-          mkdir dist
+          #mkdir dist
             
       - name: create skeleton folder and engine framework
         run: |
