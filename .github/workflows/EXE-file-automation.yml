@@ -2,10 +2,7 @@ name: Shiny App Build
 
 on:
   push:
-    branches: dev-762
-  release:
-    types:
-      - created
+    branches: DEV-762
 
 jobs:
   build:
