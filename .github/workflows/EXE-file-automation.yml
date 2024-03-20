@@ -17,9 +17,15 @@ jobs:
         with:
            r-version: '4.x'
            
-      - name: create skeleton folder and engine framework
+      - name: List and PWD
         run: |
+          pwd
+          ls -latr
           mkdir dist
+            
+      - name: create skeleton folder and engine framework
+        working-directory: dist
+        run: |
           wget -o dist/R-Portable_4.2.0.paf.exe https://sourceforge.net/projects/rportable/files/R-Portable_4.2.0.paf.exe/download
           wget -o dist/GoogleChromePortable_114.0.5735.199.paf.exe https://portableapps.com/apps/internet/google_chrome_portable
           chmod +x dist/R-Portable_4.2.0.paf.exe 
