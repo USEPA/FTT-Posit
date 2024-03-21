@@ -32,8 +32,8 @@ jobs:
           #chmod +x dist/GoogleChromePortable.exe
           #wine "R-Portable_4.2.0.paf.exe" /S 
           #wine "GoogleChromePortable.exe" /S
-          dist/R-Portable_4.2.0.paf.exe /DIR=dist/R-Portable /VERYSILENT
-          dist/GoogleChromePortable.exe /DIR=dist/GoogleChromePortable /VERYSILENT
+          R-Portable_4.2.0.paf.exe /DIR=dist/R-Portable /VERYSILENT
+          GoogleChromePortable.exe /DIR=dist/GoogleChromePortable /VERYSILENT
           #mkdir dist/shiny
 
       - name: Modify Rprofile.site
