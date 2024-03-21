@@ -24,19 +24,18 @@ jobs:
         run: |
           pwd
           ls -latr
-          #mkdir dist
+          mkdir dist
             
       - name: create skeleton folder and engine framework
-        working-directory: /dist
+        working-directory: dist
         run: |
           #mkdir dist
-          cd dist
-          wget -o dist/R-Portable_4.2.0.paf.exe https://sourceforge.net/projects/rportable/files/R-Portable_4.2.0.paf.exe/download
-          wget -o dist/GoogleChromePortable_114.0.5735.199.paf.exe https://portableapps.com/apps/internet/google_chrome_portable
-          chmod +x dist/R-Portable_4.2.0.paf.exe 
+          wget -o R-Portable_4.2.0.paf.exe https://sourceforge.net/projects/rportable/files/R-Portable_4.2.0.paf.exe/download
+          wget -o GoogleChromePortable_114.0.5735.199.paf.exe https://portableapps.com/apps/internet/google_chrome_portable
+          chmod +x R-Portable_4.2.0.paf.exe 
           #chmod +x dist/GoogleChromePortable.exe
-          dist/R-Portable_4.2.0.paf.exe /DIR=dist/R-Portable /VERYSILENT
-          dist/GoogleChromePortable.exe /DIR=dist/GoogleChromePortable /VERYSILENT
+          R-Portable_4.2.0.paf.exe /DIR=dist/R-Portable /VERYSILENT
+          GoogleChromePortable.exe /DIR=dist/GoogleChromePortable /VERYSILENT
           mkdir dist/shiny
 
       - name: Modify Rprofile.site
