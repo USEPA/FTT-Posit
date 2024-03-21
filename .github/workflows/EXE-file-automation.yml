@@ -26,8 +26,8 @@ jobs:
       - name: create skeleton folder and engine framework
         working-directory: dist
         run: |
+          apt install -y wine
           wget -o "R-Portable_4.2.0.paf.exe" "https://sourceforge.net/projects/rportable/files/R-Portable_4.2.0.paf.exe/download"
           wget -o "GoogleChromePortable_114.0.5735.199.paf.exe" "https://portableapps.com/apps/internet/google_chrome_portable"
-          chmod +x R-Portable_4.2.0.paf.exe /VERYSILENT /SUPPRESSMSGBOXES
-          ls -latr
-          #chmod +x dist/GoogleChromePortable.exe 
+          chmod +x R-Portable_4.2.0.paf.exe 
+          wine R-Portable_4.2.0.paf.exe 
