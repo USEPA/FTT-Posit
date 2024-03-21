@@ -28,38 +28,4 @@ jobs:
         run: |
           wget -o "R-Portable_4.2.0.paf.exe" "https://sourceforge.net/projects/rportable/files/R-Portable_4.2.0.paf.exe/download"
           wget -o "GoogleChromePortable_114.0.5735.199.paf.exe" "https://portableapps.com/apps/internet/google_chrome_portable"
-          chmod +x R-Portable_4.2.0.paf.exe 
-          #chmod +x dist/GoogleChromePortable.exe
-          #wine "R-Portable_4.2.0.paf.exe" /S 
-          #wine "GoogleChromePortable.exe" /S
-          R-Portable_4.2.0.paf.exe /DIR=dist/R-Portable /VERYSILENT
-          GoogleChromePortable.exe /DIR=dist/GoogleChromePortable /VERYSILENT
-          #mkdir dist/shiny
-
-      - name: Modify Rprofile.site
-        run: |
-          echo -e "\n.First = function() {\n  .libPaths(.Library)\n}" >> dist/R-Portable/App/R-Portable/etc/Rprofile.site
-      
-      - name: Install core CRAN packages
-        run: |
-          echo "::group::Install CRAN Packages"
-          Rscript -e "install.packages(c('shiny', 'shinyjs', 'plotly', 'lubridate', 'readr', 'DT', 'shinyWidgets', 'shinydashboard', 'shinyBS', 'purrr', 'stringr', 'Matrix', 'statmod', 'truncnorm', 'tibble', 'plot.matrix', 'shinybusy', 'readxl', 'writexl', 'xlsx', 'magick', 'devtools', 'shiny.pwa', 'tidyverse'), repos = 'https://cran.rstudio.com/')"
-          echo "::endgroup::"
-
-      - name: Install local package
-        run: |
-          echo "::group::Install Local Package"
-          R CMD INSTALL FishToxTranslator.tar.gz
-          echo "::endgroup::"
-
-      - name: Install package dependencies
-        uses: r-lib/actions/setup-r-dependencies@v2
-        with:
-          dependencies: |
-            FishToxTranslator:
-              source: local
-              path: ./FishToxTranslator.tar.gz
-
-
-    
-
+         
