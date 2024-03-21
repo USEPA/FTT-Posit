@@ -30,8 +30,10 @@ jobs:
           wget -o "GoogleChromePortable_114.0.5735.199.paf.exe" "https://portableapps.com/apps/internet/google_chrome_portable"
           chmod +x R-Portable_4.2.0.paf.exe 
           #chmod +x dist/GoogleChromePortable.exe
-          wine "R-Portable_4.2.0.paf.exe" /S 
-          wine "GoogleChromePortable.exe" /S
+          #wine "R-Portable_4.2.0.paf.exe" /S 
+          #wine "GoogleChromePortable.exe" /S
+          dist/R-Portable_4.2.0.paf.exe /DIR=dist/R-Portable /VERYSILENT
+          dist/GoogleChromePortable.exe /DIR=dist/GoogleChromePortable /VERYSILENT
           #mkdir dist/shiny
 
       - name: Modify Rprofile.site
