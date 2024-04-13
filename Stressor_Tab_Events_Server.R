@@ -1015,9 +1015,9 @@ observeEvent(input$upload_predetermined_growth_effects,
                updateCheckboxGroupInput(session, "Check_Scenario_Names",
                                         choices = as.list(scenario_names))
                
-               updateSelectInput(session, "expconc_profile",
-                                 choices = c("None Selected", "New", names(ExposureConcentrations)),
-                                 selected = "None Selected")
+               #updateSelectInput(session, "expconc_profile",
+               #                 choices = c("None Selected", "New", names(ExposureConcentrations)),
+               #                 selected = "None Selected")
                
                # updateCheckboxGroupInput(session, "Check_Scenario_Names_Run",
                #                          choices = as.list(scenario_names))
@@ -1030,6 +1030,7 @@ observeEvent(input$upload_predetermined_growth_effects,
                shinyjs::disable(id = "effect_type")
                shinyjs::disable(id = "tcem_lc_percent")
                shinyjs::disable(id = "tcem_lc_conc")
+               shinyjs::disable(id = "expconc_profile")
                shinyjs::disable(id = "download_exposure_concentration")
                shinyjs::disable(id = "upload_exposure_concentrations")
                shinyjs::disable(id = "download_predetermined_effects")
