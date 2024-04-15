@@ -8,27 +8,63 @@ observe({
   })
 
 observe({
-  if (is.null(input$Check_Scenario_Names_Results)){
+  if (is.null(input$Check_Scenario_Names_Results))
+  {
     shinyjs::disable(id = "Download_Results_Report")
+    shinyjs::hide(id = "summaryMatrix_out_Main")
+    shinyjs::hide(id = "scenario_summary_results_main")
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_summary_matrix",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_summary_results_table",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_dailyPopulation",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_populationBiomass",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_meanSize",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_growthPotential",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_transitionalKernel",
+                      value = FALSE)
+  }else if (length(input$Check_Scenario_Names_Results) == 1)
+  {
+    shinyjs::enable(id = "Download_Results_Report")
+    shinyjs::hide(id = "summaryMatrix_out_Main")
+    if (summaryMatrix_flag == TRUE)
+    {
+      shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
+      summaryMatrix_flag <- FALSE
+    }
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_summary_matrix",
+                      value = FALSE)
   }else
   {
     shinyjs::enable(id = "Download_Results_Report")
   }
 })
 
-observeEvent(input$Check_Scenario_Names_Results,
-             {
-               if (length(input$Check_Scenario_Names_Results) < 2){
-                 shinyjs::hide(id = "summaryMatrix_out_Main")
-                 if (summaryMatrix_flag == TRUE)
-                 {
-                   shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
-                   summaryMatrix_flag <- FALSE
-                 }
-               }
-               
-             }
-)
+# observeEvent(input$Check_Scenario_Names_Results,
+#              {
+#                if (length(input$Check_Scenario_Names_Results) < 2){
+#                  shinyjs::hide(id = "summaryMatrix_out_Main")
+#                  if (summaryMatrix_flag == TRUE)
+#                  {
+#                    shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
+#                    summaryMatrix_flag <- FALSE
+#                  }
+#                }
+#                
+#              }
+# )
 
 observeEvent(input$summary_results_table,
   {
@@ -52,6 +88,35 @@ observeEvent(input$summary_results_table,
   }
 )
 
+observeEvent(input$plot_clear_summary_results_table,
+             {
+               if (input$plot_clear_summary_results_table)
+               {
+                 if (is.null(input$Check_Scenario_Names_Results))
+                 {
+                   shinyjs::hide(id = "scenario_summary_results_main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_summary_results_table",
+                                     value = FALSE)
+                   shinyjs::info("Error: no scenarios were selected. Please select one or more scenarios.")
+                 }else
+                 {
+                   output$scenario_summary_results_table <- DT::renderDataTable(
+                     {
+                       return_summary_results_table(input$Check_Scenario_Names_Results)
+                     },
+                     options = list(scrollX = TRUE)
+                   )
+                   shinyjs::show(id = "scenario_summary_results_main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "scenario_summary_results_main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
 # This script contains observe Events for plotting results.
 observeEvent(input$plot_dailyPopulation,
              {
@@ -70,6 +135,35 @@ observeEvent(input$plot_dailyPopulation,
              }
 )
 
+observeEvent(input$plot_clear_dailyPopulation,
+             {
+               if (input$plot_clear_dailyPopulation)
+               {
+                 if (is.null(input$Check_Scenario_Names_Results))
+                 {
+                   shinyjs::hide(id = "dailyPopulation_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_dailyPopulation",
+                                     value = FALSE)
+                   shinyjs::info("Error: no scenarios were selected. Please select one or more scenarios.")
+                 }else
+                 {
+                   output$dailyPopulation_out <- renderPlot(
+                     {
+                       plot_Daily_Population(input$Check_Scenario_Names_Results)
+                     }
+                   )
+                   shinyjs::show(id = "dailyPopulation_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "dailyPopulation_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
+
 observeEvent(input$plot_populationBiomass,
              {
                if (is.null(input$Check_Scenario_Names_Results))
@@ -86,6 +180,35 @@ observeEvent(input$plot_populationBiomass,
                }
              }
 )
+
+observeEvent(input$plot_clear_populationBiomass,
+             {
+               if (input$plot_clear_populationBiomass)
+               {
+                 if (is.null(input$Check_Scenario_Names_Results))
+                 {
+                   shinyjs::hide(id = "populationBiomass_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_populationBiomass",
+                                     value = FALSE)
+                   shinyjs::info("Error: no scenarios were selected. Please select one or more scenarios.")
+                 }else
+                 {
+                   output$populationBiomass_out <- renderPlot(
+                     {
+                       plot_Population_Biomass(input$Check_Scenario_Names_Results)
+                     }
+                   )
+                   shinyjs::show(id = "populationBiomass_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "populationBiomass_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
 
 observeEvent(input$plot_meanSize,
              {
@@ -104,6 +227,35 @@ observeEvent(input$plot_meanSize,
              }
 )
 
+observeEvent(input$plot_clear_meanSize,
+             {
+               if (input$plot_clear_meanSize)
+               {
+                 if (is.null(input$Check_Scenario_Names_Results))
+                 {
+                   shinyjs::hide(id = "meanSize_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_meanSize",
+                                     value = FALSE)
+                   shinyjs::info("Error: no scenarios were selected. Please select one or more scenarios.")
+                 }else
+                 {
+                   output$meanSize_out <- renderPlot(
+                     {
+                       plot_Mean_Size(input$Check_Scenario_Names_Results)
+                     }
+                   )
+                   shinyjs::show(id = "meanSize_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "meanSize_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
+
 observeEvent(input$plot_growthPotential,
              {
                if (is.null(input$Check_Scenario_Names_Results))
@@ -120,6 +272,35 @@ observeEvent(input$plot_growthPotential,
                }
              }
 )
+
+observeEvent(input$plot_clear_growthPotential,
+             {
+               if (input$plot_clear_growthPotential)
+               {
+                 if (is.null(input$Check_Scenario_Names_Results))
+                 {
+                   shinyjs::hide(id = "growthPotential_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_growthPotential",
+                                     value = FALSE)
+                   shinyjs::info("Error: no scenarios were selected. Please select one or more scenarios.")
+                 }else
+                 {
+                   output$growthPotential_out <- renderPlot(
+                     {
+                       plot_Growth_Potential(input$Check_Scenario_Names_Results)
+                     }
+                   )
+                   shinyjs::show(id = "growthPotential_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "growthPotential_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
 
 observeEvent(input$plot_transitionalKernel,
              {
@@ -138,6 +319,34 @@ observeEvent(input$plot_transitionalKernel,
              }
 )
 
+observeEvent(input$plot_clear_transitionalKernel,
+             {
+               if (input$plot_clear_transitionalKernel)
+               {
+                 if (is.null(input$Check_Scenario_Names_Results))
+                 {
+                   shinyjs::hide(id = "transitionalKernel_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_transitionalKernel",
+                                     value = FALSE)
+                   shinyjs::info("Error: no scenarios were selected. Please select one or more scenarios.")
+                 }else
+                 {
+                   output$transitionalKernel_out <- renderPlot(
+                     {
+                       plot_Transitional_Kernel(input$Check_Scenario_Names_Results)
+                     }
+                   )
+                   shinyjs::show(id = "transitionalKernel_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "transitionalKernel_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
 
 observeEvent(input$plot_summaryMatrix, 
              {
@@ -154,6 +363,41 @@ observeEvent(input$plot_summaryMatrix,
                }
              }
 )
+
+observeEvent(input$plot_clear_summary_matrix,
+             {
+               if (input$plot_clear_summary_matrix)
+               {
+                 if (is.null(input$Check_Scenario_Names_Results))
+                 {
+                   shinyjs::hide(id = "summaryMatrix_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_summary_matrix",
+                                     value = FALSE)
+                   error_message <- "You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix."
+                   shinyjs::info(error_message)
+                 }else if (length(input$Check_Scenario_Names_Results) == 1)
+                 {
+                   shinyjs::hide(id = "summaryMatrix_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_summary_matrix",
+                                     value = FALSE)
+                   error_message <- "You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix."
+                   shinyjs::info(error_message)
+                 }else
+                 {
+                   shinyjs::show(id = "summaryMatrix_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "summaryMatrix_out_Main")
+                 updateSwitchInput(session, 
+                                   inputId = "plot_clear_summary_matrix",
+                                   value = FALSE)
+               }
+               
+             },
+             ignoreInit = TRUE)
 
 output$summaryMatrix_out <- renderPlot(
   {
