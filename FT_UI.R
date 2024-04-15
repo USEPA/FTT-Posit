@@ -20,21 +20,6 @@ FT_UI <- function(req) {
   tags$head(
     tags$style(HTML("hr {border-top: 2px solid #000000;}"))
   ),
-  
-  #switchInput color while on
-  tags$head(tags$style(HTML('.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-danger,
-                                       .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-danger {
-                                        background: #4f97d1;
-                                        color: black;
-                                        }'))),
-  
-  #switchInput color while off
-  tags$head(tags$style(HTML('.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-info,
-                                       .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-info {
-                                        background: #f0f0f0;
-                                        color: black;
-                                        }'))),
-  
   navbarPage(title = "Fish Toxicity Translator v0.1",
              pwa("https://ccte-fishtoxtranslator-dev.epa.gov",
                  title = "Fish Toxicity Translator v0.1", 
