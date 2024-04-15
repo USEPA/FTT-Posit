@@ -49,7 +49,6 @@ library("xlsx")
 #library("magick") #not in use
 library("devtools")
 library("shiny.pwa")
-library("shinyhelper")
 
 library(FishToxTranslator)
 
