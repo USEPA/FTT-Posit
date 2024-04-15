@@ -22,15 +22,6 @@ observeEvent(input$add_BaselineScenario,
                shinyjs::enable(id = "upload_history_pars")
                shinyjs::enable(id = "download_history_parameters")
                shinyjs::enable(id = "spawn_algorithm")
-               shinyBS::addTooltip(session,
-                                   "spawn_algorithm", 
-                                   "A spawning algorithm generates daily spawning probabilities based on the iteroparous or semelparous life history parameters supplied",
-                                   "right", 
-                                   options = list(container = "body"))
-               bs_spawning_alg_button <- bsTooltip("spawn_algorithm",
-                                                   "A spawning algorithm generates daily spawning probabilities based on the iteroparous or semelparous life history parameters supplied",
-                                                   "right", 
-                                                   options = list(container = "body"))
              })
 
 ###################################################################################################

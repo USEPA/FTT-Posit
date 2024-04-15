@@ -6,7 +6,6 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                         
                         shinyjs::hidden((div(id = "BuildBaselineScenario",
                                              baseline_scenario_name,
-                                             bs_baseline_scenario_name,
                                              h4(""),
                                              baseline_description_textArea,
                                              h4(""),
@@ -17,8 +16,7 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                                             hr(),
                                             h4("Define Species"),
                                             br(),
-                                            choose_species_DropDownMenu,
-                                            bs_choose_species_dropdownmenu)),
+                                            choose_species_DropDownMenu)),
 
                         h4(""),
                         shinyjs::hidden(
@@ -28,17 +26,14 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
 
                               conditionalPanel(condition = "input.species == 'Fathead Minnow'",
                                                load_fhm_parameters_button,
-                                               bs_load_fhm_parameters_button,
                                                load_fhm_parameters_out_text),
 
                               conditionalPanel(condition = "input.species == 'New'",
                                                h4("If entering new data, open template file first, enter data under corresponding headers,
                                                   and save the file to disk. Then proceed to upload the data into memory."),
                                                fluidRow(
-                                                 column(width = 8, upload_history_button, 
-                                                        bs_upload_history_button),
-                                                 column(width = 2, offset = 1, download_history_button,
-                                                 bs_download_history_button))
+                                                 column(width = 7, upload_history_button),
+                                                 column(width = 4, offset = 1, download_history_button))
                                                ))),
 
                         shinyjs::hidden(
@@ -53,7 +48,6 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                           div(id = "baseline_visualize",
                               hr(),
                               display_life_history_table_button,
-                              bs_display_life_history_table_button,
                               h4(""),
                               hr(),
                               hyperlink_newtab_button,
@@ -90,12 +84,10 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                                                  label = "Select Underlying Scenario",
                                                                  choices = ""),
                                                      shinyjs::hidden(div(id = "stressorType",
-                                                                         stressor_type_button,
-                                                                         bs_stressor_type_button)),
+                                                                         stressor_type_button)),
                                                      shinyjs::hidden(div(id = "stressorNameDescription",
                                                                          h4(""),
                                                                          stressor_name_button,
-                                                                         bs_stressor_name_button,
                                                                          h4(""),
                                                                          stressor_description_textArea,
                                                                          h4(""),
@@ -115,18 +107,13 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                             h4(""),
                                             shinyjs::hidden(div(id = "exposure_conc",
                                                                 fluidRow(
-                                                                  column(width = 8, upload_exposure_concentration),
-                                                                  column(width = 2, offset = 1, download_exposure_concentration)))),
-                                            
-                                            bs_download_exposure_concentration_button,
-                                            bs_upload_exposure_concentration_button,
-                                            h4(""),
+                                                                  column(width = 12, upload_exposure_concentration, 
+                                                                                     download_exposure_concentration)))),
+                                            br(),
                                             shinyjs::hidden(div(id = "chemicalEffectType",
-                                                                select_chemical_effect_type,
-                                                                bs_chemical_effect_type_button)),
+                                                                select_chemical_effect_type)),
                                             shinyjs::hidden(div(id = "chemicalID",
                                                                 chemical_id_textInput,
-                                                                bs_chemical_id_button,
                                                                 h4(""),
                                                                 enter_chemicalID_button,
                                                                 h5(chemID_out_text),
@@ -135,10 +122,8 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                                                 hr(),
                                                                 h4("Provide the TCEM Parameters"),
                                                                 tcem_param2,
-                                                                bs_tcem_param2,
                                                                 h4(""),
                                                                 tcem_param1,
-                                                                bs_tcem_param1,
                                                                 h4(""),
                                                                 run_tcem_button,
                                                                 h5(tcem_out_text)),
@@ -146,19 +131,16 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                                                 hr(),
                                                                 h4("Upload the predetermined effects data"),
                                                                 fluidRow(
-                                                                  column(width = 8, upload_predeterminedEffects_button),
-                                                                  column(width = 2, offset = 1, download_predeterminedEffects_button)),
-                                                                
-                                                                bs_download_predeterminedEffects_button ,
-                                                                bs_upload_predeterminedEffects_button),
+                                                                  column(width = 12, upload_predeterminedEffects_button,
+                                                                         download_predeterminedEffects_button))),
+                                                                  
                                                             div(id = "predetermined_growth_effects",
                                                                 hr(),
                                                                 h4("Upload the predetermined growth effects data"),
                                                                 fluidRow(
-                                                                  column(width = 8, upload_predeterminedGrowthEffects_button),
-                                                                  column(width = 2, offset = 1, download_predeterminedGrowthEffects_button)),
-                                                                bs_download_predeterminedGrowthEffects_button,
-                                                                bs_upload_predeterminedGrowthEffects_button),
+                                                                  column(width = 12, upload_predeterminedGrowthEffects_button,
+                                                                         download_predeterminedGrowthEffects_button))),
+                                                                  
                                                             div(id = "guts",
                                                                 guts_out_text)),
 
@@ -167,32 +149,25 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                                                div(id = "Winter_Options",
                                                                    hr(),
                                                                    h4("Provide the Winter Parameters"),
-                                                                   numericInput(inputId = "start_winter",
-                                                                                label = as.character(parameters_master$name[which(parameters_master$id == 'winter_start')]),
-                                                                                value = 355),
+                                                                   winter_start,
                                                                    h5(winter_out_text1),
-                                                                   bs_winter_out_text1,
-                                                                   h4(""),
-                                                                   numericInput(inputId = "end_winter",
-                                                                                label = as.character(parameters_master$name[which(parameters_master$id == 'winter_end')]),
-                                                                                value = 91),
+                                                                  
+                                                                   br(),
+                                                                   winter_end,
                                                                    h5(winter_out_text2),
-                                                                   bs_winter_out_text2,
-                                                                   h4(""),
+                                                                   
+                                                                   br(),
                                                                    winter_zparam,
-                                                                   bs_winter_zparam,
-                                                                   h4(""),
+                                                                   
+                                                                   br(),
                                                                    store_winter_parameters_button)),
                                                              
                                                              shinyjs::hidden(
                                                                div(id = "Density_Dependence_Options",
                                                                    hr(),
                                                                    h4("Provide the Density Dependent Growth Parameters"),
-                                                                   numericInput(inputId = "density_dependence_rate",
-                                                                                label = as.character(parameters_master$name[which(parameters_master$id == 'dd_g')]),
-                                                                                value = get(species_library$parameter_data)$value[which(parameters_master$id == 'dd_g')]),
-                                                                   bs_density_dependence_rate_out_text,
-                                                                   h4(""),
+                                                                   density_dependence_rate,
+                                                                   br(),
                                                                    store_density_dependence_parameters_button,
                                                                    h5(density_dependence_rate_out_text))),
                                             
@@ -323,68 +298,76 @@ subtab41 <- tabPanel("Visualize Results",
                          shinyjs::hidden(
                            div(id = "Results_Options",
                                check_boxes_all_results,
-                               h4(""),
+                               br(),
                                check_boxes_scenarios_results,
                                hr(),
                                h4("Comparison of Scenario Results"),
                                hr(),
-                               h4("Summary Results Table"),
                                fluidRow(
-                                 scenarios_summary_results_button,
-                                 clear_scenarios_summary_results_button,
-                                 export_summaryResults_button
+                                 column(width = 6, h4("Summary Results Table")),
+                                 column(width = 4, plot_clear_summary_results_button),
+                                 column(width = 2, offset = 0, export_summaryResults_button)
                                ),
-                               h4(""),
-                               h4("Summary Matrix"),
+                               
+                               br(),
+                               
                                fluidRow(
-                                 summary_matrix_button,
-                                 clear_matrix_button,
-                                 export_matrix_button,
-                                 export_summaryMatrixTable_button
+                                 column(width = 4, h4("Summary Matrix")),
+                                 column(width = 3, plot_clear_summary_matrix_button),
+                                 column(width = 2, export_matrix_button, offset = 1),
+                                 column(width = 2, export_summaryMatrixTable_button)
                                ),
+                               
+                               #fluidRow(
+                              #   column(width = 6, fluidRow(h4("Summary Matrix"), style = "height:70px;"),
+                               #         fluidRow(export_matrix_button, style = "height:70px;")),
+                                # column(width = 6, fluidRow(plot_clear_summary_matrix_button, style = "height:70px;"),
+                                 #       fluidRow(export_summaryMatrixTable_button, style = "height:70px;"))
+                               #),
+                               
                                hr(),
                                h4("View Selected Plots"),
                                hr(),
-                               h4("Daily Population"),
                                fluidRow(
-                                 plot_dailyPopulation_button,
-                                 clear_dailyPopulation_button,
-                                 export_dailyPopulation_button
+                                 column(width = 6, h4("Daily Population")),
+                                 column(width = 4, plot_clear_dailyPopulation_button),
+                                 column(width = 2, offset = 0, export_dailyPopulation_button)
                                ),
-                               h4(""),
-                               h4("Population Biomass"),
+                               
+                               br(),
                                fluidRow(
-                                 plot_populationBiomass_button,
-                                 clear_populationBiomass_button,
-                                 export_populationBiomass_button
+                                 column(width = 6, h4("Population Biomass")),
+                                 column(width = 4, plot_clear_populationBiomass_button),
+                                 column(width = 2, offset = 0, export_populationBiomass_button)
                                ),
-                               h4(""),
-                               h4("Mean Size"),
+                               
+                               br(),
                                fluidRow(
-                                 plot_meanSize_button,
-                                 clear_meanSize_button,
-                                 export_meanSize_button
+                                 column(width = 6, h4("Mean Size")),
+                                 column(width = 4, plot_clear_meanSize_button),
+                                 column(width = 2, offset = 0, export_meanSize_button)
                                ),
-                               h4(""),
-                               h4("Growth Potential"),
+                               
+                               br(),
                                fluidRow(
-                                 plot_growthPotential_button,
-                                 clear_growthPotential_button,
-                                 export_growthPotential_button
+                                 column(width = 6, h4("Growth Potential")),
+                                 column(width = 4, plot_clear_growthPotential_button),
+                                 column(width = 2, offset = 0, export_growthPotential_button)
                                ),
-                               h4(""),
-                               h4("Transitional Kernel"),
+                              
+                               br(),
                                fluidRow(
-                                 plot_transitionalKernel_button,
-                                 clear_transitionalKernel_button,
-                                 export_transitionalKernel_button
+                                 column(width = 6, h4("Transitional Kernel")),
+                                 column(width = 4, plot_clear_transitionalKernel_button),
+                                 column(width = 2, offset = 0, export_transitionalKernel_button)
                                ),
-                               h4(""),
+                               
+                               br(),
                                hr(),
-                               h4("Export Results Report"),
+                               
                                fluidRow(
-                                 export_results_report_button,
-                                 bs_export_results_report_button
+                                 column(width = 6, h4("Export Results Report")),
+                                 column(width = 6, offset = 0, export_results_report_button)
                                )
                            )
                          )
