@@ -27,4 +27,4 @@ install.packages('Rmpfr', repos='https://cloud.r-project.org/')
 install.packages("magick") #not in use
 install.packages("devtools")
 install.packages("shiny.pwa")
-install.packages("shinyhelper") #added for tooltip files modificaiton
+install.packages("shinyhelper")
