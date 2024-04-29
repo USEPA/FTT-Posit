@@ -20,14 +20,10 @@ tabHome <- tabPanel("About",
                   )
 
 tab1 <- tabPanel("Scenario Builder",
-                 
-                 div(helper(shiny_tag = h3("Scenario Builder"),
-                            icon = "question-circle",
-                            colour = "#4d8055",
-                            type = "inline",
-                            title = "Scenario Builder",
-                            content = "The Fish Toxicity Translator compares multiple scenarios to explore differential effects of stressor exposures on population level outcomes. Baseline scenarios are created first and stressors are overlaid.  Scenario building is when input values and data are specified to create the multiple scenarios to investigate."),
-                     style = 'width:200px'),
+                 tags$style(".popover{
+            max-width: 50%;
+          }"),
+                 div(popify(el=h3("Scenario Builder"),placement="right",title="<b>Scenario Builder</b>",content="The Fish Toxicity Translator compares multiple scenarios to explore differential effects of stressor exposures on population level outcomes. Baseline scenarios are created first and stressors are overlaid.  Scenario building is when input values and data are specified to create the multiple scenarios to investigate."),style = 'width:225px;'),
 
                  tabsetPanel(subtab1,
                              subtab2,
@@ -38,14 +34,10 @@ tab1 <- tabPanel("Scenario Builder",
                  )
 
 tab2 <- tabPanel("Visualize Scenarios",
-                 
-                 div(helper(shiny_tag = h3("Visualize Scenarios"),
-                            icon = "question-circle",
-                            colour = "#4d8055",
-                            type = "inline",
-                            title = "Visualize Scenarios",
-                            content = "The visualization step allows you to compare scenarios before they are simulated.  Visualization options include daily differences in growth, reproduction, and survival functions and differences in exposures and associated effects by scenario.  Click and unclick built scenarios to include them in plots; various plots can be displayed and cleared for convenience."),
-                     style = 'width:230px'),
+                 tags$style(".popover{
+            max-width: 50%;
+          }"),
+                 div(popify(el=h3("Visualize Scenarios"),placement="right",title="<b>Visualize Scenarios</b>",content="The visualization step allows you to compare scenarios before they are simulated.  Visualization options include daily differences in growth, reproduction, and survival functions and differences in exposures and associated effects by scenario.  Click and unclick built scenarios to include them in plots; various plots can be displayed and cleared for convenience."),style = 'width:300px;'),
 
                  sidebarLayout
                     (
@@ -64,23 +56,25 @@ tab2 <- tabPanel("Visualize Scenarios",
                               h4(""),
                               slider_parameters_button,
                               h4(""),
-                              br(),
+                              h4("Growth Functions"),
                               fluidRow(
-                                column(width = 6, h4("Growth Functions")),
-                                column(width = 4, plot_clear_growth_button),
-                                column(width = 2, offset = 0, export_growth_functions_button)
+                                plot_growth_button,
+                                clear_growth_button,
+                                export_growth_functions_button
                               ),
                               h4(""),
+                              h4("Survival Functions"),
                               fluidRow(
-                                column(width = 6, h4("Survival Functions")),
-                                column(width = 4, plot_clear_survival_button),
-                                column(width = 2, offset = 0, export_survival_functions_button)
+                                plot_survival_button,
+                                clear_survival_button,
+                                export_survival_functions_button
                               ),
                               h4(""),
+                              h4("Reproduction Functions"),
                               fluidRow(
-                                column(width = 6, h4("Reproduction Functions")),
-                                column(width = 4, plot_clear_reproduction_button),
-                                column(width = 2, offset = 0, export_reproduction_functions_button)
+                                plot_reproduction_button,
+                                clear_reproduction_button,
+                                export_reproduction_functions_button
                               ),
                               h4(""))
                         ),
@@ -89,10 +83,11 @@ tab2 <- tabPanel("Visualize Scenarios",
                               hr(),
                               h4("Visualize: Scenario Parameters"),
                               hr(),
+                              h4("Spawning Probabilities"),
                               fluidRow(
-                                column(width = 6, h4("Spawning Probabilities")),
-                                column(width = 4, plot_clear_spawning_probabilities_button),
-                                column(width = 2, offset = 0, export_spawning_functions_button)
+                                plot_spawning_probabilities_button,
+                                clear_spawning_probabilities_button,
+                                export_spawning_functions_button
                               ),
                               h4(""))
                         ),
@@ -100,23 +95,26 @@ tab2 <- tabPanel("Visualize Scenarios",
                         shinyjs::hidden(
                           div(id = "Visualization_SDEC",
                               shinyjs::hidden(div(id = "Show_SDEC",
+                                                  h4("Survival Decrements"),
                                                   fluidRow(
-                                                    column(width = 6, h4("Survival Decrements")),
-                                                    column(width = 4, plot_clear_survival_decrements_button),
-                                                    column(width = 2, offset = 0, export_survival_decrements_button)
+                                                    plot_survival_decrements_button,
+                                                    clear_survival_decrements_button,
+                                                    export_survival_decrements_button
                                                   ))),
                               h4(""),
                               shinyjs::hidden(div(id = "Show_GP",
+                                                  h4("Growth Percents"),
                                                   fluidRow(
-                                                    column(width = 6, h4("Growth Percents")),
-                                                    column(width = 4, plot_clear_growth_percents_button),
-                                                    column(width = 2, offset = 0, export_growth_percents_button)
+                                                    plot_growth_percents_button,
+                                                    clear_growth_percents_button,
+                                                    export_growth_percents_button
                                                   ))),
                               h4(""),
+                              h4("Exposure Concentrations"),
                               fluidRow(
-                                column(width = 6, h4("Exposure Concentrations")),
-                                column(width = 4, plot_clear_exposure_concentrations_button),
-                                column(width = 2, offset = 0, export_exposure_concentrations_button)
+                                plot_exposure_concentrations_button,
+                                clear_exposure_concentrations_button,
+                                export_exposure_concentrations_button
                               )
                         ))
 
@@ -168,59 +166,60 @@ tab2 <- tabPanel("Visualize Scenarios",
 
 tab3 <- tabPanel("Run Scenarios",
 
-                 div(helper(shiny_tag = h3("Run Scenarios"),
-                            icon = "question-circle",
-                            colour = "#4d8055",
-                            type = "inline",
-                            title = "Run Scenarios",
-                            content = "Choose the model scenarios you would like to simulate. Initial conditions and computational parameters are input below."),
-                     style = 'width:180px'),
+          tags$style(".popover{
+            max-width: 50%;
+          }"),
+          div(popify(el=h3("Run Scenarios"),placement="right",title="<b>Run Scenarios</b>",content="Choose the model scenarios you would like to simulate. Initial conditions and computational parameters are input below."),style = 'width:200px;'),
 
                  sidebarLayout(
 
                    sidebarPanel(
                      shinyjs::hidden(div(id = "HideAddSimulationRunButton",
                                          add_simulation_run_button,
-                                         br())),
+                                         h4(""))),
 
                      shinyjs::hidden(
                        div(id = "Run_Scenarios_Options",
                            check_boxes_all_runs,
-                           br(),
+                           h4(""),
                            check_boxes_Scenarios_Run,
-                           br(),
+                           h4(""),
                            runid_textBox,
-                           br(),
+                           bs_runid_button,
+                           h4(""),
                            runid_action_button,
-                           br(),
+                           h4(""),
                            runid_out_text,
-                           br())),
+                           h4(""))),
 
                      shinyjs::hidden(div(id = "Run_Parameters_Distributions",
                                          h4("Computational Parameters"),
                                          "Default computational parameters are recommended, altering these values may result in numerical inaccuracies or increased simulation run times.",
-                                         br(),
-                                         br(),
+                                         h4(""),
                                          num_size_classes_button,
-                                         
-                                         br(),
+                                         bs_num_size_classes_button,
+                                         h4(""),
                                          solver_order_button,
-                                         
-                                         br(),
+                                         bs_solver_order_button,
+                                         h4(""),
                                          h4("Initial conditions and simulation parameters"),
                                          select_initial_distribution_button,
+                                         bs_select_initial_distribution__button,
 
                                          conditionalPanel(condition = "input.initial_distribution == 'Predetermined'",
                                                           fluidRow(
-                                                            column(width = 12, upload_predeterminedDist_button, 
-                                                                   download_predeterminedDist_button))),
+                                                            column(width = 8, upload_predeterminedDist_button, 
+                                                                   bs_upload_predeterminedDist__button),
+                                                            column(width = 2, offset = 1, download_predeterminedDist_button,
+                                                                   bs_download_predeterminedDist__button))),
 
                                          conditionalPanel(condition = "input.initial_distribution == 'Uniform'",
-                                                          initial_population_button))),
+                                                          initial_population_button,
+                                                          bs_initial_population_button))),
 
                      shinyjs::hidden(div(id = "run_simulations_section",
                                          run_simulations_button,
-                                         br()))
+                                         h4("")))
                      ),
 
                    mainPanel(
@@ -235,14 +234,10 @@ tab3 <- tabPanel("Run Scenarios",
 
 
 tab4 <- tabPanel("Results",
-                 
-                 div(helper(shiny_tag = h3("Results"),
-                            icon = "question-circle",
-                            colour = "#4d8055",
-                            type = "inline",
-                            title = "Results",
-                            content = "In the results step, model outputs are visualized and compared.  Numerical text-based summaries of model outputs are produced as well as a variety of visualizations to explore model behavior across scenarios and within a single modeled scenario."),
-                     style = 'width:100px'),
+                        tags$style(".popover{
+                   max-width: 50%;
+                 }"),
+                div(popify(el=h3("Results"),placement="right",title="<b>Results</b>",content="In the results step, model outputs are visualized and compared.  Numerical text-based summaries of model outputs are produced as well as a variety of visualizations to explore model behavior across scenarios and within a single modeled scenario."),style = 'width:150px;'),
 
                  tabsetPanel(subtab41,
                              subtab42,
@@ -252,15 +247,10 @@ tab4 <- tabPanel("Results",
 )
 
 tab5 <- tabPanel("Reset/Clear App",
-                 
-                 div(helper(shiny_tag = h3("Reset"),
-                            icon = "question-circle",
-                            colour = "#4d8055",
-                            type = "inline",
-                            title = "Reset App",
-                            content = "The reset/clear tab contains a button that will remove all scenarios and results currently stored in memory and will restore the app to its original state."),
-                     style = 'width:90px'),
-                
+                 tags$style(".popover{
+                            max-width: 50%;
+                            }"),
+                div(popify(el=h3("Reset"),placement="right",title="<b>Reset App</b>",content="The reset/clear tab contains a button that will remove all scenarios and results currently stored in memory and will restore the app to its original state."),style = 'width:150px;'),
                 reset_clear_button,
                 h4(""),
                 verbatimTextOutput("textMessageResetApp"),
