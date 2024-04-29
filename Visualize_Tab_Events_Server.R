@@ -51,6 +51,34 @@ observeEvent(input$plot_growth,
              }
 )
 
+observeEvent(input$plot_clear_growth,
+             {
+               if (input$plot_clear_growth)
+               {
+                 if (is.null(input$Check_Scenario_Names))
+                 {
+                   shinyjs::hide(id = "Growth_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_growth",
+                                     value = FALSE)
+                   shinyjs::info("Please select one or more scenarios.")
+                 }else
+                 {
+                   output$Growth_out <- renderPlot(
+                     {
+                       plot_growth_parameters(input$Check_Scenario_Names, input$slider_parameters)
+                     }
+                   )
+                   shinyjs::show(id = "Growth_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "Growth_out_Main")
+               }
+               
+             },
+ignoreInit = TRUE)
+
 observeEvent(input$plot_survival,
              {
                if (is.null(input$Check_Scenario_Names))
@@ -68,6 +96,34 @@ observeEvent(input$plot_survival,
              }
 )
 
+observeEvent(input$plot_clear_survival,
+             {
+               if (input$plot_clear_survival)
+               {
+                 if (is.null(input$Check_Scenario_Names))
+                 {
+                   shinyjs::hide(id = "Survival_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_survival",
+                                     value = FALSE)
+                   shinyjs::info("Please select one or more scenarios.")
+                 }else
+                 {
+                   output$Survival_out <- renderPlot(
+                     {
+                       plot_survival_parameters(input$Check_Scenario_Names, input$slider_parameters)
+                     }
+                   )
+                   shinyjs::show(id = "Survival_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "Survival_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
 observeEvent(input$plot_reproduction,
              {
                if (is.null(input$Check_Scenario_Names))
@@ -84,6 +140,34 @@ observeEvent(input$plot_reproduction,
                }
              }
 )
+
+observeEvent(input$plot_clear_reproduction,
+             {
+               if (input$plot_clear_reproduction)
+               {
+                 if (is.null(input$Check_Scenario_Names))
+                 {
+                   shinyjs::hide(id = "Reproduction_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_reproduction",
+                                     value = FALSE)
+                   shinyjs::info("Please select one or more scenarios.")
+                 }else
+                 {
+                   output$Reproduction_out <- renderPlot(
+                     {
+                       plot_reproduction_parameters(input$Check_Scenario_Names, input$slider_parameters)
+                     }
+                   )
+                   shinyjs::show(id = "Reproduction_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "Reproduction_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
 
 
 observeEvent(input$plot_spawning_probs,
@@ -103,6 +187,35 @@ observeEvent(input$plot_spawning_probs,
              }
 )
 
+observeEvent(input$plot_clear_spawning_probabilities,
+             {
+               if (input$plot_clear_spawning_probabilities)
+               {
+                 if (is.null(input$Check_Scenario_Names))
+                 {
+                   shinyjs::hide(id = "SpawningProb_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_spawning_probabilities",
+                                     value = FALSE)
+                   shinyjs::info("Please select one or more scenarios.")
+                 }else
+                 {
+                   output$SpawningProb_Out <- renderPlot(
+                     {
+                       plot_scenarios_spawning_probabilities(input$Check_Scenario_Names)
+                     }
+                   )
+                   shinyjs::show(id = "SpawningProb_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "SpawningProb_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
+
 observeEvent(input$plot_survival_decs,
              {
                if (is.null(input$Check_Scenario_Names))
@@ -120,6 +233,35 @@ observeEvent(input$plot_survival_decs,
                }
              }
 )
+
+observeEvent(input$plot_clear_survival_decrements,
+             {
+               if (input$plot_clear_survival_decrements)
+               {
+                 if (is.null(input$Check_Scenario_Names))
+                 {
+                   shinyjs::hide(id = "SurvivalDecrement_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_survival_decrements",
+                                     value = FALSE)
+                   shinyjs::info("Please select one or more scenarios.")
+                 }else
+                 {
+                   output$SurvivalDecrement_out <- renderPlot(
+                     {
+                       plot_scenarios_survival_decrements(input$Check_Scenario_Names)
+                     }
+                   )
+                   shinyjs::show(id = "SurvivalDecrement_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "SurvivalDecrement_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
 
 observeEvent(input$plot_growth_percents,
              {
@@ -139,6 +281,35 @@ observeEvent(input$plot_growth_percents,
              }
 )
 
+observeEvent(input$plot_clear_growth_percents,
+             {
+               if (input$plot_clear_growth_percents)
+               {
+                 if (is.null(input$Check_Scenario_Names))
+                 {
+                   shinyjs::hide(id = "GrowthPercents_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_survival_decrements",
+                                     value = FALSE)
+                   shinyjs::info("Please select one or more scenarios.")
+                 }else
+                 {
+                   output$GrowthPercents_out <- renderPlot(
+                     {
+                       plot_scenarios_growth_percents(input$Check_Scenario_Names)
+                     }
+                   )
+                   shinyjs::show(id = "GrowthPercents_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "GrowthPercents_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
+
 observeEvent(input$plot_exposure_concs,
              {
                if (is.null(input$Check_Scenario_Names))
@@ -156,6 +327,35 @@ observeEvent(input$plot_exposure_concs,
                }
              }
 )
+
+observeEvent(input$plot_clear_exposure_concentrations,
+             {
+               if (input$plot_clear_exposure_concentrations)
+               {
+                 if (is.null(input$Check_Scenario_Names))
+                 {
+                   shinyjs::hide(id = "ExposureConcentration_out_Main")
+                   updateSwitchInput(session, 
+                                     inputId = "plot_clear_exposure_concentrations",
+                                     value = FALSE)
+                   shinyjs::info("Please select one or more scenarios.")
+                 }else
+                 {
+                   output$ExposureConcentration_out <- renderPlot(
+                     {
+                       plot_scenarios_exposure_concentrations(input$Check_Scenario_Names)
+                     }
+                   )
+                   shinyjs::show(id = "ExposureConcentration_out_Main")
+                 }
+               }else
+               {
+                 shinyjs::hide(id = "ExposureConcentration_out_Main")
+               }
+               
+             },
+             ignoreInit = TRUE)
+
 
 observe({
   updateCheckboxGroupInput(session,
