@@ -56,3 +56,8 @@ startTimes <- c()
 endTimes <- c()
 
 inputPredeterminedGrowthEffectsData <- data.frame()
+
+# Styles for action buttons
+actionButton_Style1 <- "color: #fff; background-color: #337ab7; border-color: #2e6da4;"
+actionButton_Style2 <- "color: #fff; background-color: #337ab7; border-color: #2e6da4; height: 38px;"
+helper_Color <- "#4d8055"
