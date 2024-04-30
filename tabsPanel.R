@@ -20,10 +20,16 @@ tabHome <- tabPanel("About",
                   )
 
 tab1 <- tabPanel("Scenario Builder",
-                 tags$style(".popover{
-            max-width: 50%;
-          }"),
-                 div(popify(el=h3("Scenario Builder"),placement="right",title="<b>Scenario Builder</b>",content="The Fish Toxicity Translator compares multiple scenarios to explore differential effects of stressor exposures on population level outcomes. Baseline scenarios are created first and stressors are overlaid.  Scenario building is when input values and data are specified to create the multiple scenarios to investigate."),style = 'width:225px;'),
+
+                 
+                 div(helper(shiny_tag = h3("Scenario Builder"),
+                            icon = "question-circle",
+                            colour = helper_Color,
+                            type = "inline",
+                            title = "Scenario Builder",
+                            content = "The Fish Toxicity Translator compares multiple scenarios to explore differential effects of stressor exposures on population level outcomes. Baseline scenarios are created first and stressors are overlaid.  Scenario building is when input values and data are specified to create the multiple scenarios to investigate."),
+                     style = 'width:200px'),
+
 
                  tabsetPanel(subtab1,
                              subtab2,
@@ -34,10 +40,15 @@ tab1 <- tabPanel("Scenario Builder",
                  )
 
 tab2 <- tabPanel("Visualize Scenarios",
-                 tags$style(".popover{
-            max-width: 50%;
-          }"),
-                 div(popify(el=h3("Visualize Scenarios"),placement="right",title="<b>Visualize Scenarios</b>",content="The visualization step allows you to compare scenarios before they are simulated.  Visualization options include daily differences in growth, reproduction, and survival functions and differences in exposures and associated effects by scenario.  Click and unclick built scenarios to include them in plots; various plots can be displayed and cleared for convenience."),style = 'width:300px;'),
+
+                 
+                 div(helper(shiny_tag = h3("Visualize Scenarios"),
+                            icon = "question-circle",
+                            colour = helper_Color,
+                            type = "inline",
+                            title = "Visualize Scenarios",
+                            content = "The visualization step allows you to compare scenarios before they are simulated.  Visualization options include daily differences in growth, reproduction, and survival functions and differences in exposures and associated effects by scenario.  Click and unclick built scenarios to include them in plots; various plots can be displayed and cleared for convenience."),
+                     style = 'width:230px'),
 
                  sidebarLayout
                     (
@@ -166,10 +177,15 @@ tab2 <- tabPanel("Visualize Scenarios",
 
 tab3 <- tabPanel("Run Scenarios",
 
-          tags$style(".popover{
-            max-width: 50%;
-          }"),
-          div(popify(el=h3("Run Scenarios"),placement="right",title="<b>Run Scenarios</b>",content="Choose the model scenarios you would like to simulate. Initial conditions and computational parameters are input below."),style = 'width:200px;'),
+
+                 div(helper(shiny_tag = h3("Run Scenarios"),
+                            icon = "question-circle",
+                            colour = helper_Color,
+                            type = "inline",
+                            title = "Run Scenarios",
+                            content = "Choose the model scenarios you would like to simulate. Initial conditions and computational parameters are input below."),
+                     style = 'width:180px'),
+
 
                  sidebarLayout(
 
@@ -234,10 +250,15 @@ tab3 <- tabPanel("Run Scenarios",
 
 
 tab4 <- tabPanel("Results",
-                        tags$style(".popover{
-                   max-width: 50%;
-                 }"),
-                div(popify(el=h3("Results"),placement="right",title="<b>Results</b>",content="In the results step, model outputs are visualized and compared.  Numerical text-based summaries of model outputs are produced as well as a variety of visualizations to explore model behavior across scenarios and within a single modeled scenario."),style = 'width:150px;'),
+
+                 
+                 div(helper(shiny_tag = h3("Results"),
+                            icon = "question-circle",
+                            colour = helper_Color,
+                            type = "inline",
+                            title = "Results",
+                            content = "In the results step, model outputs are visualized and compared.  Numerical text-based summaries of model outputs are produced as well as a variety of visualizations to explore model behavior across scenarios and within a single modeled scenario."),
+                     style = 'width:100px'),
 
                  tabsetPanel(subtab41,
                              subtab42,
@@ -247,10 +268,17 @@ tab4 <- tabPanel("Results",
 )
 
 tab5 <- tabPanel("Reset/Clear App",
-                 tags$style(".popover{
-                            max-width: 50%;
-                            }"),
-                div(popify(el=h3("Reset"),placement="right",title="<b>Reset App</b>",content="The reset/clear tab contains a button that will remove all scenarios and results currently stored in memory and will restore the app to its original state."),style = 'width:150px;'),
+
+                 
+                 div(helper(shiny_tag = h3("Reset"),
+                            icon = "question-circle",
+                            colour = helper_Color,
+                            type = "inline",
+                            title = "Reset App",
+                            content = "The reset/clear tab contains a button that will remove all scenarios and results currently stored in memory and will restore the app to its original state."),
+                     style = 'width:90px'),
+                
+
                 reset_clear_button,
                 h4(""),
                 verbatimTextOutput("textMessageResetApp"),
