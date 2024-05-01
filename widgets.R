@@ -56,12 +56,6 @@ load_fhm_parameters_button <- helper(load_fhm_parameters_button_element,
                                       title = "Fathead Minnow Parameters",
                                       content = "Load Fathead Minnow parameters into memory.")
 
-load_fhm_parameters_button <- actionButton(inputId = "load_fhm_parameters",
-                                           label = "Load Fathead Minnow Parameters",
-                                           width = '250px',
-                                           style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
-
-
 download_history_button_element <- downloadButton(outputId = "download_history_parameters",
                                                   label = "Get template file",
                                                   class = "download_Button")
