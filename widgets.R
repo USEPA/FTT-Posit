@@ -8,7 +8,7 @@ add_baseline_scenario_button <- actionButton(inputId = "add_BaselineScenario",
                                              class = "actButton")
 
 
-baseline_scenario_name <- textInput(inputId = "currentScenarioName",
+baseline_scenario_name_element <- textInput(inputId = "currentScenarioName",
                                     label = "Name scenario",
                                     value = "Baseline")
 
