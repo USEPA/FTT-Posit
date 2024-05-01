@@ -28,3 +28,4 @@ install.packages("magick") #not in use
 install.packages("devtools")
 install.packages("shiny.pwa")
 install.packages("shinyhelper")
+install.packages("sentryR")
