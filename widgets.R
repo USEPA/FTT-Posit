@@ -354,7 +354,7 @@ select_chemical_effect_type <- helper(select_chemical_effect_type_element,
                                         
 
 
-tcem_param1 <- numericInput(inputId = "tcem_lc_conc",
+tcem_param1_element <- numericInput(inputId = "tcem_lc_conc",
                             label = "",
                             value = 2.5,
                             min = 0.0,
@@ -568,7 +568,7 @@ enter_chemicalID_button <- actionButton(inputId = "store_chemicalID",
 
 guts_out_text <- textOutput(("text_guts"))
 
-density_dependence_rate_out_text <- textOutput("density_dependence_rate")
+density_dependence_rate_element <- textOutput("density_dependence_rate")
 
 
 density_dependence_rate <- helper(density_dependence_rate_element,
@@ -978,7 +978,7 @@ check_boxes_Scenarios_Run <- checkboxGroupInput("Check_Scenario_Names_Run", "Sel
                                                 choiceValues = list_scenarios_runs)
 
 
-num_size_classes_button <- numericInput(inputId = "num_size_classes",
+num_size_classes_button_element <- numericInput(inputId = "num_size_classes",
                                         label = as.character(parameters_master$name[which(parameters_master$id == 'num_size_classes')]),
                                         value = 100,
                                         min = 80)
@@ -1059,7 +1059,7 @@ runid_action_button <- actionButton(inputId = "enter_runid",
                                     width = '250px',
                                     class = "actButton")
 
-initial_population_button <- numericInput(inputId = "initial_population",
+initial_population_button_element <- numericInput(inputId = "initial_population",
                                           label = as.character(parameters_master$name[which(parameters_master$name == 'Initial population')]),
                                           value = 100,
                                           min = 10)
@@ -1121,6 +1121,13 @@ select_initial_distribution_button <- selectInput(inputId = "initial_distributio
                                                               "Uniform",
                                                               "Predetermined"))
 
+upload_predeterminedDist_button_element <- fileInput(inputId = "upload_predetermined_dist",
+                                             label = NULL,
+                                             accept = c("text/csv","text/comma-separated-values,text/plain",".csv"),
+                                             width = '400px',
+                                             buttonLabel = "Upload Predetermined Distribution",
+                                             placeholder = "No file selected")
+
 
 upload_predeterminedDist_button <- helper(upload_predeterminedDist_button_element,
                                           icon = "question-circle",
@@ -1140,12 +1147,6 @@ bs_download_predeterminedDist__button <- bsTooltip("download_predetermined_dist"
                                                     "Open templete file for entering predetermined initial distributions.",
                                                     "right", options = list(container = "body"))
 
-upload_predeterminedDist_button <- fileInput(inputId = "upload_predetermined_dist",
-                                             label = NULL,
-                                             accept = c("text/csv","text/comma-separated-values,text/plain",".csv"),
-                                             width = '400px',
-                                             buttonLabel = "Upload Predetermined Distribution",
-                                             placeholder = "No file selected")
 
 bs_upload_predeterminedDist__button <- bsTooltip("upload_predetermined_dist",
                                                    "Load existing file with predetermined initial distributions into memory.",
