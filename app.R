@@ -49,7 +49,7 @@ library("xlsx")
 #library("magick") #not in use
 library("devtools")
 library("shiny.pwa")
-
+library("shinyhelper")
 library(FishToxTranslator)
 
 # This loads the local App Source Files
