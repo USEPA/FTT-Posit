@@ -4,25 +4,23 @@
 add_baseline_scenario_button <- actionButton(inputId = "add_BaselineScenario",
                                              label = "Add Baseline Scenario",
                                              width = '250px',
-
-                                             class = "actButton")
-
+                                             style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 baseline_scenario_name_element <- textInput(inputId = "currentScenarioName",
-                                    label = "Name scenario",
-                                    value = "Baseline")
-
+                                            label = "Name scenario",
+                                            value = "Baseline")
+                                            
 
 baseline_scenario_name <- helper(baseline_scenario_name_element,
                                  icon = "question-circle",
-                                 colour = helper_Color,
+                                 colour = "#4d8055",
                                  type = "inline",
                                  title = "Baseline Scenario Name",
                                  content = "Enter a name for the Baseline scenario you are creating.")
 
 submit_baselinename_button <- actionButton(inputId = "submit_name",
                                            label = "Submit \"Baseline\" scenario information", width = '275px',
-                                           class = "actButton")
+                                           style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 baseline_name_out_text <- textOutput("text_basename")
 
@@ -31,7 +29,6 @@ baseline_description_textArea <- textAreaInput(inputId = "textBaselineDescriptio
                                                value = "",
                                                height = '50px')
 
-
 choose_species_DropDownMenu_element <- selectInput(inputId = "species",
                                                    label = "Choose Species",
                                                    choices = c("None Selected", as.character(species_library$common_name), "New"))
@@ -39,7 +36,7 @@ choose_species_DropDownMenu_element <- selectInput(inputId = "species",
 
 choose_species_DropDownMenu <- helper(choose_species_DropDownMenu_element,
                                       icon = "question-circle",
-                                      colour = helper_Color,
+                                      colour = "#4d8055",
                                       type = "inline",
                                       title = "Fish Species",
                                       content = "Choose a fish species with a parameterized life history or create a new life history for the scenario.")
@@ -47,60 +44,32 @@ choose_species_DropDownMenu <- helper(choose_species_DropDownMenu_element,
 load_fhm_parameters_button_element <- actionButton(inputId = "load_fhm_parameters",
                                                    label = "Load Fathead Minnow Parameters",
                                                    width = '250px',
-                                                   class = "actButton")
+                                                   style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 load_fhm_parameters_button <- helper(load_fhm_parameters_button_element,
                                       icon = "question-circle",
-                                      colour = helper_Color,
+                                      colour = "#4d8055",
                                       type = "inline",
                                       title = "Fathead Minnow Parameters",
                                       content = "Load Fathead Minnow parameters into memory.")
 
+load_fhm_parameters_out_text <- textOutput("text_load_fhm")
+
 download_history_button_element <- downloadButton(outputId = "download_history_parameters",
                                                   label = "Get template file",
-                                                  class = "download_Button")
+                                                  style = "color: #fff; background-color: gray; border-color: #2e6da4")
 
 download_history_button <- helper(download_history_button_element,
                                   icon = "question-circle",
-                                  colour = helper_Color,
+                                  colour = "#4d8055",
                                   type = "inline",
                                   title = "Template File",
                                   content = "Open template file for entering new species parameters.")
        
 
-
-download_history_button <- downloadButton(outputId = "download_history_parameters",
-                                          label = "Get template",
-                                          width = '125px',
-                                          style = "color: #fff; background-color: gray; border-color: #2e6da4")
-               
-
-# download_history_button <- actionButton(inputId = "download_history_parameters",
-#                                         label = "Get template",
-#                                         width = '125px',
-#                                         icon = icon(name = "download"),
-#                                         style="color: #fff; background-color: #808080; border-color: #2e6da4")
-
-bs_download_history_button <- bsTooltip("download_history_parameters",
-                                        "Open template file for entering new species parameters.",
-                                        "right", options = list(container = "body"))
-
-upload_history_button <- fileInput(inputId = "upload_history_pars", 
-                                   label = NULL,
-                                   accept = c("text/csv","text/comma-separated-values,text/plain",".csv"),
-                                   width = '400px', 
-                                   buttonLabel = "Upload life history Data",
-                                   placeholder = "No file selected")
-
-bs_upload_history_button <- bsTooltip("upload_history_pars",
-                                      "Select file with new species parameters from disk and upload it into memory.",
-                                      "bottom", options = list(container = "body"))
-
-spawning_alg_button <- actionButton(inputId = "spawn_algorithm",
-                                    label = "Run Spawning Algorithm",
-                                    width = '250px',
-                                    style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
-
+#bs_download_history_button <- bsTooltip("download_history_parameters",
+#                                        "Open template file for entering new species parameters.",
+#                                        "right", options = list(container = "body"))
 
 upload_history_button_element <- fileInput(inputId = "upload_history_pars",
                                            label = NULL,
@@ -112,7 +81,7 @@ upload_history_button_element <- fileInput(inputId = "upload_history_pars",
 
 upload_history_button <- helper(upload_history_button_element,
                                 icon = "question-circle",
-                                colour = helper_Color,
+                                colour = "#4d8055",
                                 type = "inline",
                                 title = "New Species Parameters File",
                                 content = "Select file with new species parameters from disk and upload it into memory.")
@@ -125,11 +94,11 @@ upload_history_button <- helper(upload_history_button_element,
 spawning_alg_button_element <- actionButton(inputId = "spawn_algorithm",
                                             label = "Run Spawning Algorithm",
                                             width = '250px',
-                                            class = "actButton")
+                                            style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                                     
 spawning_alg_button <- helper(spawning_alg_button_element,
                               icon = "question-circle",
-                              colour = helper_Color,
+                              colour = "#4d8055",
                               type = "inline",
                               title = "Spawning Algorithm",
                               content = "A spawning algorithm generates daily spawning probabilities based on the iteroparous or semelparous life history parameters supplied.")
@@ -141,33 +110,32 @@ baseline_scenario_complete_text_out <- htmlOutput("baseline_scenario_complete")
 hyperlink_newtab_button <- actionLink(inputId = "hyperlink_newtab",
                                       label = "Move to creating a stressor scenario",
                                       width = '300px',
-                                      style="#002966; background-color: #f2f2f2; border-color: #2e6da4;")
+                                      style="#002966; background-color: #f2f2f2; border-color: #2e6da4")
 
 hyperlink_visualization_button <- actionLink(inputId = "hyperlink_visualization_newtab",
                                              label = "Move to visualizing a baseline scenario",
                                              width = '300px',
-                                             style="#002966; background-color: #f2f2f2; border-color: #2e6da4;")
+                                             style="#002966; background-color: #f2f2f2; border-color: #2e6da4")
 
 hyperlink_run_button <- actionLink(inputId = "hyperlink_run_newtab",
                                    label = "Move to running a baseline scenario",
                                    width = '300px',
-                                   style="#002966; background-color: #f2f2f2; border-color: #2e6da4;")
+                                   style="#002966; background-color: #f2f2f2; border-color: #2e6da4")
 
 
 visualize_text_out <- textOutput("text_visualize")
 
 run_baseline_text_out <- textOutput("text_run_baseline")
 
-
 display_life_history_table_button_element <- actionButton(inputId = "display_LifeHistory",
                                                            label = "Display Life-History Parameters Table",
                                                            width = '250px',
-                                                           class = "actButton")
+                                                           style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
                                                   
 
 display_life_history_table_button <- helper(display_life_history_table_button_element,
                                             icon = "question-circle",
-                                            colour = helper_Color,
+                                            colour = "#4d8055",
                                             type = "inline",
                                             title = "Life History Parameters",
                                             content = "Content of the life history parameters table can be filtered to specific parameters using the View/Hide columns function below.")
@@ -186,7 +154,6 @@ display_life_history_table_button <- helper(display_life_history_table_button_el
 #bs_radio_LifeHistory <- bsTooltip("rad_headers_daily",
 #                                  "Content of the life history parameters table can be filtered to specific parameters using the 'View/Hide' columns function below",
 #                                   "right", options = list(container = "body"))
-
 
 list1 <- list("ordinal_date", "z_hatch", "z_inf", "k_g", "var_k_g",
               "var_e_g", "dd_g", "b_inf", "allo_slope", "allo_intercept",
@@ -216,33 +183,32 @@ set_parameters_out_text <- textOutput("text_set_parameters")
 add_stressor_scenario_button <- actionButton(inputId = "add_StressorScenario",
                                              label = "Add Stressor Scenario",
                                              width = '250px',
-                                             class = "actButton")
+                                             style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 export_scenario_button <- actionButton(inputId = "Export_Scenario",
                                        label = "Export Scenario",
                                        width = '250px',
-                                       class = "actButton")
+                                       style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 export_scenario_out_text <- textOutput("text_export_scenario")
 
 import_scenario_button <- actionButton(inputId = "Import_Scenario",
                                        label = "Import Scenario",
                                        width = '250px',
-                                       class = "actButton")
+                                       style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 submit_stressorName_button <- actionButton(inputId = "submit_stressorName",
                                            label = "Submit stressor information",
                                            width = '250px',
-                                           class = "actButton")
+                                           style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 underlying_scenario_text_out <- textOutput("underlying_scenario")
 
-bs_underlying_scenario<- bsTooltip("baselines",
-                                   "Select a scenario you would like to apply a stressor to.  The underlying scenario will serve as the basis for the stressor scenario parameters.",
-                                   "right", options = list(container = "body"))
+#bs_underlying_scenario<- bsTooltip("baselines",
+#                                   "Select a scenario you would like to apply a stressor to.  The underlying scenario will serve as the basis for the stressor scenario parameters.",
+#                                   "right", options = list(container = "body"))
 
 stressorName_out_text <- textOutput("text_stressorName")
-
 
 stressor_name_button_element <- textInput(inputId = "stressorName",
                                           label = "Name the stressor scenario",
@@ -251,21 +217,21 @@ stressor_name_button_element <- textInput(inputId = "stressorName",
 
 stressor_name_button <- helper(stressor_name_button_element,
                                icon = "question-circle",
-                               colour = helper_Color,
+                               colour = "#4d8055",
                                type = "inline",
                                title = "Stressor Name",
                                content = "Choose a name for the stressor scenario you are creating.")
        
 
-
-bs_stressor_name_button <- bsTooltip("stressorName",
-                                      "Choose a name for the stressor scenario you are creating",
-                                      "right", options = list(container = "body"))
+#bs_stressor_name_button <- bsTooltip("stressorName",
+#                                      "Choose a name for the stressor scenario you are creating",
+#                                      "right", options = list(container = "body"))
 
 stressor_description_textArea <- textAreaInput(inputId = "textStressorDescription",
                                                label = "Enter description of stressor scenario",
                                                value = "",
                                                height = '50px')
+
 stressor_type_button_element <- selectInput(inputId = "stressor_type",
                                             label = "Choose Stressor Type",
                                             choices = c("None Selected", 
@@ -277,7 +243,7 @@ stressor_type_button_element <- selectInput(inputId = "stressor_type",
 
 stressor_type_button <- helper(stressor_type_button_element,
                                icon = "question-circle",
-                               colour = helper_Color,
+                               colour = "#4d8055",
                                type = "inline",
                                title = "Stressor Type",
                                content = "Select type of stressor.")
@@ -286,21 +252,19 @@ stressor_type_button <- helper(stressor_type_button_element,
 #                                     "Select type of stressor",
 #                                     "right", options = list(container = "body"))
 
-
 choose_Exposure_Concentration_dropdownmenu <- selectInput(inputId = "expconc_profile",
                                                           label = "Choose Exposure Concentration Profile",
                                                           choices = c("None Selected","New"))
 
-
 download_exposure_concentration_element <-  downloadButton(outputId = "download_exposure_concentration",
                                                            label = "Get template",
                                                            width = '125px',
-                                                           class = "download_Button")
+                                                           style = "color: #fff; background-color: gray; border-color: #2e6da4")
                                                    
 
 download_exposure_concentration <- helper(download_exposure_concentration_element,
                                           icon = "question-circle",
-                                          colour = helper_Color,
+                                          colour = "#4d8055",
                                           type = "inline",
                                           title = "Download Exposure Concentration",
                                           content = "Open template file for entering chemical exposure concentrations.")
@@ -311,18 +275,16 @@ download_exposure_concentration <- helper(download_exposure_concentration_elemen
 #                                                        "top", options = list(container = "body"))
 
 upload_exposure_concentration_element <- fileInput(inputId = "upload_exposure_concentrations", 
-
                                            label = NULL,
                                            accept = c("text/csv","text/comma-separated-values,text/plain",".csv"),
-                                           width = '400px', 
+                                           width = '500px', 
                                            buttonLabel = "Upload Exposure Concentrations",
                                            placeholder = "No file selected",
                                            multiple = FALSE)
 
-
 upload_exposure_concentration <- helper(upload_exposure_concentration_element,
                                         icon = "question-circle",
-                                        colour = helper_Color,
+                                        colour = "#4d8055",
                                         type = "inline",
                                         title = "Upload Exposure Concentration",
                                         content = "Load into memory existing file with chemical exposure concentrations.")
@@ -341,30 +303,31 @@ select_chemical_effect_type_element <- selectInput(inputId = "effect_type",
 
 select_chemical_effect_type <- helper(select_chemical_effect_type_element,
                                       icon = "question-circle",
-                                      colour = helper_Color,
+                                      colour = "#4d8055",
                                       type = "inline",
                                       title = "Chemical Effect Type",
                                       content = "Choose the type of chemical effect.")
                                         
 
+# bs_chemical_effect_type_button <- bsTooltip("effect_type",
+#                                             "Choose the type of chemical effect.",
+#                                             "right", options = list(container = "body"))
 
 tcem_param1_element <- numericInput(inputId = "tcem_lc_conc",
-                            label = "",
-                            value = 2.5,
-                            min = 0.0,
-                            step = 0.05)
+                                    label = "",
+                                    value = 2.5,
+                                    min = 0.0,
+                                    step = 0.05)
+                            
 
-
-#lbl_title1 <- as.character(parameters_master$name[which(parameters_master$id == 'lc_conc')])
 tt_tcm1 <- paste(as.character(parameters_master$id[which(parameters_master$id == 'lc_conc')]),
                  ": ",
                  as.character(parameters_master$description[which(parameters_master$id == 'lc_conc')]))
 
 
-
 tcem_param1 <- helper(tcem_param1_element,
                       icon = "question-circle",
-                      colour = helper_Color,
+                      colour = "#4d8055",
                       type = "inline",
                       title = "TCEM Lethal Concentration",
                       content = tt_tcm1)
@@ -377,13 +340,11 @@ tcem_param1 <- helper(tcem_param1_element,
 
 
 
-
 tt_tcm2 <- paste(as.character(parameters_master$id[which(parameters_master$id == 'lc_percent')]),
                    ": ",
                    as.character(parameters_master$description[which(parameters_master$id == 'lc_percent')]))
 
 lbl_tcm <- as.character(parameters_master$name[which(parameters_master$id == 'lc_percent')])
-
 
 tcem_param2_element <- numericInput(inputId = "tcem_lc_percent",
                                     label = lbl_tcm,
@@ -395,7 +356,7 @@ tcem_param2_element <- numericInput(inputId = "tcem_lc_percent",
 
 tcem_param2 <- helper(tcem_param2_element,
                       icon = "question-circle",
-                      colour = helper_Color,
+                      colour = "#4d8055",
                       type = "inline",
                       title = "TCEM Lethal Concentration Percent",
                       content = tt_tcm2)
@@ -406,63 +367,23 @@ tcem_param2 <- helper(tcem_param2_element,
 #                             placement = "right",
 #                             options = list(container = "body"))
 
-
 run_tcem_button <- actionButton(inputId = "run_tcem",
                                 label = "Run TCEM Algorithm",
                                 width = '250px',
-                                class = "actButton")
+                                style = "color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 tcem_out_text <- htmlOutput("text_tcem")
-
-download_predeterminedEffects_button <- downloadButton(outputId = "download_predetermined_effects",
-                                                       label = "Get template",
-                                                       width = '125px',
-                                                       style = "color: #fff; background-color: gray; border-color: #2e6da4")
-               
-
-# download_predeterminedEffects_button <- actionButton(inputId = "download_predetermined_effects",
-#                                                      label = "Get template",
-#                                                      width = '120px',
-#                                                      icon = icon(name = "download"),
-#                                                      style="color: #fff; background-color: #808080; border-color: #2e6da4")
-
-bs_download_predeterminedEffects_button <- bsTooltip("download_predetermined_effects",
-                                            "Open template file for entering predetermined effects. File is of CSV type.",
-                                            "right", options = list(container = "body"))
-
-download_predeterminedGrowthEffects_button <- downloadButton(outputId = "download_predetermined_growth_effects",
-                                                             label = "Get template",
-                                                             width = '125px',
-                                                             style = "color: #fff; background-color: gray; border-color: #2e6da4")
-               
-
-# download_predeterminedGrowthEffects_button<- actionButton(inputId = "download_predetermined_growth_effects",
-#                                                           label = "Get template",
-#                                                           width = '120px',
-#                                                           icon = icon(name = "download"),
-#                                                           style="color: #fff; background-color: #808080; border-color: #2e6da4")
-
-bs_download_predeterminedGrowthEffects_button <- bsTooltip("download_predetermined_growth_effects",
-                                                           "Open template file for entering predetermined growth effects. File is of CSV type.",
-                                                           "right", options = list(container = "body"))
-
-upload_predeterminedEffects_button <- fileInput(inputId = "upload_predetermined_effects",
-                                                label = NULL,
-                                                accept = c("text/csv","text/comma-separated-values,text/plain",".csv"),
-                                                width = '400px',
-                                                buttonLabel = "Upload predetermined effects",
-                                                placeholder = "No file selected")
 
 
 download_predeterminedEffects_button_element <- downloadButton(outputId = "download_predetermined_effects",
                                                                label = "Get template",
                                                                width = '125px',
-                                                               class = "download_Button")
+                                                               style = "color: #fff; background-color: gray; border-color: #2e6da4")
                                                        
 
 download_predeterminedEffects_button <- helper(download_predeterminedEffects_button_element,
                                                icon = "question-circle",
-                                               colour = helper_Color,
+                                               colour = "#4d8055",
                                                type = "inline",
                                                title = "Pre-determined Effects Template File",
                                                content = "Open template file for entering predetermined effects. File is of CSV type.")
@@ -475,12 +396,12 @@ download_predeterminedEffects_button <- helper(download_predeterminedEffects_but
 download_predeterminedGrowthEffects_button_element <- downloadButton(outputId = "download_predetermined_growth_effects",
                                                                      label = "Get template",
                                                                      width = '125px',
-                                                                     class = "download_Button")
+                                                                     style = "color: #fff; background-color: gray; border-color: #2e6da4")
                                                              
 
 download_predeterminedGrowthEffects_button <- helper(download_predeterminedGrowthEffects_button_element,
                                                icon = "question-circle",
-                                               colour = helper_Color,
+                                               colour = "#4d8055",
                                                type = "inline",
                                                title = "Predetermined Growth Effects Template File",
                                                content = "Open template file for entering predetermined growth effects. File is of CSV type.")
@@ -500,7 +421,7 @@ upload_predeterminedEffects_button_element <- fileInput(inputId = "upload_predet
 
 upload_predeterminedEffects_button <- helper(upload_predeterminedEffects_button_element,
                                              icon = "question-circle",
-                                             colour = helper_Color,
+                                             colour = "#4d8055",
                                              type = "inline",
                                              title = "Existing Predetermined Effects File",
                                              content = "Load existing file with predetermined effects into memory. Browse and select file from local drive.")
@@ -521,18 +442,17 @@ upload_predeterminedGrowthEffects_button_element <- fileInput(inputId = "upload_
 
 upload_predeterminedGrowthEffects_button <- helper(upload_predeterminedGrowthEffects_button_element,
                                                    icon = "question-circle",
-                                                   colour = helper_Color,
+                                                   colour = "#4d8055",
                                                    type = "inline",
                                                    title = "Existing Predetermined Growth Effects File",
                                                    content = "Load existing file with predetermined growth effects into memory. Browse and select file from local drive.")
                                                      
 
+# bs_upload_predeterminedGrowthEffects_button <- bsTooltip("upload_predetermined_growth_effects",
+#                                                          "Load existing file with predetermined growth effects into memory. Browse and select file from local drive.",
+#                                                          "right", options = list(container = "body"))
 
-bs_upload_predeterminedGrowthEffects_button <- bsTooltip("upload_predetermined_growth_effects",
-                                                         "Load existing file with predetermined growth effects into memory. Browse and select file from local drive.",
-                                                         "right", options = list(container = "body"))
-
-
+  
 chemical_id_textInput_element <- textInput(inputId = "chemical_id",
                                            label = as.character(parameters_master$name[which(parameters_master$id == 'chem_id')]),
                                            value = "")
@@ -540,7 +460,7 @@ chemical_id_textInput_element <- textInput(inputId = "chemical_id",
 
 chemical_id_textInput <- helper(chemical_id_textInput_element,
                                 icon = "question-circle",
-                                colour = helper_Color,
+                                colour = "#4d8055",
                                 type = "inline",
                                 title = "Chemical ID",
                                 content = paste(as.character(parameters_master$id[which(parameters_master$id == 'chem_id')]), ": ",
@@ -552,22 +472,25 @@ chemical_id_textInput <- helper(chemical_id_textInput_element,
 #                                         as.character(parameters_master$description[which(parameters_master$id == 'chem_id')])),
 #                                    "right", options = list(container = "body"))
 
-
 chemID_out_text <- textOutput("text_chemicalID")
 
 enter_chemicalID_button <- actionButton(inputId = "store_chemicalID",
                                         label = "Store Chemical ID",
                                         width = '250px',
-                                        class = "actButton")
+                                        style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 guts_out_text <- textOutput(("text_guts"))
 
-density_dependence_rate_element <- textOutput("density_dependence_rate")
+density_dependence_rate_element <- numericInput(inputId = "density_dependence_rate",
+                                                label = as.character(parameters_master$name[which(parameters_master$id == 'dd_g')]),
+                                                value = get(species_library$parameter_data)$value[which(parameters_master$id == 'dd_g')])
+             
 
+density_dependence_rate_out_text <- textOutput("density_dependence_rate")
 
 density_dependence_rate <- helper(density_dependence_rate_element,
                                   icon = "question-circle",
-                                  colour = helper_Color,
+                                  colour = "#4d8055",
                                   type = "inline",
                                   title = "Density Dependence Rate",
                                   content = as.character(parameters_master$description[which(parameters_master$id == 'dd_g')]))
@@ -587,7 +510,7 @@ winter_out_text1 <- textOutput("firstDay_winter")
 
 winter_start <- helper(winter_start_element,
                        icon = "question-circle",
-                       colour = helper_Color,
+                       colour = "#4d8055",
                        type = "inline",
                        title = "First Day of Winter",
                        content = paste(as.character(parameters_master$id[which(parameters_master$id == 'winter_start')]), ": ",
@@ -607,30 +530,21 @@ winter_out_text2 <- textOutput("lastDay_winter")
 
 winter_end <- helper(winter_end_element,
                      icon = "question-circle",
-                     colour = helper_Color,
+                     colour = "#4d8055",
                      type = "inline",
                      title = "Last Day of Winter",
                      content = paste(as.character(parameters_master$id[which(parameters_master$id == 'winter_end')]), ": ",
                                      as.character(parameters_master$description[which(parameters_master$id == 'winter_end')])))
                            
 
-winter_out_text1 <- textOutput("firstDay_winter")
-
-bs_winter_out_text1 <- bsTooltip("start_winter",
-                                 paste(as.character(parameters_master$id[which(parameters_master$id == 'winter_start')]), ": ",
-                                       as.character(parameters_master$description[which(parameters_master$id == 'winter_start')])),
-                                 "right", options = list(container = "body"))
-
-winter_out_text2 <- textOutput("lastDay_winter")
-bs_winter_out_text2 <- bsTooltip("end_winter",
-                                 paste(as.character(parameters_master$id[which(parameters_master$id == 'winter_end')]), ": ",
-                                       as.character(parameters_master$description[which(parameters_master$id == 'winter_end')])),
-                                 "right", options = list(container = "body"))
+# bs_winter_out_text2 <- bsTooltip("end_winter",
+#                                  paste(as.character(parameters_master$id[which(parameters_master$id == 'winter_end')]), ": ",
+#                                        as.character(parameters_master$description[which(parameters_master$id == 'winter_end')])),
+#                                  "right", options = list(container = "body"))
 
 label_zparam <- paste(as.character(parameters_master$id[which(parameters_master$id == 'z_winter')]),
                       ": ",
                       as.character(parameters_master$description[which(parameters_master$id == 'z_winter')]))
-
 
 winter_zparam_element <- numericInput(inputId = "winter_cutoff",
                                       label = as.character(parameters_master$name[which(parameters_master$id == 'z_winter')]),
@@ -640,7 +554,7 @@ winter_zparam_element <- numericInput(inputId = "winter_cutoff",
 
 winter_zparam <- helper(winter_zparam_element,
                         icon = "question-circle",
-                        colour = helper_Color,
+                        colour = "#4d8055",
                         type = "inline",
                         title = "Winter Cutoff",
                         content = label_zparam)
@@ -650,33 +564,32 @@ winter_zparam <- helper(winter_zparam_element,
 #                               label_zparam,
 #                               "right", options = list(container = "body"))
 
-
 store_winter_parameters_button <- actionButton(inputId = "store_winter_params",
                                                label = "Store Winter Parameters",
                                                width = '250px',
-                                               class = "actButton")
+                                               style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 store_density_dependence_parameters_button <- actionButton(inputId = "store_density_dependent_params",
                                                            label = "Store Density Dependent Parameters",
                                                            width = '250px',
-                                                           class = "actButton")
+                                                           style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 display_stressor_table_button <- actionButton(inputId = "display_stressor_table",
                                               label = "Display Stressor Parameters Table",
                                               width = '250px',
-                                              class = "actButton")
+                                              style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 stressor_scenario_complete_text_out <- htmlOutput("stressor_scenario_complete")
 
 hyperlink_stressor_newtab_button <- actionLink(inputId = "hyperlink_stressor_newtab",
                                                label = "Move to visualizing scenario(s)",
                                                width = '300px',
-                                               style="#002966; background-color: #f2f2f2; border-color: #2e6da4;")
+                                               style="#002966; background-color: #f2f2f2; border-color: #2e6da4")
 
 hyperlink_run_stressor_button <- actionLink(inputId = "hyperlink_run_stressor",
                                                label = "Move to running scenario(s)",
                                                width = '300px',
-                                               style="#002966; background-color: #f2f2f2; border-color: #2e6da4;")
+                                               style="#002966; background-color: #f2f2f2; border-color: #2e6da4")
 
 visualize_stressor_text_out <- textOutput("text_visualize_stressor")
 
@@ -701,6 +614,7 @@ slider_parameters_button <- sliderInput(inputId = "slider_parameters",
                                         min = 1,
                                         max = 365,
                                         value = 91)
+                                        
 
 day_selection_button <- numericInput(inputId = "slider_DaySelection", 
                                      label = "Choose ordinal date",
@@ -713,8 +627,7 @@ day_selection_button <- numericInput(inputId = "slider_DaySelection",
 plot_growth_button <- actionButton(inputId = "plot_growth",
                                    label = "Plot",
                                    width = '150px',
-                                   class = "actButton")
-
+                                   style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 plot_clear_growth_button <- switchInput(inputId = "plot_clear_growth",
                                         label = "Plot",
@@ -723,34 +636,66 @@ plot_clear_growth_button <- switchInput(inputId = "plot_clear_growth",
                                         offStatus = "info",
                                         size = "large",
                                         width = NULL)
-                                        
-
 
 plot_survival_button <- actionButton(inputId = "plot_survival",
                                      label = "Plot",
                                      width = '150px',
-                                     class = "actButton")
+                                     style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+
+plot_clear_survival_button <- switchInput(inputId = "plot_clear_survival",
+                                          label = "Plot",
+                                          value = FALSE,
+                                          onStatus = "danger",
+                                          offStatus = "info",
+                                          size = "large",
+                                          width = NULL)
 
 plot_reproduction_button <- actionButton(inputId = "plot_reproduction",
                                          label = "Plot",
                                          width = '150px',
-                                         class = "actButton")
+                                         style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+
+plot_clear_reproduction_button <- switchInput(inputId = "plot_clear_reproduction",
+                                              label = "Plot",
+                                              value = FALSE,
+                                              onStatus = "danger",
+                                              offStatus = "info",
+                                              size = "large",
+                                              width = NULL)
+                                        
 
 plot_spawning_probabilities_button <- actionButton(inputId = "plot_spawning_probs",
                                                    label = "Plot",
                                                    width = '150px',
-                                                   class = "actButton")
+                                                   style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+
+plot_clear_spawning_probabilities_button <- switchInput(inputId = "plot_clear_spawning_probabilities",
+                                                        label = "Plot",
+                                                        value = FALSE,
+                                                        onStatus = "danger",
+                                                        offStatus = "info",
+                                                        size = "large",
+                                                        width = NULL)
+                                              
 
 plot_survival_decrements_button <- actionButton(inputId = "plot_survival_decs",
                                                 label = "Plot",
                                                 width = '150px',
-                                                class = "actButton")
+                                                style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+
+plot_clear_survival_decrements_button <- switchInput(inputId = "plot_clear_survival_decrements",
+                                                     label = "Plot",
+                                                     value = FALSE,
+                                                     onStatus = "danger",
+                                                     offStatus = "info",
+                                                     size = "large",
+                                                     width = NULL)
+                                                        
 
 plot_growth_percents_button <- actionButton(inputId = "plot_growth_percents",
                                             label = "Plot",
                                             width = '150px',
-
-                                            class = "actButton")
+                                            style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 plot_clear_growth_percents_button <- switchInput(inputId = "plot_clear_growth_percents",
                                                  label = "Plot",
@@ -760,102 +705,99 @@ plot_clear_growth_percents_button <- switchInput(inputId = "plot_clear_growth_pe
                                                  size = "large",
                                                  width = NULL)
                                            
-
+                                                                                                     
 
 plot_exposure_concentrations_button <- actionButton(inputId = "plot_exposure_concs",
                                                     label = "Plot",
                                                     width = '150px',
-                                                    class = "actButton")
+                                                    style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
+
+plot_clear_exposure_concentrations_button <- switchInput(inputId = "plot_clear_exposure_concentrations",
+                                                         label = "Plot",
+                                                         value = FALSE,
+                                                         onStatus = "danger",
+                                                         offStatus = "info",
+                                                         size = "large",
+                                                         width = NULL)
+                                                 
 
 clear_growth_button <- actionButton(inputId = "clear_growth",
                                     label = "Clear",
                                     width = '75px',
-                                    style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                    style="color: #fff; background-color: orange; border-color: #2e6da4")
 
 clear_survival_button <- actionButton(inputId = "clear_survival",
                                       label = "Clear",
                                       width = '75px',
-                                      style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                      style="color: #fff; background-color: orange; border-color: #2e6da4")
 
 clear_reproduction_button <- actionButton(inputId = "clear_reproduction",
                                           label = "Clear",
                                           width = '75px',
-                                          style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                          style="color: #fff; background-color: orange; border-color: #2e6da4")
 
 clear_spawning_probabilities_button <- actionButton(inputId = "clear_spawning_probabilities",
                                                     label = "Clear",
                                                     width = '75px',
-                                                    style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                                    style="color: #fff; background-color: orange; border-color: #2e6da4")
 
 clear_survival_decrements_button <- actionButton(inputId = "clear_survival_decrements",
                                                  label = "Clear",
                                                  width = '75px',
-                                                 style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                                 style="color: #fff; background-color: orange; border-color: #2e6da4")
                                           
 
 clear_growth_percents_button <- actionButton(inputId = "clear_growth_percents",
                                              label = "Clear",
                                              width = '75px',
-                                             style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                             style="color: #fff; background-color: orange; border-color: #2e6da4")
                                                  
 
 clear_exposure_concentrations_button <- actionButton(inputId = "clear_exposure_concentrations",
                                               label = "Clear",
                                               width = '75px',
-                                              style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                              style="color: #fff; background-color: orange; border-color: #2e6da4")
 
 export_growth_functions_button <- actionButton(inputId = "export_growth_modal",
-                                               label = "Export",
+                                               label = NULL,
                                                width = '75px',
-
-                                               style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                               style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                icon = icon("download"))
 
-
 export_survival_functions_button <- actionButton(inputId = "export_survival_modal",
-                                                 label = "Export",
+                                                 label = NULL,
                                                  width = '75px',
-
-                                                 style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                 style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                  icon = icon("download"))
 
-
 export_reproduction_functions_button <- actionButton(inputId = "export_reproduction_modal",
-                                                     label = "Export",
+                                                     label = NULL,
                                                      width = '75px',
-
-                                                     style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                     style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                      icon = icon("download"))
 
-
 export_spawning_functions_button <- actionButton(inputId = "export_spawning_modal",
-                                                 label = "Export",
+                                                 label = NULL,
                                                  width = '75px',
-
-                                                 style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                 style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                  icon = icon("download"))
 
 export_survival_decrements_button <- actionButton(inputId = "export_survivalDecrement_modal",
-                                                  label = "Export",
+                                                  label = NULL,
                                                   width = '75px',
-
-                                                  style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                  style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                   icon = icon("download"))
-
 
 export_growth_percents_button <- actionButton(inputId = "export_growthPercents_modal",
-                                                  label = "Export",
+                                                  label = NULL,
                                                   width = '75px',
-
-                                                  style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                  style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                   icon = icon("download"))
 
-
 export_exposure_concentrations_button <- actionButton(inputId = "export_exposureConcentration_modal",
-                                                      label = "Export",
+                                                      label = NULL,
                                                       width = '75px',
-
-                                                      style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                      style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                       icon = icon("download"))
 
 growth_modal_window <- bsModal(id = "growthPopup", 
@@ -864,9 +806,7 @@ growth_modal_window <- bsModal(id = "growthPopup",
                                size = "large", 
                                textOutput("textMessageGrowth"),
                                plotOutput("plotGrowth"),
-                               downloadButton(outputId = 'downloadPlotGrowth', 
-                                              label = 'Download', 
-                                              class = "download_Button"))
+                               downloadButton(outputId = 'downloadPlotGrowth', label = 'Download'))
 
 survival_modal_window <- bsModal(id = "survivalPopup",
                                  title = "Survival Functions", 
@@ -875,8 +815,7 @@ survival_modal_window <- bsModal(id = "survivalPopup",
                                  textOutput("textMessageSurvival"),
                                  plotOutput("plotSurvival"),
                                  downloadButton(outputId = 'downloadPlotSurvival', 
-                                                label = 'Download', 
-                                                class = "download_Button"))
+                                                label = 'Download'))
 
 reproduction_modal_window <- bsModal(id = "reproductionPopup",
                                      title = "Reproduction Functions", 
@@ -885,8 +824,7 @@ reproduction_modal_window <- bsModal(id = "reproductionPopup",
                                      textOutput("textMessageReproduction"),
                                      plotOutput("plotReproduction"),
                                      downloadButton(outputId = 'downloadPlotReproduction', 
-                                                    label = 'Download',
-                                                    class = "download_Button")) 
+                                                    label = 'Download')) 
 
 spawning_modal_window <- bsModal(id = "spawningPopup",
                                      title = "Spawning Probabilities", 
@@ -895,8 +833,7 @@ spawning_modal_window <- bsModal(id = "spawningPopup",
                                      textOutput("textMessageSpawning"),
                                      plotOutput("plotSpawning"),
                                      downloadButton(outputId = 'downloadPlotSpawning', 
-                                                    label = 'Download',
-                                                    class = "download_Button"))    
+                                                    label = 'Download'))    
 
 survivalDecrement_modal_window <- bsModal(id = "survivalDecrementPopup",
                                           title = "Survival Decrements", 
@@ -905,8 +842,7 @@ survivalDecrement_modal_window <- bsModal(id = "survivalDecrementPopup",
                                           textOutput("textMessageSurvivalDecrement"),
                                           plotOutput("plotSurvivalDecrement"),
                                           downloadButton(outputId = 'downloadPlotSurvivalDecrement', 
-                                                         label = 'Download',
-                                                         class = "download_Button"))    
+                                                         label = 'Download'))    
 
 growthPercents_modal_window <- bsModal(id = "growthPercentsPopup",
                                        title = "Growth Percents", 
@@ -915,8 +851,7 @@ growthPercents_modal_window <- bsModal(id = "growthPercentsPopup",
                                        textOutput("textMessageGrowthPercents"),
                                        plotOutput("plotGrowthPercents"),
                                        downloadButton(outputId = 'downloadPlotGrowthPercents', 
-                                                      label = 'Download',
-                                                      class = "download_Button"))   
+                                                      label = 'Download'))   
                                          
 
 expousureConcentration_modal_window <- bsModal(id = "ExposureConcentrationPopup",
@@ -926,8 +861,7 @@ expousureConcentration_modal_window <- bsModal(id = "ExposureConcentrationPopup"
                                                textOutput("textMessageExpousureConcentration"),
                                                plotOutput("plotExposureConcentration"),
                                                downloadButton(outputId = 'downloadPlotExposureConcentration', 
-                                                              label = 'Download',
-                                                              class = "download_Button"))    
+                                                              label = 'Download'))    
 
 ####################################################################################################
 # Export Scenario Sub-tab
@@ -935,7 +869,7 @@ expousureConcentration_modal_window <- bsModal(id = "ExposureConcentrationPopup"
 delete_scenario_button <- actionButton(inputId = "Delete_Scenario",
                                        label = "Delete Scenario",
                                        width = '150px',
-                                       style="color: #fff; background-color: blue; border-color: #2e6da4;")
+                                       style="color: #fff; background-color: blue; border-color: #2e6da4")
             
 delete_scenario_modal_window <- bsModal(id = "DeleteScenarioPopup",
                                         title = "Delete Scenario", 
@@ -960,7 +894,7 @@ delete_scenario_modal_window <- bsModal(id = "DeleteScenarioPopup",
 add_simulation_run_button <- actionButton(inputId = "add_SimulationRun",
                                           label = "Add Simulation Run",
                                           width = '250px',
-                                          class = "actButton")
+                                          style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 check_boxes_all_runs <- checkboxInput("All_Runs", "Select All/None", value = FALSE)
 
@@ -973,14 +907,14 @@ check_boxes_Scenarios_Run <- checkboxGroupInput("Check_Scenario_Names_Run", "Sel
 
 
 num_size_classes_button_element <- numericInput(inputId = "num_size_classes",
-                                        label = as.character(parameters_master$name[which(parameters_master$id == 'num_size_classes')]),
-                                        value = 100,
-                                        min = 80)
-
+                                                label = as.character(parameters_master$name[which(parameters_master$id == 'num_size_classes')]),
+                                                value = 100,
+                                                min = 80)
+                                        
 
 num_size_classes_button <- helper(num_size_classes_button_element,
                                   icon = "question-circle",
-                                  colour = helper_Color,
+                                  colour = "#4d8055",
                                   type = "inline",
                                   title = "Number of Size Classes",
                                   content = paste(as.character(parameters_master$id[which(parameters_master$id == 'num_size_classes')]), ": ",
@@ -1000,7 +934,7 @@ solver_order_button_element <- numericInput(inputId = "solver_order",
 
 solver_order_button <- helper(solver_order_button_element,
                               icon = "question-circle",
-                              colour = helper_Color,
+                              colour = "#4d8055",
                               type = "inline",
                               title = "Solver Order",
                               content = paste(as.character(parameters_master$id[which(parameters_master$id == 'solver_order')]), ": ",
@@ -1020,48 +954,31 @@ runid_out_text <- textOutput("text_runid")
 
 runid_textBox <- helper(runid_textBox_element,
                         icon = "question-circle",
-                        colour = helper_Color,
+                        colour = "#4d8055",
                         type = "inline",
                         title = "Run ID",
                         content = "A string, with a maximum of 5 characters, that is unique for each run.")
                               
 
-
-solver_order_button <- numericInput(inputId = "solver_order",
-                                    label = as.character(parameters_master$name[which(parameters_master$id == 'solver_order')]),
-                                    value = 3,
-                                    min = 3)
-
-bs_solver_order_button <- bsTooltip("solver_order",
-                                    paste(as.character(parameters_master$id[which(parameters_master$id == 'solver_order')]), ": ",
-                                          as.character(parameters_master$description[which(parameters_master$id == 'solver_order')])),
-                                    "right", options = list(container = "body"))
-
-runid_textBox <- textInput(inputId = "runid", 
-                           label = "Run ID",
-                           value = "")
-
-runid_out_text <- textOutput("text_runid")
-
-bs_runid_button <- bsTooltip(id = "runid",
-                             title = "A string, with a maximum of 5 characters, that is unique for each run.",
-                             placement = "right",
-                             options = list(container = "body"))
+# bs_runid_button <- bsTooltip(id = "runid",
+#                              title = "A string, with a maximum of 5 characters, that is unique for each run.",
+#                              placement = "right",
+#                              options = list(container = "body"))
 
 runid_action_button <- actionButton(inputId = "enter_runid",
                                     label = "Submit Run ID",
                                     width = '250px',
-                                    class = "actButton")
+                                    style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 initial_population_button_element <- numericInput(inputId = "initial_population",
-                                          label = as.character(parameters_master$name[which(parameters_master$name == 'Initial population')]),
-                                          value = 100,
-                                          min = 10)
-
+                                                  label = as.character(parameters_master$name[which(parameters_master$name == 'Initial population')]),
+                                                  value = 100,
+                                                  min = 10)
+                                          
 
 initial_population_button <- helper(initial_population_button_element,
                                     icon = "question-circle",
-                                    colour = helper_Color,
+                                    colour = "#4d8055",
                                     type = "inline",
                                     title = "Initial Population",
                                     content = paste(as.character(parameters_master$id[which(parameters_master$name == 'Initial population')]), ": ",
@@ -1083,7 +1000,7 @@ select_initial_distribution_button_element <- selectInput(inputId = "initial_dis
 
 select_initial_distribution_button <- helper(select_initial_distribution_button_element,
                                              icon = "question-circle",
-                                             colour = helper_Color,
+                                             colour = "#4d8055",
                                              type = "inline",
                                              title = "Initial Distribution",
                                              content = "Select type of initial distribution.")
@@ -1096,60 +1013,45 @@ select_initial_distribution_button <- helper(select_initial_distribution_button_
 download_predeterminedDist_button_element <- downloadButton(outputId = "download_predetermined_dist",
                                                             label = "Get template",
                                                             width = '125px',
-                                                            class = "download_Button")
+                                                            style = "color: #fff; background-color: gray; border-color: #2e6da4")
                                                     
                                           
 download_predeterminedDist_button <- helper(download_predeterminedDist_button_element,
                                             icon = "question-circle",
-                                            colour = helper_Color,
+                                            colour = "#4d8055",
                                             type = "inline",
                                             title = "Download Predetermined Distribution",
                                             content = "Open template file for entering predetermined initial distributions.")
                                              
 
-
-
-select_initial_distribution_button <- selectInput(inputId = "initial_distribution",
-                                                  label = "Select Initial Distribution",
-                                                  choices = c("None Selected",
-                                                              "Uniform",
-                                                              "Predetermined"))
+# bs_download_predeterminedDist__button <- bsTooltip("download_predetermined_dist",
+#                                                     "Open template file for entering predetermined initial distributions.",
+#                                                     "right", options = list(container = "body"))
 
 upload_predeterminedDist_button_element <- fileInput(inputId = "upload_predetermined_dist",
-                                             label = NULL,
-                                             accept = c("text/csv","text/comma-separated-values,text/plain",".csv"),
-                                             width = '400px',
-                                             buttonLabel = "Upload Predetermined Distribution",
-                                             placeholder = "No file selected")
-
+                                                     label = NULL,
+                                                     accept = c("text/csv","text/comma-separated-values,text/plain",".csv"),
+                                                     width = '400px',
+                                                     buttonLabel = "Upload Predetermined Distribution",
+                                                     placeholder = "No file selected")
+                                             
 
 upload_predeterminedDist_button <- helper(upload_predeterminedDist_button_element,
                                           icon = "question-circle",
-                                          colour = helper_Color,
+                                          colour = "#4d8055",
                                           type = "inline",
                                           title = "Upload Predetermined Distribution",
                                           content = "Load existing file with predetermined initial distributions into memory.")
                                             
 
-download_predeterminedDist_button <- downloadButton(outputId = "download_predetermined_dist",
-                                                    label = "Get template",
-                                                    width = '125px',
-                                                    style = "color: #fff; background-color: gray; border-color: #2e6da4")
-                                          
-
-bs_download_predeterminedDist__button <- bsTooltip("download_predetermined_dist",
-                                                    "Open templete file for entering predetermined initial distributions.",
-                                                    "right", options = list(container = "body"))
-
-
-bs_upload_predeterminedDist__button <- bsTooltip("upload_predetermined_dist",
-                                                   "Load existing file with predetermined initial distributions into memory.",
-                                                   "right", options = list(container = "body"))
+# bs_upload_predeterminedDist__button <- bsTooltip("upload_predetermined_dist",
+#                                                    "Load existing file with predetermined initial distributions into memory.",
+#                                                    "right", options = list(container = "body"))
 
 run_simulations_button <- actionButton(inputId = "run_simulations",
                                        label = "Run Simulation(s)",
                                        width = '250px',
-                                       class = "actButton")
+                                       style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 run_simulations_text <- textOutput("run_simulations_message")
 
@@ -1168,20 +1070,27 @@ check_boxes_scenarios_results <- checkboxGroupInput("Check_Scenario_Names_Result
 scenarios_summary_results_button <- actionButton(inputId = "summary_results_table",
                                                  label = "View",
                                                  width = '150px',
-                                                 class = "actButton")
+                                                 style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 clear_scenarios_summary_results_button <- actionButton(inputId = "clear_scenarios_summary_results",
                                                        label = "Clear",
                                                        width = '75px',
-                                                       style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                                       style="color: #fff; background-color: orange; border-color: #2e6da4")
+
+plot_clear_summary_results_button <- switchInput(inputId = "plot_clear_summary_results_table",
+                                                 label = "View",
+                                                 value = FALSE,
+                                                 onStatus = "danger",
+                                                 offStatus = "info",
+                                                 size = "large",
+                                                 width = NULL)
+                                        
 
 export_summaryResults_button <- actionButton(inputId = "export_summaryResults_modal",
-                                             label = "Export",
+                                             label = NULL,
                                              width = '75px',
-
-                                             style = actionButton_Style2,
+                                             style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                              icon = icon("download"))
-
 
 summaryResults_modal_window <- bsModal(id = "summaryResultsPopup",
                                        title = "Summary Results Table", 
@@ -1189,28 +1098,32 @@ summaryResults_modal_window <- bsModal(id = "summaryResultsPopup",
                                        size = "large", 
                                        textOutput("textMessageSummaryResults"),
                                        DT::dataTableOutput("plotSummaryResults"),
-                                       downloadButton(outputId = 'downloadPlotSummaryResults', 
-                                                      label = 'Download',
-                                                      class = "download_Button"))
+                                       downloadButton(outputId = 'downloadPlotSummaryResults', label = 'Download'))
                                         
 
 plot_dailyPopulation_button <- actionButton(inputId = "plot_dailyPopulation",
                                             label = "Plot",
                                             width = '150px',
-                                            class = "actButton")
+                                            style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 clear_dailyPopulation_button <- actionButton(inputId = "clear_dailyPopulation",
                                              label = "Clear",
                                              width = '75px',
-                                             style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                             style="color: #fff; background-color: orange; border-color: #2e6da4")
+
+plot_clear_dailyPopulation_button <- switchInput(inputId = "plot_clear_dailyPopulation",
+                                                 label = "Plot",
+                                                 value = FALSE,
+                                                 onStatus = "danger",
+                                                 offStatus = "info",
+                                                 size = "large",
+                                                 width = NULL)
 
 export_dailyPopulation_button <- actionButton(inputId = "export_dailyPopulation_modal",
-                                              label = "Export",
+                                              label = NULL,
                                               width = '75px',
-
-                                              style = actionButton_Style2,
+                                              style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                               icon = icon("download"))
-
                                      
 
 dailyPopulation_modal_window <- bsModal(id = "dailyPopulationPopup", 
@@ -1219,28 +1132,32 @@ dailyPopulation_modal_window <- bsModal(id = "dailyPopulationPopup",
                                         size = "large", 
                                         textOutput("textMessageDailyPopulation"),
                                         plotOutput("plotDailyPopulation"),
-                                        downloadButton(outputId = 'downloadPlotDailyPopulation', 
-                                                       label = 'Download',
-                                                       class = "download_Button"))
+                                        downloadButton(outputId = 'downloadPlotDailyPopulation', label = 'Download'))
                                
 
 plot_populationBiomass_button <- actionButton(inputId = "plot_populationBiomass",
                                               label = "Plot",
                                               width = '150px',
-                                              class = "actButton")
+                                              style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 clear_populationBiomass_button <- actionButton(inputId = "clear_populationBiomass",
                                                label = "Clear",
                                                width = '75px',
-                                               style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                               style="color: #fff; background-color: orange; border-color: #2e6da4")
 
+plot_clear_populationBiomass_button <- switchInput(inputId = "plot_clear_populationBiomass",
+                                                   label = "Plot",
+                                                   value = FALSE,
+                                                   onStatus = "danger",
+                                                   offStatus = "info",
+                                                   size = "large",
+                                                   width = NULL)
+                                                 
 export_populationBiomass_button <- actionButton(inputId = "export_populationBiomass_modal",
-                                                label = "Export",
+                                                label = NULL,
                                                 width = '75px',
-
-                                                style = actionButton_Style2,
+                                                style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                 icon = icon("download"))
-
 
 populationBiomass_modal_window <- bsModal(id = "populationBiomassPopup",
                                           title = "Population Biomass", 
@@ -1248,26 +1165,32 @@ populationBiomass_modal_window <- bsModal(id = "populationBiomassPopup",
                                           size = "large", 
                                           textOutput("textMessagePopulationBiomass"),
                                           plotOutput("plotPopulationBiomass"),
-                                          downloadButton(outputId = 'downloadPlotPopulationBiomass', label = 'Download', class = "download_Button"))
+                                          downloadButton(outputId = 'downloadPlotPopulationBiomass', label = 'Download'))
 
                                         
 plot_meanSize_button <- actionButton(inputId = "plot_meanSize",
                                             label = "Plot",
                                             width = '150px',
-                                            class = "actButton")
+                                            style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 clear_meanSize_button <- actionButton(inputId = "clear_meanSize",
                                              label = "Clear",
                                              width = '75px',
-                                             style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                             style="color: #fff; background-color: orange; border-color: #2e6da4")
 
+plot_clear_meanSize_button <- switchInput(inputId = "plot_clear_meanSize",
+                                          label = "Plot",
+                                          value = FALSE,
+                                          onStatus = "danger",
+                                          offStatus = "info",
+                                          size = "large",
+                                          width = NULL)
+                                                   
 export_meanSize_button <- actionButton(inputId = "export_meanSize_modal",
-                                       label = "Export",
+                                       label = NULL,
                                        width = '75px',
-
-                                       style = actionButton_Style2,
+                                       style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                        icon = icon("download"))
-
                                                 
 meanSize_modal_window <- bsModal(id = "meanSizePopup",
                                  title = "Mean Size", 
@@ -1275,27 +1198,33 @@ meanSize_modal_window <- bsModal(id = "meanSizePopup",
                                  size = "large", 
                                  textOutput("textMessageMeanSize"),
                                  plotOutput("plotMeanSize"),
-                                 downloadButton(outputId = 'downloadPlotMeanSize', 
-                                                label = 'Download',
-                                                class = "download_Button"))
+                                 downloadButton(outputId = 'downloadPlotMeanSize', label = 'Download'))
                                          
 
 plot_growthPotential_button <- actionButton(inputId = "plot_growthPotential",
                                             label = "Plot",
                                             width = '150px',
-                                            class = "actButton")
+                                            style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 clear_growthPotential_button <- actionButton(inputId = "clear_growthPotential",
                                              label = "Clear",
                                              width = '75px',
-                                             style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                             style="color: #fff; background-color: orange; border-color: #2e6da4")
 
+plot_clear_growthPotential_button <- switchInput(inputId = "plot_clear_growthPotential",
+                                                 label = "Plot",
+                                                 value = FALSE,
+                                                 onStatus = "danger",
+                                                 offStatus = "info",
+                                                 size = "large",
+                                                 width = NULL)
+                                          
 export_growthPotential_button <- actionButton(inputId = "export_growthPotential_modal",
-
                                               label = NULL,
                                               width = '75px',
-                                              style = actionButton_Style2,
+                                              style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                               icon = icon("download"))
+                                       
 
 growthPotential_modal_window <- bsModal(id = "growthPotentialPopup",
                                         title = "Growth Potential", 
@@ -1303,29 +1232,33 @@ growthPotential_modal_window <- bsModal(id = "growthPotentialPopup",
                                         size = "large", 
                                         textOutput("textMessageGrowthPotential"),
                                         plotOutput("plotGrowthPotential"),
-                                        downloadButton(outputId = 'downloadPlotGrowthPotential', 
-                                                       label = 'Download',
-                                                       class = "download_Button"))
+                                        downloadButton(outputId = 'downloadPlotGrowthPotential', label = 'Download'))
                                  
 
 plot_transitionalKernel_button <- actionButton(inputId = "plot_transitionalKernel",
                                                label = "Plot",
                                                width = '150px',
-                                               class = "actButton")
+                                               style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 clear_transitionalKernel_button <- actionButton(inputId = "clear_transitionalKernel",
                                                 label = "Clear",
                                                 width = '75px',
-                                                style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                                style="color: #fff; background-color: orange; border-color: #2e6da4")
+
+plot_clear_transitionalKernel_button <- switchInput(inputId = "plot_clear_transitionalKernel",
+                                                    label = "Plot",
+                                                    value = FALSE,
+                                                    onStatus = "danger",
+                                                    offStatus = "info",
+                                                    size = "large",
+                                                    width = NULL)
 
 export_transitionalKernel_button <- actionButton(inputId = "export_transitionalKernel_modal",
-
                                                  label = NULL,
                                                  width = '75px',
-                                                 style = actionButton_Style2,
+                                                 style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                  icon = icon("download"))
                                               
-
 
 transitionalKernel_modal_window <- bsModal(id = "transitionalKernelPopup",
                                            title = "Transitional Kernel", 
@@ -1333,29 +1266,31 @@ transitionalKernel_modal_window <- bsModal(id = "transitionalKernelPopup",
                                            size = "large", 
                                            textOutput("textMessageTransitionalKernel"),
                                            plotOutput("plotTransitionalKernel"),
-
-                                           downloadButton(outputId = 'downloadPlotTransitionalKernel', 
-                                                          label = 'Download',
-                                                          class = "download_Button"))
-
+                                           downloadButton(outputId = 'downloadPlotTransitionalKernel', label = 'Download'))
 
 summary_matrix_button <- actionButton(inputId = "plot_summaryMatrix",
                                       label = "Plot",
                                       width = '150px',
-                                      class = "actButton")
+                                      style="color: #fff; background-color: #337ab7; border-color: #2e6da4")
 
 clear_matrix_button <- actionButton(inputId = "clear_matrix",
                                     label = "Clear",
                                     width = '75px',
-                                    style="color: #fff; background-color: orange; border-color: #2e6da4;")
+                                    style="color: #fff; background-color: orange; border-color: #2e6da4")
+
+plot_clear_summary_matrix_button <- switchInput(inputId = "plot_clear_summary_matrix",
+                                                label = "Plot",
+                                                value = FALSE,
+                                                onStatus = "danger",
+                                                offStatus = "info",
+                                                size = "large",
+                                                width = NULL)
 
 export_matrix_button <- actionButton(inputId = "export_summaryMatrix_modal",
-
                                      label = "Plot",
                                      width = '80px',
-                                     style = actionButton_Style2,
+                                     style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                      icon = icon("download"))
-
                                                
 matrix_modal_window <- bsModal(id = "summaryMatrixPopup", 
                                title = "Summary Matrix", 
@@ -1363,18 +1298,14 @@ matrix_modal_window <- bsModal(id = "summaryMatrixPopup",
                                size = "large", 
                                textOutput("textMessageSummaryMatrix"),
                                plotOutput("plotSummaryMatrix"),
-                               downloadButton(outputId = 'downloadPlotSummaryMatrix', 
-                                              label = 'Download',
-                                              class = "download_Button"))
+                               downloadButton(outputId = 'downloadPlotSummaryMatrix', label = 'Download'))
 
 
 export_summaryMatrixTable_button <- actionButton(inputId = "export_summaryMatrixTable_modal",
-
                                                  label = "Table",
                                                  width = '80px',
-                                                 style = actionButton_Style2,
+                                                 style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px",
                                                  icon = icon("download"))
-
                                              
 
 matrixTable_modal_window <- bsModal(id = "summaryMatrixTablePopup",
@@ -1383,36 +1314,32 @@ matrixTable_modal_window <- bsModal(id = "summaryMatrixTablePopup",
                                     size = "large", 
                                     textOutput("textMessageSummaryMatrixTable"),
                                     DT::dataTableOutput("plotSummaryMatrixTable"),
-                                    downloadButton(outputId = 'downloadPlotSummaryMatrixTable', 
-                                                   label = 'Download',
-                                                   class = "download_Button"))
-
+                                    downloadButton(outputId = 'downloadPlotSummaryMatrixTable', label = 'Download'))
 
 
 export_results_report_button_element <- downloadButton(outputId = "Download_Results_Report",
                                                        label = "Download Results",
                                                        width = '400px',
-                                                       style="color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;")
+                                                       style="color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px")
                                                
 
 export_results_report_button <- helper(export_results_report_button_element,
                                        icon = "question-circle",
-                                       colour = helper_Color,
+                                       colour = "#4d8055",
                                        type = "inline",
                                        title = "Download Results Report",
                                        content = "Creates an excel workbook with all data and information for the currently selected scenario results.")
                                  
 
-
-bs_export_results_report_button <- bsTooltip("Download_Results_Report",
-                                             "Creates an excel workbook with all data and information for the currently selected scenario results",
-                                             "right", options = list(container = "body"))
+# bs_export_results_report_button <- bsTooltip("Download_Results_Report",
+#                                              "Creates an excel workbook with all data and information for the currently selected scenario results",
+#                                              "right", options = list(container = "body"))
                                                  
 
 delete_results_button <- actionButton(inputId = "Delete_Results",
                                       label = "Delete Results",
                                       width = '175px',
-                                      class = "actButton")
+                                      style="color: #fff; background-color: blue; border-color: #2e6da4")
                                        
 
 delete_results_modal_window <- bsModal(id = "DeleteResultsPopup",
@@ -1424,14 +1351,14 @@ delete_results_modal_window <- bsModal(id = "DeleteResultsPopup",
                                          column(width = 8, actionButton(inputId = 'actionDeleteResults', 
                                                                         label = 'Delete and Confirm',
                                                                         width = '200px',
-                                                                        class = "actButton")),
+                                                                        style="color: #fff; background-color: blue; border-color: #2e6da4")),
                                          column(width = 2, offset = 1, modalButton(label = "Close"))),
                                        tags$head(tags$style("#DeleteResultsPopup .modal-footer{display:none}")))    
  
 import_results_button <- actionButton(inputId = "Import_Results",
                                       label = "Import Results",
                                       width = '250px',
-                                      class = "actButton")    
+                                      style="color: #fff; background-color: #337ab7; border-color: #2e6da4")    
                                                                           
 
 ####################################################################################################
@@ -1440,5 +1367,5 @@ import_results_button <- actionButton(inputId = "Import_Results",
 reset_clear_button <- actionButton(inputId = "reset_clear_app",
                                    label = "Reset App",
                                    width = '200px',
-                                   class = "actButton")
+                                   style = "color: #fff; background-color: green; border-color: #2e6da4")
                                                  
