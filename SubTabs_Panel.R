@@ -25,9 +25,8 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                               h4(""),
 
                               conditionalPanel(condition = "input.species == 'Fathead Minnow'",
-                                               load_fhm_parameters_button),
-#,
-                                              # load_fhm_parameters_out_text),
+                                               load_fhm_parameters_button,
+                                               load_fhm_parameters_out_text),
 
                               conditionalPanel(condition = "input.species == 'New'",
                                                h4("If entering new data, open template file first, enter data under corresponding headers,
@@ -169,10 +168,8 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                                                    h4("Provide the Density Dependent Growth Parameters"),
                                                                    density_dependence_rate,
                                                                    br(),
-                                                                   store_density_dependence_parameters_button
-#,
-                                                                   #h5(density_dependence_rate_out_text)
-)),
+                                                                   store_density_dependence_parameters_button,
+                                                                   h5(density_dependence_rate_out_text))),
                                             
 
                                             shinyjs::hidden(div(id = "stressor_verification",
