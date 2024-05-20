@@ -66,21 +66,21 @@ tab2 <- tabPanel("Visualize Scenarios",
                               h4(""),
                               br(),
                               fluidRow(
-                                column(width = 6, h4("Growth Functions")),
-                                column(width = 4, plot_clear_growth_button),
-                                column(width = 2, offset = 0, export_growth_functions_button)
+                                column(width = 3, h4("Growth Functions", class = "header4")),
+                                column(width = 4, offset = 1, plot_clear_growth_button),
+                                column(width = 3, offset = 1, export_growth_functions_button)
                               ),
                               h4(""),
                               fluidRow(
-                                column(width = 6, h4("Survival Functions")),
-                                column(width = 4, plot_clear_survival_button),
-                                column(width = 2, offset = 0, export_survival_functions_button)
+                                column(width = 3, h4("Survival Functions", class = "header4")),
+                                column(width = 4, offset = 1, plot_clear_survival_button),
+                                column(width = 3, offset = 1, export_survival_functions_button)
                               ),
                               h4(""),
                               fluidRow(
-                                column(width = 6, h4("Reproduction Functions")),
-                                column(width = 4, plot_clear_reproduction_button),
-                                column(width = 2, offset = 0, export_reproduction_functions_button)
+                                column(width = 3, h4("Reproduction Functions", class = "header4")),
+                                column(width = 4, offset = 1, plot_clear_reproduction_button),
+                                column(width = 3, offset = 1, export_reproduction_functions_button)
                               ),
                               h4(""))
                         ),
@@ -90,9 +90,9 @@ tab2 <- tabPanel("Visualize Scenarios",
                               h4("Visualize: Scenario Parameters"),
                               hr(),
                               fluidRow(
-                                column(width = 6, h4("Spawning Probabilities")),
-                                column(width = 4, plot_clear_spawning_probabilities_button),
-                                column(width = 2, offset = 0, export_spawning_functions_button)
+                                column(width = 3, h4("Spawning Probabilities", class = "header4")),
+                                column(width = 4, offset = 1, plot_clear_spawning_probabilities_button),
+                                column(width = 3, offset = 1, export_spawning_functions_button)
                               ),
                               h4(""))
                         ),
@@ -101,22 +101,22 @@ tab2 <- tabPanel("Visualize Scenarios",
                           div(id = "Visualization_SDEC",
                               shinyjs::hidden(div(id = "Show_SDEC",
                                                   fluidRow(
-                                                    column(width = 6, h4("Survival Decrements")),
-                                                    column(width = 4, plot_clear_survival_decrements_button),
-                                                    column(width = 2, offset = 0, export_survival_decrements_button)
+                                                    column(width = 3, h4("Survival Decrements", class = "header4")),
+                                                    column(width = 4, offset = 1, plot_clear_survival_decrements_button),
+                                                    column(width = 3, offset = 1, export_survival_decrements_button)
                                                   ))),
                               h4(""),
                               shinyjs::hidden(div(id = "Show_GP",
                                                   fluidRow(
-                                                    column(width = 6, h4("Growth Percents")),
-                                                    column(width = 4, plot_clear_growth_percents_button),
-                                                    column(width = 2, offset = 0, export_growth_percents_button)
+                                                    column(width = 3, h4("Growth Percents", class = "header4")),
+                                                    column(width = 4, offset = 1, plot_clear_growth_percents_button),
+                                                    column(width = 3, offset = 1, export_growth_percents_button)
                                                   ))),
                               h4(""),
                               fluidRow(
-                                column(width = 6, h4("Exposure Concentrations")),
-                                column(width = 4, plot_clear_exposure_concentrations_button),
-                                column(width = 2, offset = 0, export_exposure_concentrations_button)
+                                column(width = 3, h4("Exposure Concentrations", class = "header4")),
+                                column(width = 4, offset = 1, plot_clear_exposure_concentrations_button),
+                                column(width = 3, offset = 1, export_exposure_concentrations_button)
                               )
                         ))
 

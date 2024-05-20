@@ -21,6 +21,10 @@ FT_UI <- function(req) {
     tags$style(HTML("hr {border-top: 2px solid #000000;}"))
   ),
   
+  tags$head(tags$style(
+    "body { word-wrap: break-word; }"
+  )),
+  
   #switchInput color while on
   tags$head(tags$style(HTML('.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-danger,
                                        .bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-danger {
@@ -34,21 +38,81 @@ FT_UI <- function(req) {
                                         background: #f0f0f0;
                                         color: black;
                                         }'))),
+  tags$head(tags$style(".header4 {
+    font-size: 100%;
+    font-weight: normal;
+    padding: 0px;
+    margin-left: 0;
+  }"
+  )),
   
   # CSS class for action buttons.
   tags$head(tags$style(".actButton{
                           background-color: #337ab7; 
                           color: #ffffff;
                           border-color: #2e6da4;
+                          width: 80%;
+                          height: 40px;
+                          font-size: 80%;
+                          padding: 0px;
+                          margin-left: 0;
                        }
                        .actButton:hover { 
                           background-color: #337ab7; 
                           color: #ff0000;
-                          border-color: #2e6da4;}
+                          border-color: #2e6da4;
+                          width: 80%;
+                          height: 40px;
+                          font-size: 80%;
+                          padding: 0px;
+                          margin-left: 0;
+                          }
                        .actButton:focus {
                           background-color: #337ab7; 
                           color: #00ff00;
-                          border-color: #2e6da4;}"
+                          border-color: #2e6da4;
+                          width: 80%;
+                          height: 40px;
+                          font-size: 80%;
+                          padding: 0px;
+                          margin-left: 0;
+                       }"
+  )),
+  
+  # CSS class for action buttons.
+  tags$head(tags$style(".actButtonD{
+                          background-color: #1a4480; 
+                          color: #ffffff;
+                          border-color: #2e6da4;
+                          width: 90%;
+                          height: 35px;
+                          font-size: 80%;
+                          align: left;
+                          padding: 0px;
+                          margin-right: 0;
+                       }
+                       .actButtonD:hover { 
+                          background-color: #1a4480; 
+                          color: #ff0000;
+                          border-color: #2e6da4;
+                          width: 90%;
+                          height: 35px;
+                          font-size: 80%;
+                          align: left;
+                          padding: 0px;
+                          margin-right: 0;
+                          }
+                       .actButtonD:focus {
+                          background-color: #1a4480; 
+                          color: #00ff00;
+                          border-color: #2e6da4;
+                          width: 90%;
+                          height: 35px;
+                          font-size: 80%;
+                          align: left;
+                          padding: 0px;
+                          margin-right: 0;
+                       }"
   )),
   
   # CSS class for download buttons.
@@ -56,15 +120,20 @@ FT_UI <- function(req) {
                           background-color: #337ab7; 
                           color: #ffffff;
                           border-color: #2e6da4;
+                          align: left;
                        }
                        .download_Button:hover { 
                           background-color: #337ab7; 
                           color: #ff0000;
-                          border-color: #2e6da4;}
+                          border-color: #2e6da4;
+                          align: left;
+                          }
                        .download_Button:focus {
                           background-color: #337ab7; 
                           color: #00ff00;
-                          border-color: #2e6da4;}"
+                          border-color: #2e6da4; 
+                          align: left;
+                       }"
   )),
   
   navbarPage(title = "Fish Toxicity Translator v0.1",

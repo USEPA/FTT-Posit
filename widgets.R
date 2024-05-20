@@ -3,7 +3,6 @@
 ##################################################################################################
 add_baseline_scenario_button <- actionButton(inputId = "add_BaselineScenario",
                                              label = "Add Baseline Scenario",
-                                             width = '250px',
                                              class = "actButton")
 
 baseline_scenario_name_element <- textInput(inputId = "currentScenarioName",
@@ -19,7 +18,7 @@ baseline_scenario_name <- helper(baseline_scenario_name_element,
                                  content = "Enter a name for the Baseline scenario you are creating.")
 
 submit_baselinename_button <- actionButton(inputId = "submit_name",
-                                           label = "Submit \"Baseline\" scenario information", width = '275px',
+                                           label = "Submit \"Baseline\" scenario information",
                                            class = "actButton")
 
 baseline_name_out_text <- textOutput("text_basename")
@@ -43,7 +42,6 @@ choose_species_DropDownMenu <- helper(choose_species_DropDownMenu_element,
 
 load_fhm_parameters_button_element <- actionButton(inputId = "load_fhm_parameters",
                                                    label = "Load Fathead Minnow Parameters",
-                                                   width = '250px',
                                                    class = "actButton")
 
 load_fhm_parameters_button <- helper(load_fhm_parameters_button_element,
@@ -93,7 +91,6 @@ upload_history_button <- helper(upload_history_button_element,
 
 spawning_alg_button_element <- actionButton(inputId = "spawn_algorithm",
                                             label = "Run Spawning Algorithm",
-                                            width = '250px',
                                             class = "actButton")
                                     
 spawning_alg_button <- helper(spawning_alg_button_element,
@@ -182,12 +179,10 @@ set_parameters_out_text <- textOutput("text_set_parameters")
 ##################################################################################################
 add_stressor_scenario_button <- actionButton(inputId = "add_StressorScenario",
                                              label = "Add Stressor Scenario",
-                                             width = '250px',
                                              class = "actButton")
 
 export_scenario_button <- actionButton(inputId = "Export_Scenario",
                                        label = "Export Scenario",
-                                       width = '250px',
                                        class = "actButton")
 
 export_scenario_out_text <- textOutput("text_export_scenario")
@@ -626,7 +621,6 @@ day_selection_button <- numericInput(inputId = "slider_DaySelection",
                                      
 plot_growth_button <- actionButton(inputId = "plot_growth",
                                    label = "Plot",
-                                   width = '150px',
                                    class = "actButton")
 
 plot_clear_growth_button <- switchInput(inputId = "plot_clear_growth",
@@ -637,10 +631,10 @@ plot_clear_growth_button <- switchInput(inputId = "plot_clear_growth",
                                         size = "large",
                                         width = NULL)
                                         
+                                        
 
 plot_survival_button <- actionButton(inputId = "plot_survival",
                                      label = "Plot",
-                                     width = '150px',
                                      class = "actButton")
 
 plot_clear_survival_button <- switchInput(inputId = "plot_clear_survival",
@@ -650,10 +644,10 @@ plot_clear_survival_button <- switchInput(inputId = "plot_clear_survival",
                                           offStatus = "info",
                                           size = "large",
                                           width = NULL)
+                                          
 
 plot_reproduction_button <- actionButton(inputId = "plot_reproduction",
                                          label = "Plot",
-                                         width = '150px',
                                          class = "actButton")
 
 plot_clear_reproduction_button <- switchInput(inputId = "plot_clear_reproduction",
@@ -761,44 +755,38 @@ clear_exposure_concentrations_button <- actionButton(inputId = "clear_exposure_c
 
 export_growth_functions_button <- actionButton(inputId = "export_growth_modal",
                                                label = NULL,
-                                               width = '75px',
-                                               style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                               class = "actButtonD",
                                                icon = icon("download"))
 
 export_survival_functions_button <- actionButton(inputId = "export_survival_modal",
                                                  label = NULL,
-                                                 width = '75px',
-                                                 style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                 class = "actButtonD",
                                                  icon = icon("download"))
 
 export_reproduction_functions_button <- actionButton(inputId = "export_reproduction_modal",
                                                      label = NULL,
-                                                     width = '75px',
-                                                     style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                     class = "actButtonD",
                                                      icon = icon("download"))
 
 export_spawning_functions_button <- actionButton(inputId = "export_spawning_modal",
                                                  label = NULL,
-                                                 width = '75px',
-                                                 style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                 class = "actButtonD",
                                                  icon = icon("download"))
 
 export_survival_decrements_button <- actionButton(inputId = "export_survivalDecrement_modal",
                                                   label = NULL,
-                                                  width = '75px',
-                                                  style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                  class = "actButtonD",
                                                   icon = icon("download"))
 
 export_growth_percents_button <- actionButton(inputId = "export_growthPercents_modal",
-                                                  label = NULL,
-                                                  width = '75px',
-                                                  style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
-                                                  icon = icon("download"))
+                                              label = NULL,
+                                              class = "actButtonD",
+                                              icon = icon("download"))
+                                                  
 
 export_exposure_concentrations_button <- actionButton(inputId = "export_exposureConcentration_modal",
                                                       label = NULL,
-                                                      width = '75px',
-                                                      style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;",
+                                                      class = "actButtonD",
                                                       icon = icon("download"))
 
 growth_modal_window <- bsModal(id = "growthPopup", 
