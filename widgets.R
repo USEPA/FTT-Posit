@@ -598,7 +598,7 @@ check_boxes_all_scenarios <- checkboxInput("All", "Select All/None", value = FAL
 list_scenarios <- list()
 check_boxes_Scenarios <- checkboxGroupInput("Check_Scenario_Names", "Select name(s):",
                                             width = '400px',
-                                            selected = list_scenarios,
+                                            selected = NULL,
                                             choiceNames = list_scenarios,
                                             choiceValues = list_scenarios)
 
@@ -1085,8 +1085,7 @@ plot_clear_summary_results_button <- switchInput(inputId = "plot_clear_summary_r
 
 export_summaryResults_button <- actionButton(inputId = "export_summaryResults_modal",
                                              label = NULL,
-                                             width = '75px',
-                                             style = actionButton_Style2,
+                                             class = "actButtonD",
                                              icon = icon("download"))
 
 summaryResults_modal_window <- bsModal(id = "summaryResultsPopup",
@@ -1102,7 +1101,6 @@ summaryResults_modal_window <- bsModal(id = "summaryResultsPopup",
 
 plot_dailyPopulation_button <- actionButton(inputId = "plot_dailyPopulation",
                                             label = "Plot",
-                                            width = '150px',
                                             class = "actButton")
 
 clear_dailyPopulation_button <- actionButton(inputId = "clear_dailyPopulation",
@@ -1120,8 +1118,7 @@ plot_clear_dailyPopulation_button <- switchInput(inputId = "plot_clear_dailyPopu
 
 export_dailyPopulation_button <- actionButton(inputId = "export_dailyPopulation_modal",
                                               label = NULL,
-                                              width = '75px',
-                                              style = actionButton_Style2,
+                                              class = "actButtonD",
                                               icon = icon("download"))
                                      
 
@@ -1138,7 +1135,6 @@ dailyPopulation_modal_window <- bsModal(id = "dailyPopulationPopup",
 
 plot_populationBiomass_button <- actionButton(inputId = "plot_populationBiomass",
                                               label = "Plot",
-                                              width = '150px',
                                               class = "actButton")
 
 clear_populationBiomass_button <- actionButton(inputId = "clear_populationBiomass",
@@ -1156,8 +1152,7 @@ plot_clear_populationBiomass_button <- switchInput(inputId = "plot_clear_populat
                                                  
 export_populationBiomass_button <- actionButton(inputId = "export_populationBiomass_modal",
                                                 label = NULL,
-                                                width = '75px',
-                                                style = actionButton_Style2,
+                                                class = "actButtonD",
                                                 icon = icon("download"))
 
 populationBiomass_modal_window <- bsModal(id = "populationBiomassPopup",
@@ -1189,8 +1184,7 @@ plot_clear_meanSize_button <- switchInput(inputId = "plot_clear_meanSize",
                                                    
 export_meanSize_button <- actionButton(inputId = "export_meanSize_modal",
                                        label = NULL,
-                                       width = '75px',
-                                       style = actionButton_Style2,
+                                       class = "actButtonD",
                                        icon = icon("download"))
                                                 
 meanSize_modal_window <- bsModal(id = "meanSizePopup",
@@ -1206,7 +1200,6 @@ meanSize_modal_window <- bsModal(id = "meanSizePopup",
 
 plot_growthPotential_button <- actionButton(inputId = "plot_growthPotential",
                                             label = "Plot",
-                                            width = '150px',
                                             class = "actButton")
 
 clear_growthPotential_button <- actionButton(inputId = "clear_growthPotential",
@@ -1224,8 +1217,7 @@ plot_clear_growthPotential_button <- switchInput(inputId = "plot_clear_growthPot
                                           
 export_growthPotential_button <- actionButton(inputId = "export_growthPotential_modal",
                                               label = NULL,
-                                              width = '75px',
-                                              style = actionButton_Style2,
+                                              class = "actButtonD",
                                               icon = icon("download"))
                                        
 
@@ -1242,7 +1234,6 @@ growthPotential_modal_window <- bsModal(id = "growthPotentialPopup",
 
 plot_transitionalKernel_button <- actionButton(inputId = "plot_transitionalKernel",
                                                label = "Plot",
-                                               width = '150px',
                                                class = "actButton")
 
 clear_transitionalKernel_button <- actionButton(inputId = "clear_transitionalKernel",
@@ -1260,8 +1251,7 @@ plot_clear_transitionalKernel_button <- switchInput(inputId = "plot_clear_transi
 
 export_transitionalKernel_button <- actionButton(inputId = "export_transitionalKernel_modal",
                                                  label = NULL,
-                                                 width = '75px',
-                                                 style = actionButton_Style2,
+                                                 class = "actButtonD",
                                                  icon = icon("download"))
                                               
 
@@ -1277,7 +1267,6 @@ transitionalKernel_modal_window <- bsModal(id = "transitionalKernelPopup",
 
 summary_matrix_button <- actionButton(inputId = "plot_summaryMatrix",
                                       label = "Plot",
-                                      width = '150px',
                                       class = "actButton")
 
 clear_matrix_button <- actionButton(inputId = "clear_matrix",
@@ -1295,8 +1284,7 @@ plot_clear_summary_matrix_button <- switchInput(inputId = "plot_clear_summary_ma
 
 export_matrix_button <- actionButton(inputId = "export_summaryMatrix_modal",
                                      label = "Plot",
-                                     width = '80px',
-                                     style = actionButton_Style2,
+                                     class = "actButtonD",
                                      icon = icon("download"))
                                                
 matrix_modal_window <- bsModal(id = "summaryMatrixPopup", 
@@ -1312,8 +1300,7 @@ matrix_modal_window <- bsModal(id = "summaryMatrixPopup",
 
 export_summaryMatrixTable_button <- actionButton(inputId = "export_summaryMatrixTable_modal",
                                                  label = "Table",
-                                                 width = '80px',
-                                                 style = actionButton_Style2,
+                                                 class = "actButtonD",
                                                  icon = icon("download"))
                                              
 
@@ -1349,7 +1336,6 @@ export_results_report_button <- helper(export_results_report_button_element,
 
 delete_results_button <- actionButton(inputId = "Delete_Results",
                                       label = "Delete Results",
-                                      width = '175px',
                                       class = "actButton")
                                        
 
@@ -1368,7 +1354,6 @@ delete_results_modal_window <- bsModal(id = "DeleteResultsPopup",
  
 import_results_button <- actionButton(inputId = "Import_Results",
                                       label = "Import Results",
-                                      width = '250px',
                                       class = "actButton")    
                                                                           
 

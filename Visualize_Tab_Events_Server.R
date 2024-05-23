@@ -1,4 +1,34 @@
 # This script contains observe Events for plotting results.
+observe({
+  if (is.null(input$Check_Scenario_Names))
+  {
+    updateCheckboxGroupInput(session, 
+                             inputId = "Check_Scenario_Names",
+                             choices = as.list(scenario_names),
+                             selected = NULL)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_growth",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_survival",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_reproduction",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_spawning_probabilities",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_survival_decrements",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_growth_percents",
+                      value = FALSE)
+    updateSwitchInput(session, 
+                      inputId = "plot_clear_exposure_concentrations",
+                      value = FALSE)
+  }
+})
 
 observeEvent(input$slider_DaySelection,
   {

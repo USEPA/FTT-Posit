@@ -118,9 +118,9 @@ tab2 <- tabPanel("Visualize Scenarios",
                                 column(width = 4, offset = 1, plot_clear_exposure_concentrations_button),
                                 column(width = 3, offset = 1, export_exposure_concentrations_button)
                               )
-                        ))
+                        )),
 
-                      ),
+                      width = 6),
 
                       mainPanel
                       (
@@ -158,9 +158,9 @@ tab2 <- tabPanel("Visualize Scenarios",
                         shinyjs::hidden(div(id = "ExposureConcentration_out_Main",
                                             plotOutput(outputId = "ExposureConcentration_out"))),
 
-                        expousureConcentration_modal_window
+                        expousureConcentration_modal_window,
 
-                      )
+                      width = 6)
 
                     )
 )

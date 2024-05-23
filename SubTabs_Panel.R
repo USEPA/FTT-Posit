@@ -57,9 +57,9 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                               hyperlink_run_button,
                               h4("")
                               )
-                        )
+                        ),
 
-                      ),
+                      width = 6),
 
                       mainPanel(
                         shinyjs::hidden(div(id = "life_history_table_main",
@@ -67,9 +67,9 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                                                                 width = "100%"))),
 
                         shinyjs::hidden(div(id = "Spawning_Prob_main",
-                                            plotOutput(outputId = "Spawning_Prob_out")))
+                                            plotOutput(outputId = "Spawning_Prob_out"))),
 
-                      )))
+                      width = 6)))
 
 subtab2 <- tabPanel("Build a Stressor Scenario",
                     sidebarLayout(
@@ -183,8 +183,8 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                                                 h4(""),
                                                                 hyperlink_run_stressor_button))
 
-                                        ))
-                      ),
+                                        )),
+                      width = 6),
                       mainPanel(
                         shinyjs::hidden(div(id = "stressor_table_main",
                                              DT::dataTableOutput("stressor_table"))),
@@ -202,10 +202,10 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                             plotOutput(outputId = "Growth_Percent_out"))),
 
                         shinyjs::hidden(div(id = "Winter_Survival_Main",
-                                            plotOutput(outputId = "Winter_Survival_out")))
+                                            plotOutput(outputId = "Winter_Survival_out"))),
 
 
-                        )
+                        width = 6)
                     ))
 
 subtab3 <- tabPanel("Export Scenario",
@@ -304,18 +304,18 @@ subtab41 <- tabPanel("Visualize Results",
                                h4("Comparison of Scenario Results"),
                                hr(),
                                fluidRow(
-                                 column(width = 6, h4("Summary Results Table")),
-                                 column(width = 4, plot_clear_summary_results_button),
-                                 column(width = 2, offset = 0, export_summaryResults_button)
+                                 column(width = 3, h4("Summary Results Table", class = "header4")),
+                                 column(width = 4, offset = 1, plot_clear_summary_results_button),
+                                 column(width = 3, offset = 1, export_summaryResults_button)
                                ),
                                
                                br(),
                                
                                fluidRow(
-                                 column(width = 4, h4("Summary Matrix")),
-                                 column(width = 3, plot_clear_summary_matrix_button),
-                                 column(width = 2, export_matrix_button, offset = 1),
-                                 column(width = 2, export_summaryMatrixTable_button)
+                                 column(width = 3, h4("Summary Matrix", class = "header4")),
+                                 column(width = 3, offset = 0, plot_clear_summary_matrix_button),
+                                 column(width = 2, offset = 1, export_matrix_button),
+                                 column(width = 2, offset = 1, export_summaryMatrixTable_button)
                                ),
                                
                                #fluidRow(
@@ -329,37 +329,37 @@ subtab41 <- tabPanel("Visualize Results",
                                h4("View Selected Plots"),
                                hr(),
                                fluidRow(
-                                 column(width = 6, h4("Daily Population")),
-                                 column(width = 4, plot_clear_dailyPopulation_button),
-                                 column(width = 2, offset = 0, export_dailyPopulation_button)
+                                 column(width = 3, h4("Daily Population", class = "header4")),
+                                 column(width = 4, offset = 1, plot_clear_dailyPopulation_button),
+                                 column(width = 3, offset = 1, export_dailyPopulation_button)
                                ),
                                
                                br(),
                                fluidRow(
-                                 column(width = 6, h4("Population Biomass")),
-                                 column(width = 4, plot_clear_populationBiomass_button),
-                                 column(width = 2, offset = 0, export_populationBiomass_button)
+                                 column(width = 3, h4("Population Biomass", class = "header4")),
+                                 column(width = 4, offset = 1, plot_clear_populationBiomass_button),
+                                 column(width = 3, offset = 1, export_populationBiomass_button)
                                ),
                                
                                br(),
                                fluidRow(
-                                 column(width = 6, h4("Mean Size")),
-                                 column(width = 4, plot_clear_meanSize_button),
-                                 column(width = 2, offset = 0, export_meanSize_button)
+                                 column(width = 3, h4("Mean Size", class = "header4")),
+                                 column(width = 4, offset = 1, plot_clear_meanSize_button),
+                                 column(width = 3, offset = 1, export_meanSize_button)
                                ),
                                
                                br(),
                                fluidRow(
-                                 column(width = 6, h4("Growth Potential")),
-                                 column(width = 4, plot_clear_growthPotential_button),
-                                 column(width = 2, offset = 0, export_growthPotential_button)
+                                 column(width = 3, h4("Growth Potential", class = "header4")),
+                                 column(width = 4, offset = 1, plot_clear_growthPotential_button),
+                                 column(width = 3, offset = 1, export_growthPotential_button)
                                ),
                               
                                br(),
                                fluidRow(
-                                 column(width = 6, h4("Transitional Kernel")),
-                                 column(width = 4, plot_clear_transitionalKernel_button),
-                                 column(width = 2, offset = 0, export_transitionalKernel_button)
+                                 column(width = 3, h4("Transitional Kernel", class = "header4")),
+                                 column(width = 4, offset = 1, plot_clear_transitionalKernel_button),
+                                 column(width = 3, offset = 1, export_transitionalKernel_button)
                                ),
                                
                                br(),
@@ -370,9 +370,9 @@ subtab41 <- tabPanel("Visualize Results",
                                  column(width = 6, offset = 0, export_results_report_button)
                                )
                            )
-                         )
+                         ),
                          
-                       ),
+                       width = 6),
                        
                        mainPanel
                        (
@@ -412,9 +412,9 @@ subtab41 <- tabPanel("Visualize Results",
                          shinyjs::hidden(div(id = "transitionalKernel_out_Main",
                                              plotOutput(outputId = "transitionalKernel_out"))),
                          
-                         transitionalKernel_modal_window
+                         transitionalKernel_modal_window,
                          
-                       )
+                       width = 6)
                      )
   
 )
