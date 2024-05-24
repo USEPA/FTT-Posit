@@ -43,12 +43,12 @@ FT_UI <- function(req) {
                        }
                        .actButton:hover { 
                           background-color: #337ab7; 
-                          color: #ff0000;
-                          border-color: #2e6da4;}
+                          color: #ffffff;
+                          border-color: #cccccc;}
                        .actButton:focus {
                           background-color: #337ab7; 
-                          color: #00ff00;
-                          border-color: #2e6da4;}"
+                          color: #ffffff;
+                          border-color: #cccccc;}"
   )),
   
   # CSS class for download buttons.
@@ -59,12 +59,12 @@ FT_UI <- function(req) {
                        }
                        .download_Button:hover { 
                           background-color: #337ab7; 
-                          color: #ff0000;
-                          border-color: #2e6da4;}
+                          color: #ffffff;
+                          border-color: #cccccc;}
                        .download_Button:focus {
                           background-color: #337ab7; 
-                          color: #00ff00;
-                          border-color: #2e6da4;}"
+                          color: #ffffff;
+                          border-color: #cccccc;}"
   )),
   
   navbarPage(title = "Fish Toxicity Translator v0.1",
