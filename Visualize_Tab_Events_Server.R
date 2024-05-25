@@ -319,7 +319,7 @@ observeEvent(input$plot_clear_growth_percents,
                  {
                    shinyjs::hide(id = "GrowthPercents_out_Main")
                    updateSwitchInput(session, 
-                                     inputId = "plot_clear_survival_decrements",
+                                     inputId = "plot_clear_growth_percents",
                                      value = FALSE)
                    shinyjs::info("Please select one or more scenarios.")
                  }else
