@@ -75,6 +75,7 @@ FT_UI <- function(req) {
                           padding: 0px;
                           margin-left: 0;
                        }
+
                        .actButton:hover {
                           background-color: #337ab7;
                           color: #ff0000;
