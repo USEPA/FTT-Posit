@@ -701,7 +701,7 @@ plot_clear_growth_button <-
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
-    size = "large",
+    size = "small",
     width = NULL
   )
 
@@ -713,7 +713,7 @@ plot_clear_survival_button <-
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
-    size = "large",
+    size = "small",
     width = NULL
   )
 
@@ -725,7 +725,7 @@ plot_clear_reproduction_button <-
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
-    size = "large",
+    size = "small",
     width = NULL
   )
 
@@ -737,7 +737,7 @@ plot_clear_spawning_probabilities_button <-
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
-    size = "large",
+    size = "small",
     width = NULL
   )
 
@@ -749,7 +749,7 @@ plot_clear_survival_decrements_button <-
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
-    size = "large",
+    size = "small",
     width = NULL
   )
 
@@ -761,7 +761,7 @@ plot_clear_growth_percents_button <-
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
-    size = "large",
+    size = "small",
     width = NULL
   )
 
@@ -772,7 +772,7 @@ plot_clear_exposure_concentrations_button <-
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
-    size = "large",
+    size = "small",
     width = NULL
   )
 
@@ -789,7 +789,7 @@ export_survival_functions_button <-
   actionButton(
     inputId = "export_survival_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -797,7 +797,7 @@ export_reproduction_functions_button <-
   actionButton(
     inputId = "export_reproduction_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 

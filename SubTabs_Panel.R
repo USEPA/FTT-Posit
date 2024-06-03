@@ -79,7 +79,7 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                           )
                         ),
                         
-                        width = 6
+                        width = 4
                       ),
                       
                       mainPanel(shinyjs::hidden(
@@ -95,7 +95,7 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                             plotOutput(outputId = "Spawning_Prob_out"))
                       ),
                       
-                      width = 6)
+                      width = 8)
                     ))
 
 subtab2 <- tabPanel("Build a Stressor Scenario",
@@ -259,7 +259,7 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                             
                           )
                         ),
-                        width = 6
+                        width = 4
                       ),
                       mainPanel(
                         shinyjs::hidden(div(
@@ -291,7 +291,7 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                         )),
                         
                         
-                        width = 6
+                        width = 8
                       )
                     ))
 
