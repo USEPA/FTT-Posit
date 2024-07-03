@@ -1030,7 +1030,6 @@ observeEvent(input$upload_predetermined_growth_effects,
                shinyjs::disable(id = "effect_type")
                shinyjs::disable(id = "tcem_lc_percent")
                shinyjs::disable(id = "tcem_lc_conc")
-               shinyjs::disable(id = "expconc_profile")
                shinyjs::disable(id = "download_exposure_concentration")
                shinyjs::disable(id = "upload_exposure_concentrations")
                shinyjs::disable(id = "download_predetermined_effects")

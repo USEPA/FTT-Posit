@@ -1,10 +1,19 @@
 ##################################################################################################
 # Baseline buttons/widgets
 ##################################################################################################
-add_baseline_scenario_button <-
+add_baseline_scenario_button_element <-
   actionButton(inputId = "add_BaselineScenario",
                label = "Add Baseline Scenario",
                class = "actButton")
+
+add_baseline_scenario_button <- helper(
+  add_baseline_scenario_button_element,
+  icon = "question-circle",
+  colour = helper_Color,
+  type = "inline",
+  title = "Add Scenario Name",
+  content = GUI_Tooltip[GUI_Tooltip$Name == "add_baseline_scenario", ]$tooltip
+)
 
 baseline_scenario_name_element <-
   textInput(inputId = "currentScenarioName",
@@ -18,22 +27,40 @@ baseline_scenario_name <- helper(
   colour = helper_Color,
   type = "inline",
   title = "Baseline Scenario Name",
-  content = "Enter a name for the Baseline scenario you are creating."
+  content = GUI_Tooltip[GUI_Tooltip$Name == "name_baseline_scenario", ]$tooltip
 )
 
-submit_baselinename_button <- actionButton(inputId = "submit_name",
-                                           label = "Submit \"Baseline\" scenario information",
-                                           class = "actButton")
+submit_baselinename_button_element <- actionButton(inputId = "submit_name",
+                                                   label = "Submit \"Baseline\" scenario information",
+                                                   class = "actButton")
+                                           
+submit_baselinename_button <- helper(
+  submit_baselinename_button_element,
+  icon = "question-circle",
+  colour = helper_Color,
+  type = "inline",
+  title = "Submit Baseline Scenario",
+  content = GUI_Tooltip[GUI_Tooltip$Name == "submit_baseline_scenario", ]$tooltip
+)
 
 baseline_name_out_text <- textOutput("text_basename")
 
-baseline_description_textArea <-
+baseline_description_textArea_element <-
   textAreaInput(
     inputId = "textBaselineDescription",
     label = "Enter description of scenario",
     value = "",
     height = '50px'
   )
+
+baseline_description_textArea <- helper(
+  baseline_description_textArea_element,
+  icon = "question-circle",
+  colour = helper_Color,
+  type = "inline",
+  title = "Description of Scenario",
+  content = GUI_Tooltip[GUI_Tooltip$Name == "enter_description_of_scenario", ]$tooltip
+)
 
 choose_species_DropDownMenu_element <-
   selectInput(
@@ -54,7 +81,7 @@ choose_species_DropDownMenu <-
     colour = helper_Color,
     type = "inline",
     title = "Fish Species",
-    content = "Choose a fish species with a parameterized life history or create a new life history for the scenario."
+    content = GUI_Tooltip[GUI_Tooltip$Name == "choose_species", ]$tooltip
   )
 
 load_fhm_parameters_button_element <-
@@ -68,8 +95,8 @@ load_fhm_parameters_button <-
     icon = "question-circle",
     colour = helper_Color,
     type = "inline",
-    title = "Fathead Minnow Parameters",
-    content = "Load Fathead Minnow parameters into memory."
+    title = "Load Species Parameters",
+    content = GUI_Tooltip[GUI_Tooltip$Name == "load_species_parameters", ]$tooltip
   )
 
 load_fhm_parameters_out_text <- textOutput("text_load_fhm")
@@ -121,7 +148,7 @@ spawning_alg_button <- helper(
   colour = helper_Color,
   type = "inline",
   title = "Spawning Algorithm",
-  content = "A spawning algorithm generates daily spawning probabilities based on the iteroparous or semelparous life history parameters supplied."
+  content = GUI_Tooltip[GUI_Tooltip$Name == "run_spawning_algorithm", ]$tooltip
 )
 
 spawning_alg_out_text <- textOutput("text_spawning_alg")
@@ -172,7 +199,7 @@ display_life_history_table_button <-
     colour = helper_Color,
     type = "inline",
     title = "Life History Parameters",
-    content = "Content of the life history parameters table can be filtered to specific parameters using the View/Hide columns function below."
+    content = GUI_Tooltip[GUI_Tooltip$Name == "view_complete_baseline_parameters", ]$tooltip
   )
 
 
@@ -781,7 +808,7 @@ export_growth_functions_button <-
   actionButton(
     inputId = "export_growth_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -789,7 +816,7 @@ export_survival_functions_button <-
   actionButton(
     inputId = "export_survival_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -797,7 +824,7 @@ export_reproduction_functions_button <-
   actionButton(
     inputId = "export_reproduction_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -805,7 +832,7 @@ export_spawning_functions_button <-
   actionButton(
     inputId = "export_spawning_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -813,7 +840,7 @@ export_survival_decrements_button <-
   actionButton(
     inputId = "export_survivalDecrement_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -821,7 +848,7 @@ export_growth_percents_button <-
   actionButton(
     inputId = "export_growthPercents_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -830,7 +857,7 @@ export_exposure_concentrations_button <-
   actionButton(
     inputId = "export_exposureConcentration_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -1190,8 +1217,7 @@ scenarios_summary_results_button <-
   actionButton(
     inputId = "summary_results_table",
     label = "View",
-    width = '150px',
-    class = "actButton"
+    class = "actButtonD1"
   )
 
 clear_scenarios_summary_results_button <-
@@ -1218,7 +1244,7 @@ export_summaryResults_button <-
   actionButton(
     inputId = "export_summaryResults_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -1252,7 +1278,7 @@ export_dailyPopulation_button <-
   actionButton(
     inputId = "export_dailyPopulation_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -1288,7 +1314,7 @@ export_populationBiomass_button <-
   actionButton(
     inputId = "export_populationBiomass_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -1323,7 +1349,7 @@ export_meanSize_button <-
   actionButton(
     inputId = "export_meanSize_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -1357,7 +1383,7 @@ export_growthPotential_button <-
   actionButton(
     inputId = "export_growthPotential_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -1392,7 +1418,7 @@ export_transitionalKernel_button <-
   actionButton(
     inputId = "export_transitionalKernel_modal",
     label = NULL,
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -1428,7 +1454,7 @@ export_matrix_button <-
   actionButton(
     inputId = "export_summaryMatrix_modal",
     label = "Plot",
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -1451,7 +1477,7 @@ export_summaryMatrixTable_button <-
   actionButton(
     inputId = "export_summaryMatrixTable_modal",
     label = "Table",
-    class = "actButtonD",
+    class = "actButtonD1",
     icon = icon("download")
   )
 
@@ -1474,9 +1500,8 @@ matrixTable_modal_window <- bsModal(
 export_results_report_button_element <-
   downloadButton(
     outputId = "Download_Results_Report",
-    label = "Download Results",
-    width = '400px',
-    style = "color: #fff; background-color: #1a4480; border-color: #2e6da4; height: 38px;"
+    label = "Results",
+    class = "download_Button"
   )
 
 
@@ -1486,7 +1511,7 @@ export_results_report_button <-
     icon = "question-circle",
     colour = helper_Color,
     type = "inline",
-    title = "Download Results Report",
+    title = "Export Results Report",
     content = "Creates an excel workbook with all data and information for the currently selected scenario results."
   )
 
