@@ -51,16 +51,18 @@ FT_UI <- function(req) {
                                         }'
       )
     )),
+    
     tags$head(
       tags$style(
         ".header4 {
-    font-size: 100%;
-    font-weight: normal;
+    font-size: 120%;
+    font-weight: bold;
+    font-thickness: 120%;
     padding: 0px;
     margin-left: 0;
   }"
       )
-    ),
+    ), 
     
     # CSS class for action buttons.
     tags$head(
@@ -151,8 +153,8 @@ FT_UI <- function(req) {
                           color: #ffffff;
                           border-color: #2e6da4;
                           width: 80px;
-                          height: 30px;
-                          font-size: 70%;
+                          height: 37px;
+                          font-size: 80%;
                           align: left;
                           padding: 0px;
                           margin-right: 0;
@@ -162,8 +164,8 @@ FT_UI <- function(req) {
                           color: #ff0000;
                           border-color: #2e6da4;
                           width: 80px;
-                          height: 30px;
-                          font-size: 70%;
+                          height: 37px;
+                          font-size: 80%;
                           align: left;
                           padding: 0px;
                           margin-right: 0;
@@ -173,8 +175,8 @@ FT_UI <- function(req) {
                           color: #00ff00;
                           border-color: #2e6da4;
                           width: 80px;
-                          height: 30px;
-                          font-size: 70%;
+                          height: 37px;
+                          font-size: 80%;
                           align: left;
                           padding: 0px;
                           margin-right: 0;
@@ -211,7 +213,7 @@ FT_UI <- function(req) {
       tags$style(
         ".fluid_row{
                           border: 4px double red;
-                          flex-flow: coumn wrap;
+                          flex-flow: column wrap;
                        }"
       )
     ),

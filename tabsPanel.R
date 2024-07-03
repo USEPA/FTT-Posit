@@ -21,19 +21,16 @@ tabHome <- tabPanel(
     tags$li(
       'The Fish Toxicity Translator works by introducing stressor scenarios to an underlying annual baseline life history model'
     )
-  ),
-  h5(tags$li(
+  ), h5(tags$li(
     paste(
       'The model has a built-in parameterization for Fathead minnow (P. promelas) life history and can be parameterized for other species using the available Species Life History Template',
       sep = ""
     )
-  )),
-  h5(
+  )), h5(
     tags$li(
       'Non-chemical stressors can also be modeled and overlaid on baseline or chemical stressor scenarios.  The current non-chemical stressors included in the model are (1) Over-winter growth and survival and (2) Density-dependent growth effects'
     )
-  ),
-  h5(
+  ), h5(
     tags$li(
       'Model outputs include a variety of daily population metrics including:
                                  number of individuals, total biomass, average size, and daily minimum and maximum population growth potential. Annual population metrics include asymtotic population growth rate (lambda) and annual maximum growth potential to estimate long term effects of exposure'
@@ -64,17 +61,12 @@ tab1 <- tabPanel(
       colour = helper_Color,
       type = "inline",
       title = "Scenario Builder",
-      content = "The Fish Toxicity Translator compares multiple scenarios to explore differential effects of stressor exposures on population level outcomes. Baseline scenarios are created first and stressors are overlaid.  Scenario building is when input values and data are specified to create the multiple scenarios to investigate."
+      content = GUI_Tooltip[GUI_Tooltip$Name == "Scenario Builder", ]$tooltip
     ),
     style = 'width:200px'
   ),
   
-  tabsetPanel(subtab1,
-              subtab2,
-              subtab3,
-              subtab4,
-              subtab5,
-              id = "tabsetPanel_scenarios")
+  tabsetPanel(subtab1, subtab2, subtab3, subtab4, subtab5, id = "tabsetPanel_scenarios")
 )
 
 
@@ -110,78 +102,76 @@ tab2 <- tabPanel(
           slider_parameters_button,
           h4(""),
           br(),
-          fluidRow(class = "fluid_row",
-            column(width = 3, class = "columns1", h4("Growth Functions", class = "header4")),
-            column(
-              width = 3,
-              class = "columns1",
-              offset = 1,
-              plot_clear_growth_button,
-              style = "margin-top: 5px;"
-            ),
-            column(
-              width = 4,
-              class = "columns1",
-              offset = 1,
-              export_growth_functions_button,
-              style = "margin-top: 5px;"
-            )
-          ),
-          br(),
-          fluidRow(class = "fluid_row",
-            column(width = 6, h4("Survival Functions", class = "header4"), div(style = "height:20px;")),
-            column(width = 6, 
-                   fluidRow(
-                     column(width = 12, plot_clear_survival_button, div(style = "height:10px;"), style = "margin-top: 5px;")
-                   ),
-                   fluidRow(
-                     column(width = 12, export_survival_functions_button, div(style = "height:10px;"))
-                   )
-                   )
-            # column(
-            #   width = 4,
-            #   offset = 1,
-            #   plot_clear_survival_button
-            # ),
-            # column(
-            #   width = 2,
-            #   offset = 1,
-            #   export_survival_functions_button
-            # )
-          ),
-          h4(""),
-          fluidRow(class = "fluid_row",
-            column(
+          fluidRow(column(
+            width = 12, fluidRow(column(
               width = 12,
-              fluidRow(
-                column(width = 12, h4("Reproduction Functions", class = "header4"))
+              helper(
+                shiny_tag = h4("Growth Functions", class = "header4"),
+                icon = "question-circle",
+                colour = helper_Color,
+                type = "inline",
+                title = "Growth Functions",
+                content = GUI_Tooltip[GUI_Tooltip$Name == "Growth Functions", ]$tooltip
               ),
-              fluidRow(
-                column(
-                  width = 6,
-                  plot_clear_reproduction_button
-                ),
-                column(
-                  width = 6,
-                  export_reproduction_functions_button
-                )
+            )), fluidRow(
+              column(width = 6, align = "left", plot_clear_growth_button),
+              column(
+                width = 6,
+                align = "right",
+                export_growth_functions_button
               )
             )
-          ),
-          
-          # fluidRow(
-          #   column(width = 4, h4("Reproduction Functions", class = "header4")),
-          #   column(
-          #     width = 4,
-          #     offset = 1,
-          #     plot_clear_reproduction_button
-          #   ),
-          #   column(
-          #     width = 2,
-          #     offset = 1,
-          #     export_reproduction_functions_button
-          #   )
-          # ),
+          )),
+          br(),
+          fluidRow(column(
+            width = 12, fluidRow(column(
+              width = 12,
+              helper(
+                shiny_tag = h4("Survival Functions", class = "header4"),
+                icon = "question-circle",
+                colour = helper_Color,
+                type = "inline",
+                title = "Survival Functions",
+                content = GUI_Tooltip[GUI_Tooltip$Name == "Survival Functions", ]$tooltip
+              ),
+            )), fluidRow(
+              column(
+                width = 6,
+                align = "left",
+                plot_clear_survival_button
+              ),
+              column(
+                width = 6,
+                align = "right",
+                export_survival_functions_button
+              )
+            )
+          )),
+          h4(""),
+          fluidRow(column(
+            width = 12, fluidRow(column(
+              width = 12,
+              helper(
+                shiny_tag = h4("Reproduction Functions", class = "header4"),
+                icon = "question-circle",
+                colour = helper_Color,
+                type = "inline",
+                title = "Reproduction Functions",
+                content = GUI_Tooltip[GUI_Tooltip$Name == "Reproduction Functions", ]$tooltip
+              ),
+            )), fluidRow(
+              column(
+                width = 6,
+                align = "left",
+                plot_clear_reproduction_button
+              ),
+              column(
+                width = 6,
+                align = "right",
+                export_reproduction_functions_button
+              )
+            )
+          )),
           h4("")
         )
       ),
@@ -190,68 +180,110 @@ tab2 <- tabPanel(
         hr(),
         h4("Visualize: Scenario Parameters"),
         hr(),
-        fluidRow(
-          column(width = 3, h4("Spawning Probabilities", class = "header4")),
-          column(
-            width = 3,
-            offset = 1,
-            plot_clear_spawning_probabilities_button
-          ),
-          column(
-            width = 4,
-            offset = 1,
-            export_spawning_functions_button
+        fluidRow(column(
+          width = 12, fluidRow(column(
+            width = 12,
+            helper(
+              shiny_tag = h4("Spawning Probabilities", class = "header4"),
+              icon = "question-circle",
+              colour = helper_Color,
+              type = "inline",
+              title = "Spawning Probabilities",
+              content = GUI_Tooltip[GUI_Tooltip$Name == "Spawning Probabilities", ]$tooltip
+            ),
+          )), fluidRow(
+            column(
+              width = 6,
+              align = "left",
+              plot_clear_spawning_probabilities_button
+            ),
+            column(
+              width = 6,
+              align = "right",
+              export_spawning_functions_button
+            )
           )
-        ),
+        )),
         h4("")
       )),
       
       shinyjs::hidden(
         div(
           id = "Visualization_SDEC",
-          shinyjs::hidden(div(id = "Show_SDEC",
-                              fluidRow(
-                                column(width = 3, h4("Survival Decrements", class = "header4")),
-                                column(
-                                  width = 3,
-                                  offset = 1,
-                                  plot_clear_survival_decrements_button
-                                ),
-                                column(
-                                  width = 4,
-                                  offset = 1,
-                                  export_survival_decrements_button
-                                )
-                              ))),
+          shinyjs::hidden(div(id = "Show_SDEC", fluidRow(
+            column(width = 12, fluidRow(column(
+              width = 12,
+              helper(
+                shiny_tag = h4("Survival Decrements", class = "header4"),
+                icon = "question-circle",
+                colour = helper_Color,
+                type = "inline",
+                title = "Survival Decrements",
+                content = GUI_Tooltip[GUI_Tooltip$Name == "Survival Decrements", ]$tooltip
+              ),
+            )), fluidRow(
+              column(
+                width = 6,
+                align = "left",
+                plot_clear_survival_decrements_button
+              ),
+              column(
+                width = 6,
+                align = "right",
+                export_survival_decrements_button
+              )
+            ))
+          ))),
           h4(""),
-          shinyjs::hidden(div(id = "Show_GP",
-                              fluidRow(
-                                column(width = 3, h4("Growth Percents", class = "header4")),
-                                column(
-                                  width = 3,
-                                  offset = 1,
-                                  plot_clear_growth_percents_button
-                                ),
-                                column(
-                                  width = 4,
-                                  offset = 1,
-                                  export_growth_percents_button
-                                )
-                              ))),
+          shinyjs::hidden(div(id = "Show_GP", fluidRow(
+            column(width = 12, fluidRow(column(
+              width = 12,
+              helper(
+                shiny_tag = h4("Growth Percents", class = "header4"),
+                icon = "question-circle",
+                colour = helper_Color,
+                type = "inline",
+                title = "Growth Percents",
+                content = GUI_Tooltip[GUI_Tooltip$Name == "Growth Percents", ]$tooltip
+              ),
+            )), fluidRow(
+              column(
+                width = 6,
+                align = "left",
+                plot_clear_growth_percents_button
+              ),
+              column(
+                width = 6,
+                align = "right",
+                export_growth_percents_button
+              )
+            ))
+          ))),
           h4(""),
-          fluidRow(
-            column(width = 3, h4("Exposure Concentrations", class = "header4")),
-            column(
-              width = 3,
-              offset = 1,
-              plot_clear_exposure_concentrations_button
-            ),
-            column(
-              width = 4,
-              offset = 1,
-              export_exposure_concentrations_button
+          fluidRow(column(
+            width = 12, fluidRow(column(
+              width = 12,
+              helper(
+                shiny_tag = h4("Exposure Concentrations", class = "header4"),
+                icon = "question-circle",
+                colour = helper_Color,
+                type = "inline",
+                title = "Exposure Concentrations",
+                content = GUI_Tooltip[GUI_Tooltip$Name == "Exposure Concentrations", ]$tooltip
+              ),
+            )), fluidRow(
+              column(
+                width = 6,
+                align = "left",
+                plot_clear_exposure_concentrations_button
+              ),
+              column(
+                width = 6,
+                align = "right",
+                export_exposure_concentrations_button
+              )
             )
-          )
+          )),
         )
       ),
       
@@ -260,49 +292,42 @@ tab2 <- tabPanel(
     
     mainPanel
     (
-      shinyjs::hidden(div(id = "Growth_out_Main",
-                          plotOutput(outputId = "Growth_out"))),
+      shinyjs::hidden(div(id = "Growth_out_Main", plotOutput(outputId = "Growth_out"))),
       
       growth_modal_window,
       
       shinyjs::hidden(div(
-        id = "Survival_out_Main",
-        plotOutput(outputId = "Survival_out")
+        id = "Survival_out_Main", plotOutput(outputId = "Survival_out")
       )),
       
       survival_modal_window,
       
       shinyjs::hidden(div(
-        id = "Reproduction_out_Main",
-        plotOutput(outputId = "Reproduction_out")
+        id = "Reproduction_out_Main", plotOutput(outputId = "Reproduction_out")
       )),
       
       reproduction_modal_window,
       
       shinyjs::hidden(div(
-        id = "SpawningProb_out_Main",
-        plotOutput(outputId = "SpawningProb_Out")
+        id = "SpawningProb_out_Main", plotOutput(outputId = "SpawningProb_Out")
       )),
       
       spawning_modal_window,
       
       shinyjs::hidden(div(
-        id = "SurvivalDecrement_out_Main",
-        plotOutput(outputId = "SurvivalDecrement_out")
+        id = "SurvivalDecrement_out_Main", plotOutput(outputId = "SurvivalDecrement_out")
       )),
       
       survivalDecrement_modal_window,
       
       shinyjs::hidden(div(
-        id = "GrowthPercents_out_Main",
-        plotOutput(outputId = "GrowthPercents_out")
+        id = "GrowthPercents_out_Main", plotOutput(outputId = "GrowthPercents_out")
       )),
       
       growthPercents_modal_window,
       
       shinyjs::hidden(div(
-        id = "ExposureConcentration_out_Main",
-        plotOutput(outputId = "ExposureConcentration_out")
+        id = "ExposureConcentration_out_Main", plotOutput(outputId = "ExposureConcentration_out")
       )),
       
       expousureConcentration_modal_window,
@@ -332,9 +357,7 @@ tab3 <- tabPanel(
   sidebarLayout(
     sidebarPanel(
       shinyjs::hidden(
-        div(id = "HideAddSimulationRunButton",
-            add_simulation_run_button,
-            br())
+        div(id = "HideAddSimulationRunButton", add_simulation_run_button, br())
       ),
       
       shinyjs::hidden(
@@ -369,24 +392,20 @@ tab3 <- tabPanel(
           h4("Initial conditions and simulation parameters"),
           select_initial_distribution_button,
           
-          conditionalPanel(condition = "input.initial_distribution == 'Predetermined'",
-                           fluidRow(
-                             column(
-                               width = 12,
-                               upload_predeterminedDist_button,
-                               download_predeterminedDist_button
-                             )
-                           )),
+          conditionalPanel(condition = "input.initial_distribution == 'Predetermined'", fluidRow(
+            column(
+              width = 12,
+              upload_predeterminedDist_button,
+              download_predeterminedDist_button
+            )
+          )),
           
-          conditionalPanel(condition = "input.initial_distribution == 'Uniform'",
-                           initial_population_button)
+          conditionalPanel(condition = "input.initial_distribution == 'Uniform'", initial_population_button)
         )
       ),
       
       shinyjs::hidden(
-        div(id = "run_simulations_section",
-            run_simulations_button,
-            br())
+        div(id = "run_simulations_section", run_simulations_button, br())
       )
     ),
     
@@ -417,10 +436,7 @@ tab4 <- tabPanel(
     style = 'width:100px'
   ),
   
-  tabsetPanel(subtab41,
-              subtab42,
-              subtab43,
-              subtab44)
+  tabsetPanel(subtab41, subtab42, subtab43, subtab44)
   
 )
 

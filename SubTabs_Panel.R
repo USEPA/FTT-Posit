@@ -85,26 +85,18 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                       mainPanel(shinyjs::hidden(
                         div(
                           id = "life_history_table_main",
-                          DT::dataTableOutput(outputId = "life_history_table",
-                                              width = "100%")
+                          DT::dataTableOutput(outputId = "life_history_table", width = "100%")
                         )
-                      ),
-                      
-                      shinyjs::hidden(
-                        div(id = "Spawning_Prob_main",
-                            plotOutput(outputId = "Spawning_Prob_out"))
-                      ),
-                      
-                      width = 8)
+                      ), shinyjs::hidden(
+                        div(id = "Spawning_Prob_main", plotOutput(outputId = "Spawning_Prob_out"))
+                      ), width = 8)
                     ))
 
 subtab2 <- tabPanel("Build a Stressor Scenario",
                     sidebarLayout(
                       sidebarPanel(
                         shinyjs::hidden(
-                          div(id = "HideAddStressorScenarioButton",
-                              add_stressor_scenario_button,
-                              h4(""))
+                          div(id = "HideAddStressorScenarioButton", add_stressor_scenario_button, h4(""))
                         ),
                         
                         shinyjs::hidden(
@@ -117,8 +109,7 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                 label = "Select Underlying Scenario",
                                 choices = ""
                               ),
-                              shinyjs::hidden(div(id = "stressorType",
-                                                  stressor_type_button)),
+                              shinyjs::hidden(div(id = "stressorType", stressor_type_button)),
                               shinyjs::hidden(
                                 div(
                                   id = "stressorNameDescription",
@@ -143,21 +134,18 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                           div(
                             id = "baseline_selection_name",
                             shinyjs::hidden(
-                              div(id = "upload_new_exposure_concentration",
-                                  choose_Exposure_Concentration_dropdownmenu)
+                              div(id = "upload_new_exposure_concentration", choose_Exposure_Concentration_dropdownmenu)
                             ),
                             h4(""),
-                            shinyjs::hidden(div(id = "exposure_conc",
-                                                fluidRow(
-                                                  column(
-                                                    width = 12,
-                                                    upload_exposure_concentration,
-                                                    download_exposure_concentration
-                                                  )
-                                                ))),
+                            shinyjs::hidden(div(id = "exposure_conc", fluidRow(
+                              column(
+                                width = 12,
+                                upload_exposure_concentration,
+                                download_exposure_concentration
+                              )
+                            ))),
                             br(),
-                            shinyjs::hidden(div(id = "chemicalEffectType",
-                                                select_chemical_effect_type)),
+                            shinyjs::hidden(div(id = "chemicalEffectType", select_chemical_effect_type)),
                             shinyjs::hidden(
                               div(
                                 id = "chemicalID",
@@ -204,8 +192,7 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                 )
                               ),
                               
-                              div(id = "guts",
-                                  guts_out_text)
+                              div(id = "guts", guts_out_text)
                             ),
                             
                             
@@ -263,31 +250,25 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                       ),
                       mainPanel(
                         shinyjs::hidden(div(
-                          id = "stressor_table_main",
-                          DT::dataTableOutput("stressor_table")
+                          id = "stressor_table_main", DT::dataTableOutput("stressor_table")
                         )),
                         
                         shinyjs::hidden(div(
-                          id = "Exposure_Concentration_Main",
-                          plotOutput(outputId = "Exposure_Concentration_out")
+                          id = "Exposure_Concentration_Main", plotOutput(outputId = "Exposure_Concentration_out")
                         )),
                         
-                        shinyjs::hidden(div(id = "TCEM_Main",
-                                            plotOutput(outputId = "TCEM_out"))),
+                        shinyjs::hidden(div(id = "TCEM_Main", plotOutput(outputId = "TCEM_out"))),
                         
                         shinyjs::hidden(div(
-                          id = "Survival_Decrement_Main",
-                          plotOutput(outputId = "Survival_Decrement_out")
+                          id = "Survival_Decrement_Main", plotOutput(outputId = "Survival_Decrement_out")
                         )),
                         
                         shinyjs::hidden(div(
-                          id = "Growth_Percent_Main",
-                          plotOutput(outputId = "Growth_Percent_out")
+                          id = "Growth_Percent_Main", plotOutput(outputId = "Growth_Percent_out")
                         )),
                         
                         shinyjs::hidden(div(
-                          id = "Winter_Survival_Main",
-                          plotOutput(outputId = "Winter_Survival_out")
+                          id = "Winter_Survival_Main", plotOutput(outputId = "Winter_Survival_out")
                         )),
                         
                         
@@ -295,450 +276,513 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                       )
                     ))
 
-subtab3 <- tabPanel("Export Scenario",
-                    sidebarLayout(
-                      sidebarPanel(
-                        shinyjs::hidden(div(id = "HideExportScenarioButton",
-                                            export_scenario_button)),
-                        
-                        shinyjs::hidden(div(
-                          id = "ExportScenarioButton",
-                          h4("Select scenario to download"),
-                          selectInput(
-                            inputId = "downloadScenario",
-                            label = "",
-                            choices = ""
-                          )
-                        )),
-                        
-                        h4(""),
-                        shinyjs::hidden(div(
-                          id = "DownloadScenarioButton",
-                          downloadButton(
-                            outputId = "Download_Scenario",
-                            label = "Download Scenario",
-                            width = '275px',
-                            style = "color: #fff; background-color: gray; border-color: #2e6da4"
-                          )
-                          # export_scenario_out_text
-                        ))
-                        
-                      ),
-                      
-                      mainPanel()
-                    ))
+subtab3 <- tabPanel("Export Scenario", sidebarLayout(
+  sidebarPanel(
+    shinyjs::hidden(div(id = "HideExportScenarioButton", export_scenario_button)),
+    
+    shinyjs::hidden(div(
+      id = "ExportScenarioButton",
+      h4("Select scenario to export"),
+      selectInput(
+        inputId = "downloadScenario",
+        label = "",
+        choices = ""
+      )
+    )),
+    
+    h4(""),
+    shinyjs::hidden(div(
+      id = "DownloadScenarioButton",
+      downloadButton(
+        outputId = "Download_Scenario",
+        label = "Export Scenario",
+        class = "download_Button"
+      )
+      # export_scenario_out_text
+    ))
+    
+  ),
+  
+  mainPanel()
+))
 
-subtab4 <- tabPanel("Import Scenario",
-                    sidebarLayout(
-                      sidebarPanel(
-                        import_scenario_button,
-                        
-                        shinyjs::hidden(
-                          div(
-                            id = "UploadScenarioButton",
-                            h4("Click 'Upload Scenario' to browse for scenario to be imported"),
-                            upload_scenario <-
-                              fileInput(
-                                inputId = "importScenario",
-                                label = NULL,
-                                accept = c(
-                                  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                  "Microsoft Excel (OpenXML)",
-                                  ".xlsx"
-                                ),
-                                width = '400px',
-                                buttonLabel = "Upload Scenario",
-                                placeholder = "No file selected",
-                                multiple = FALSE
-                              )
-                          )
-                        ),
-                        
-                        h4(""),
-                        shinyjs::hidden(
-                          div(
-                            id = "ImportScenarioButton",
-                            h4("Enter a new name for scenario to be imported"),
-                            textInput(inputId = "ImportedScenario", label = ""),
-                            h4(""),
-                            actionButton(
-                              inputId = "submit_ImportedScenario_name",
-                              label = "Submit New Scenario Name",
-                              width = '250px',
-                              style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
-                            )
-                          )
-                        ),
-                        
-                        h4(""),
-                        h5(textOutput(outputId = "textImportedScenario"))
-                      ),
-                      
-                      mainPanel()
-                    ))
+subtab4 <- tabPanel("Import Scenario", sidebarLayout(
+  sidebarPanel(
+    import_scenario_button,
+    
+    shinyjs::hidden(
+      div(
+        id = "UploadScenarioButton",
+        h4("Click 'Upload Scenario' to browse for scenario to be imported"),
+        upload_scenario <-
+          fileInput(
+            inputId = "importScenario",
+            label = NULL,
+            accept = c(
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              "Microsoft Excel (OpenXML)",
+              ".xlsx"
+            ),
+            width = '400px',
+            buttonLabel = "Upload Scenario",
+            placeholder = "No file selected",
+            multiple = FALSE
+          )
+      )
+    ),
+    
+    h4(""),
+    shinyjs::hidden(
+      div(
+        id = "ImportScenarioButton",
+        h4("Enter a new name for scenario to be imported"),
+        textInput(inputId = "ImportedScenario", label = ""),
+        h4(""),
+        actionButton(
+          inputId = "submit_ImportedScenario_name",
+          label = "Submit New Scenario Name",
+          width = '250px',
+          style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
+        )
+      )
+    ),
+    
+    h4(""),
+    h5(textOutput(outputId = "textImportedScenario"))
+  ),
+  
+  mainPanel()
+))
 
-subtab5 <- tabPanel("Delete Scenario",
-                    sidebarLayout(
-                      sidebarPanel(shinyjs::hidden(
-                        div(
-                          id = "HideDeleteScenarioSelection",
-                          h4("Select scenario you wish to delete"),
-                          selectInput(
-                            inputId = "deleteScenario",
-                            label = "",
-                            choices = ""
-                          )
-                        )
-                      ),
-                      h4(""),
-                      shinyjs::hidden(
-                        div(id = "DeleteScenarioButton",
-                            delete_scenario_button)
-                      )),
-                      
-                      mainPanel(delete_scenario_modal_window)
-                    ))
+subtab5 <- tabPanel("Delete Scenario", sidebarLayout(
+  sidebarPanel(shinyjs::hidden(
+    div(
+      id = "HideDeleteScenarioSelection",
+      h4("Select scenario you wish to delete"),
+      selectInput(
+        inputId = "deleteScenario",
+        label = "",
+        choices = ""
+      )
+    )
+  ), h4(""), shinyjs::hidden(
+    div(id = "DeleteScenarioButton", delete_scenario_button)
+  )),
+  
+  mainPanel(delete_scenario_modal_window)
+))
 
-subtab41 <- tabPanel("Visualize Results",
-                     sidebarLayout(
-                       sidebarPanel
-                       (shinyjs::hidden(
-                         div(
-                           id = "Results_Options",
-                           check_boxes_all_results,
-                           br(),
-                           check_boxes_scenarios_results,
-                           hr(),
-                           h4("Comparison of Scenario Results"),
-                           hr(),
-                           fluidRow(
-                             column(width = 4, h4("Summary Results Table", class = "header4")),
-                             column(
-                               width = 4,
-                               offset = 1,
-                               plot_clear_summary_results_button
-                             ),
-                             column(
-                               width = 2,
-                               offset = 1,
-                               export_summaryResults_button
-                             )
-                           ),
-                           
-                           br(),
-                           
-                           fluidRow(
-                             column(width = 3, h4("Summary Matrix", class = "header4")),
-                             column(
-                               width = 3,
-                               offset = 0,
-                               plot_clear_summary_matrix_button
-                             ),
-                             column(width = 2, offset = 1, export_matrix_button),
-                             column(
-                               width = 2,
-                               offset = 1,
-                               export_summaryMatrixTable_button
-                             )
-                           ),
-                           
-                           hr(),
-                           h4("View Selected Plots"),
-                           hr(),
-                           fluidRow(
-                             column(width = 4, h4("Daily Population", class = "header4")),
-                             column(
-                               width = 4,
-                               offset = 1,
-                               plot_clear_dailyPopulation_button
-                             ),
-                             column(
-                               width = 2,
-                               offset = 1,
-                               export_dailyPopulation_button
-                             )
-                           ),
-                           
-                           br(),
-                           fluidRow(
-                             column(width = 4, h4("Population Biomass", class = "header4")),
-                             column(
-                               width = 4,
-                               offset = 1,
-                               plot_clear_populationBiomass_button
-                             ),
-                             column(
-                               width = 2,
-                               offset = 1,
-                               export_populationBiomass_button
-                             )
-                           ),
-                           
-                           br(),
-                           fluidRow(
-                             column(width = 4, h4("Mean Size", class = "header4")),
-                             column(
-                               width = 4,
-                               offset = 1,
-                               plot_clear_meanSize_button
-                             ),
-                             column(width = 2, offset = 1, export_meanSize_button)
-                           ),
-                           
-                           br(),
-                           fluidRow(
-                             column(width = 4, h4("Growth Potential", class = "header4")),
-                             column(
-                               width = 4,
-                               offset = 1,
-                               plot_clear_growthPotential_button
-                             ),
-                             column(
-                               width = 2,
-                               offset = 1,
-                               export_growthPotential_button
-                             )
-                           ),
-                           
-                           br(),
-                           fluidRow(
-                             column(width = 4, h4("Transitional Kernel", class = "header4")),
-                             column(
-                               width = 4,
-                               offset = 1,
-                               plot_clear_transitionalKernel_button
-                             ),
-                             column(
-                               width = 2,
-                               offset = 1,
-                               export_transitionalKernel_button
-                             )
-                           ),
-                           
-                           br(),
-                           hr(),
-                           
-                           fluidRow(
-                             column(width = 6, h4("Export Results Report")),
-                             column(
-                               width = 6,
-                               offset = 0,
-                               export_results_report_button
-                             )
-                           )
-                         )
-                       ),
-                         
-                         width = 6),
-                       
-                       mainPanel
-                       (
-                         shinyjs::hidden(
-                           div(id = "scenario_summary_results_main",
-                               DT::dataTableOutput("scenario_summary_results_table"))
-                         ),
-                         
-                         summaryResults_modal_window,
-                         
-                         shinyjs::hidden(div(
-                           id = "summaryMatrix_out_Main",
-                           plotOutput(
-                             outputId = "summaryMatrix_out",
-                             width = "1200px",
-                             height = "1000px"
-                           )
-                         )),
-                         
-                         matrix_modal_window,
-                         matrixTable_modal_window,
-                         
-                         shinyjs::hidden(div(
-                           id = "dailyPopulation_out_Main",
-                           plotOutput(outputId = "dailyPopulation_out")
-                         )),
-                         
-                         dailyPopulation_modal_window,
-                         
-                         shinyjs::hidden(div(
-                           id = "populationBiomass_out_Main",
-                           plotOutput(outputId = "populationBiomass_out")
-                         )),
-                         
-                         populationBiomass_modal_window,
-                         
-                         shinyjs::hidden(div(
-                           id = "meanSize_out_Main",
-                           plotOutput(outputId = "meanSize_out")
-                         )),
-                         
-                         meanSize_modal_window,
-                         
-                         shinyjs::hidden(div(
-                           id = "growthPotential_out_Main",
-                           plotOutput(outputId = "growthPotential_out")
-                         )),
-                         
-                         growthPotential_modal_window,
-                         
-                         shinyjs::hidden(div(
-                           id = "transitionalKernel_out_Main",
-                           plotOutput(outputId = "transitionalKernel_out")
-                         )),
-                         
-                         transitionalKernel_modal_window,
-                         
-                         width = 6
-                       )
-                     ))
+subtab41 <- tabPanel("Visualize Results", sidebarLayout(
+  sidebarPanel
+  (shinyjs::hidden(
+    div(
+      id = "Results_Options",
+      check_boxes_all_results,
+      br(),
+      check_boxes_scenarios_results,
+      hr(),
+      h4("Comparison of Scenario Results"),
+      hr(),
+      fluidRow(column(
+        width = 12, fluidRow(column(
+          width = 12,
+          helper(
+            shiny_tag = h4("Summary Results Table", class = "header4"),
+            icon = "question-circle",
+            colour = helper_Color,
+            type = "inline",
+            title = "Summary Results Table",
+            content = GUI_Tooltip[GUI_Tooltip$Name == "Summary Results Table", ]$tooltip
+          ),
+        )), fluidRow(
+          column(
+            width = 6,
+            align = "left",
+            plot_clear_summary_results_button
+          ),
+          column(
+            width = 6,
+            align = "right",
+            export_summaryResults_button
+          )
+        )
+      )),
+      
+      br(),
+      fluidRow(column(
+        width = 12, fluidRow(column(
+          width = 12,
+          helper(
+            shiny_tag = h4("Summary Matrix", class = "header4"),
+            icon = "question-circle",
+            colour = helper_Color,
+            type = "inline",
+            title = "Summary Matrix",
+            content = GUI_Tooltip[GUI_Tooltip$Name == "Summary Matrix", ]$tooltip
+          ),
+        )), fluidRow(
+          column(
+            width = 6,
+            align = "left",
+            plot_clear_summary_matrix_button
+          ),
+          column(
+            width = 6,
+            fluidRow(column(
+              width = 12, align = "right", export_matrix_button
+            )),
+            fluidRow(column(width = 12, br())),
+            fluidRow(
+              column(
+                width = 12,
+                align = "right",
+                export_summaryMatrixTable_button
+              )
+            )
+          )
+        )
+      )),
+      
+      br(),
+      hr(),
+      h4("View Selected Plots"),
+      hr(),
+      fluidRow(column(
+        width = 12, fluidRow(column(
+          width = 12,
+          helper(
+            shiny_tag = h4("Daily Population", class = "header4"),
+            icon = "question-circle",
+            colour = helper_Color,
+            type = "inline",
+            title = "Daily Population",
+            content = GUI_Tooltip[GUI_Tooltip$Name == "Daily Population", ]$tooltip
+          ),
+        )), fluidRow(
+          column(
+            width = 6,
+            align = "left",
+            plot_clear_dailyPopulation_button
+          ),
+          column(
+            width = 6,
+            align = "right",
+            export_dailyPopulation_button
+          )
+        )
+      )),
+      
+      br(),
+      fluidRow(column(
+        width = 12, fluidRow(column(
+          width = 12,
+          helper(
+            shiny_tag = h4("Population Biomass", class = "header4"),
+            icon = "question-circle",
+            colour = helper_Color,
+            type = "inline",
+            title = "Population Biomass",
+            content = GUI_Tooltip[GUI_Tooltip$Name == "Population Biomass", ]$tooltip
+          ),
+        )), fluidRow(
+          column(
+            width = 6,
+            align = "left",
+            plot_clear_populationBiomass_button
+          ),
+          column(
+            width = 6,
+            align = "right",
+            export_populationBiomass_button
+          )
+        )
+      )),
+      
+      br(),
+      fluidRow(column(
+        width = 12, fluidRow(column(
+          width = 12,
+          helper(
+            shiny_tag = h4("Mean Size", class = "header4"),
+            icon = "question-circle",
+            colour = helper_Color,
+            type = "inline",
+            title = "Mean Size",
+            content = GUI_Tooltip[GUI_Tooltip$Name == "Mean Size", ]$tooltip
+          ),
+        )), fluidRow(
+          column(
+            width = 6,
+            align = "left",
+            plot_clear_meanSize_button
+          ),
+          column(width = 6, align = "right", export_meanSize_button)
+        )
+      )),
+      
+      br(),
+      fluidRow(column(
+        width = 12, fluidRow(column(
+          width = 12,
+          helper(
+            shiny_tag = h4("Growth Potential", class = "header4"),
+            icon = "question-circle",
+            colour = helper_Color,
+            type = "inline",
+            title = "Growth Potential",
+            content = GUI_Tooltip[GUI_Tooltip$Name == "Growth Potential", ]$tooltip
+          ),
+        )), fluidRow(
+          column(
+            width = 6,
+            align = "left",
+            plot_clear_growthPotential_button
+          ),
+          column(
+            width = 6,
+            align = "right",
+            export_growthPotential_button
+          )
+        )
+      )),
+      
+      br(),
+      fluidRow(column(
+        width = 12, fluidRow(column(
+          width = 12,
+          helper(
+            shiny_tag = h4("Transition Kernel", class = "header4"),
+            icon = "question-circle",
+            colour = helper_Color,
+            type = "inline",
+            title = "Transition Kernel",
+            content = GUI_Tooltip[GUI_Tooltip$Name == "Transition Kernel", ]$tooltip
+          ),
+        )), fluidRow(
+          column(
+            width = 6,
+            align = "left",
+            plot_clear_transitionalKernel_button
+          ),
+          column(
+            width = 6,
+            align = "right",
+            export_transitionalKernel_button
+          )
+        )
+      )),
+      
+      br(),
+      hr(),
+      
+      fluidRow(
+        column(width = 6, h4("Export Results Report")),
+        column(
+          width = 6,
+          offset = 0,
+          export_results_report_button
+        )
+      )
+    )
+  ), width = 4),
+  
+  mainPanel
+  (
+    shinyjs::hidden(
+      div(id = "scenario_summary_results_main", DT::dataTableOutput("scenario_summary_results_table"))
+    ),
+    
+    summaryResults_modal_window,
+    
+    shinyjs::hidden(div(
+      id = "summaryMatrix_out_Main",
+      plotOutput(
+        outputId = "summaryMatrix_out",
+        width = "1200px",
+        height = "1000px"
+      )
+    )),
+    
+    matrix_modal_window,
+    matrixTable_modal_window,
+    
+    shinyjs::hidden(div(
+      id = "dailyPopulation_out_Main", plotOutput(outputId = "dailyPopulation_out")
+    )),
+    
+    dailyPopulation_modal_window,
+    
+    shinyjs::hidden(div(
+      id = "populationBiomass_out_Main", plotOutput(outputId = "populationBiomass_out")
+    )),
+    
+    populationBiomass_modal_window,
+    
+    shinyjs::hidden(div(
+      id = "meanSize_out_Main", plotOutput(outputId = "meanSize_out")
+    )),
+    
+    meanSize_modal_window,
+    
+    shinyjs::hidden(div(
+      id = "growthPotential_out_Main", plotOutput(outputId = "growthPotential_out")
+    )),
+    
+    growthPotential_modal_window,
+    
+    shinyjs::hidden(div(
+      id = "transitionalKernel_out_Main", plotOutput(outputId = "transitionalKernel_out")
+    )),
+    
+    transitionalKernel_modal_window,
+    
+    width = 8
+  )
+))
 
-subtab42 <- tabPanel("Export Results",
-                     sidebarLayout(
-                       sidebarPanel(
-                         shinyjs::hidden(div(
-                           id = "HideSelectionRunID",
-                           h4("Select run ID"),
-                           selectInput(
-                             inputId = "selectRunID",
-                             label = "",
-                             choices = ""
-                           )
-                         )),
-                         h4(""),
-                         
-                         shinyjs::hidden(div(
-                           id = "AssociatedScenarioButton",
-                           h4("Select Associated Scenario"),
-                           selectInput(
-                             inputId = "selectAssociatedScenario",
-                             label = "",
-                             choices = ""
-                           )
-                         )),
-                         h4(""),
-                         
-                         shinyjs::hidden(div(
-                           id = "DownloadResultsButton",
-                           downloadButton(
-                             outputId = "Download_Results",
-                             label = "Download Results",
-                             width = '275px',
-                             style = "color: #fff; background-color: gray; border-color: #2e6da4"
-                           )
-                         ))
-                       ),
-                       
-                       mainPanel()
-                     ))
+subtab42 <- tabPanel("Export Results", sidebarLayout(
+  sidebarPanel(
+    shinyjs::hidden(div(
+      id = "HideSelectionRunID",
+      h4("Select run ID"),
+      selectInput(
+        inputId = "selectRunID",
+        label = "",
+        choices = ""
+      )
+    )),
+    h4(""),
+    
+    shinyjs::hidden(div(
+      id = "AssociatedScenarioButton",
+      h4("Select Associated Scenario"),
+      selectInput(
+        inputId = "selectAssociatedScenario",
+        label = "",
+        choices = ""
+      )
+    )),
+    h4(""),
+    
+    shinyjs::hidden(div(
+      id = "DownloadResultsButton",
+      downloadButton(
+        outputId = "Download_Results",
+        label = "Export Results",
+        class = "download_Button"
+      )
+    ))
+  ),
+  
+  mainPanel()
+))
 
-subtab43 <- tabPanel("Import Results",
-                     sidebarLayout(
-                       sidebarPanel(
-                         import_results_button,
-                         
-                         shinyjs::hidden(
-                           div(
-                             id = "UploadResultsButton",
-                             h4("Click 'Upload Results' to browse for results to be imported."),
-                             upload_scenario <-
-                               fileInput(
-                                 inputId = "importResults",
-                                 label = NULL,
-                                 accept = c(
-                                   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                                   "Microsoft Excel (OpenXML)",
-                                   ".xlsx"
-                                 ),
-                                 width = '400px',
-                                 buttonLabel = "Upload Results",
-                                 placeholder = "No file selected",
-                                 multiple = FALSE
-                               )
-                           )
-                         ),
-                         
-                         shinyjs::hidden(
-                           div(
-                             id = "Imported_Results_RunID",
-                             textInput(inputId = "ImportedResultsRunID", label = ""),
-                             h4(""),
-                             actionButton(
-                               inputId = "submit_ImportedResults_runID",
-                               label = "Submit New Run ID",
-                               width = '250px',
-                               style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
-                             ),
-                             h4("")
-                           )
-                         ),
-                         
-                         shinyjs::hidden(
-                           div(
-                             id = "Imported_Results_ScenarioName",
-                             textInput(inputId = "ImportedResults", label = ""),
-                             h4(""),
-                             actionButton(
-                               inputId = "submit_ImportedResults_ScenarioName",
-                               label = "Submit New Scenario Name",
-                               width = '250px',
-                               style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
-                             ),
-                             h4("")
-                           )
-                         ),
-                         
-                         shinyjs::hidden(
-                           div(
-                             id = "Imported_Results_NameRunID",
-                             textInput(inputId = "ResultsRunId", label = "New Run ID"),
-                             h4(""),
-                             textInput(inputId = "ResultsName", label = "New Results Name"),
-                             h4(""),
-                             actionButton(
-                               inputId = "submit_ImportedResults_NameRunID",
-                               label = "Submit New Scenario Name and Run ID",
-                               width = '250px',
-                               style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
-                             ),
-                             h4("")
-                           )
-                         ),
-                         
-                         textOutput("textImportedResults")
-                         
-                       ),
-                       
-                       mainPanel()
-                     ))
+subtab43 <- tabPanel("Import Results", sidebarLayout(
+  sidebarPanel(
+    import_results_button,
+    
+    shinyjs::hidden(
+      div(
+        id = "UploadResultsButton",
+        h4("Click 'Upload Results' to browse for results to be imported."),
+        upload_scenario <-
+          fileInput(
+            inputId = "importResults",
+            label = NULL,
+            accept = c(
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+              "Microsoft Excel (OpenXML)",
+              ".xlsx"
+            ),
+            width = '400px',
+            buttonLabel = "Upload Results",
+            placeholder = "No file selected",
+            multiple = FALSE
+          )
+      )
+    ),
+    
+    shinyjs::hidden(
+      div(
+        id = "Imported_Results_RunID",
+        textInput(inputId = "ImportedResultsRunID", label = ""),
+        h4(""),
+        actionButton(
+          inputId = "submit_ImportedResults_runID",
+          label = "Submit New Run ID",
+          width = '250px',
+          style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
+        ),
+        h4("")
+      )
+    ),
+    
+    shinyjs::hidden(
+      div(
+        id = "Imported_Results_ScenarioName",
+        textInput(inputId = "ImportedResults", label = ""),
+        h4(""),
+        actionButton(
+          inputId = "submit_ImportedResults_ScenarioName",
+          label = "Submit New Scenario Name",
+          width = '250px',
+          style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
+        ),
+        h4("")
+      )
+    ),
+    
+    shinyjs::hidden(
+      div(
+        id = "Imported_Results_NameRunID",
+        textInput(inputId = "ResultsRunId", label = "New Run ID"),
+        h4(""),
+        textInput(inputId = "ResultsName", label = "New Results Name"),
+        h4(""),
+        actionButton(
+          inputId = "submit_ImportedResults_NameRunID",
+          label = "Submit New Scenario Name and Run ID",
+          width = '250px',
+          style = "color: #fff; background-color: #337ab7; border-color: #2e6da4"
+        ),
+        h4("")
+      )
+    ),
+    
+    textOutput("textImportedResults")
+    
+  ),
+  
+  mainPanel()
+))
 
-subtab44 <- tabPanel("Delete Results",
-                     sidebarLayout(
-                       sidebarPanel(
-                         shinyjs::hidden(div(
-                           id = "HideSelectionResultsRunId",
-                           h4("Select run ID"),
-                           selectInput(
-                             inputId = "selectResultsRunID",
-                             label = "",
-                             choices = ""
-                           )
-                         )),
-                         
-                         h4(""),
-                         
-                         shinyjs::hidden(div(
-                           id = "ResultsNameButton",
-                           h4("Select Associated Scenario Name"),
-                           selectInput(
-                             inputId = "selectResultsName",
-                             label = "",
-                             choices = ""
-                           )
-                         )),
-                         h4(""),
-                         
-                         shinyjs::hidden(div(id = "DeleteResultsButton",
-                                             delete_results_button))
-                       ),
-                       
-                       mainPanel(delete_results_modal_window)
-                     ))
+subtab44 <- tabPanel("Delete Results", sidebarLayout(
+  sidebarPanel(
+    shinyjs::hidden(div(
+      id = "HideSelectionResultsRunId",
+      h4("Select run ID"),
+      selectInput(
+        inputId = "selectResultsRunID",
+        label = "",
+        choices = ""
+      )
+    )),
+    
+    h4(""),
+    
+    shinyjs::hidden(div(
+      id = "ResultsNameButton",
+      h4("Select Associated Scenario Name"),
+      selectInput(
+        inputId = "selectResultsName",
+        label = "",
+        choices = ""
+      )
+    )),
+    h4(""),
+    
+    shinyjs::hidden(div(id = "DeleteResultsButton", delete_results_button))
+  ),
+  
+  mainPanel(delete_results_modal_window)
+))
