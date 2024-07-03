@@ -51,16 +51,18 @@ FT_UI <- function(req) {
                                         }'
       )
     )),
+    
     tags$head(
       tags$style(
         ".header4 {
-    font-size: 100%;
-    font-weight: normal;
+    font-size: 120%;
+    font-weight: bold;
+    font-thickness: 120%;
     padding: 0px;
     margin-left: 0;
   }"
       )
-    ),
+    ), 
     
     # CSS class for action buttons.
     tags$head(
@@ -72,29 +74,35 @@ FT_UI <- function(req) {
                           width: 60%;
                           height: 40px;
                           font-size: 100%;
+                          align: center;
                           padding: 0px;
                           margin-left: 0;
+                          margin-top: -5px;
                        }
 
                        .actButton:hover {
                           background-color: #337ab7;
-                          color: #ff0000;
-                          border-color: #2e6da4;
+                          color: #ffffff;
+                          border-color: #000000;
                           width: 60%;
                           height: 40px;
                           font-size: 100%;
+                          align: center;
                           padding: 0px;
                           margin-left: 0;
+                          margin-top: -5px;
                           }
                        .actButton:focus {
                           background-color: #337ab7;
-                          color: #00ff00;
-                          border-color: #2e6da4;
+                          color: #cccccc;
+                          border-color: #FFFFFF;
                           width: 60%;
                           height: 40px;
                           font-size: 100%;
+                          align: center;
                           padding: 0px;
                           margin-left: 0;
+                          margin-top: -5px;
                        }"
       )
     ),
@@ -106,30 +114,68 @@ FT_UI <- function(req) {
                           background-color: #1a4480;
                           color: #ffffff;
                           border-color: #2e6da4;
-                          width: 90%;
-                          height: 35px;
-                          font-size: 80%;
+                          width: 35%;
+                          height: 30px;
+                          font-size: 70%;
                           align: left;
                           padding: 0px;
                           margin-right: 0;
                        }
                        .actButtonD:hover {
                           background-color: #1a4480;
-                          color: #ff0000;
-                          border-color: #2e6da4;
-                          width: 90%;
-                          height: 35px;
-                          font-size: 80%;
+                          color: #ffffff;
+                          border-color: #000000;
+                          width: 35%;
+                          height: 30px;
+                          font-size: 70%;
                           align: left;
                           padding: 0px;
                           margin-right: 0;
                           }
                        .actButtonD:focus {
                           background-color: #1a4480;
+                          color: #cccccc;
+                          border-color: #ffffff;
+                          width: 35%;
+                          height: 30px;
+                          font-size: 70%;
+                          align: left;
+                          padding: 0px;
+                          margin-right: 0;
+                       }"
+      )
+    ),
+    
+    tags$head(
+      tags$style(
+        ".actButtonD1{
+                          background-color: #1a4480;
+                          color: #ffffff;
+                          border-color: #2e6da4;
+                          width: 80px;
+                          height: 37px;
+                          font-size: 80%;
+                          align: left;
+                          padding: 0px;
+                          margin-right: 0;
+                       }
+                       .actButtonD1:hover {
+                          background-color: #1a4480;
+                          color: #ff0000;
+                          border-color: #2e6da4;
+                          width: 80px;
+                          height: 37px;
+                          font-size: 80%;
+                          align: left;
+                          padding: 0px;
+                          margin-right: 0;
+                          }
+                       .actButtonD1:focus {
+                          background-color: #1a4480;
                           color: #00ff00;
                           border-color: #2e6da4;
-                          width: 90%;
-                          height: 35px;
+                          width: 80px;
+                          height: 37px;
                           font-size: 80%;
                           align: left;
                           padding: 0px;
@@ -158,6 +204,25 @@ FT_UI <- function(req) {
                           color: #00ff00;
                           border-color: #2e6da4;
                           align: left;
+                       }"
+      )
+    ),
+    
+    # CSS class for fluid rows.
+    tags$head(
+      tags$style(
+        ".fluid_row{
+                          border: 4px double red;
+                          flex-flow: column wrap;
+                       }"
+      )
+    ),
+    
+    # CSS class for fluid rows.
+    tags$head(
+      tags$style(
+        ".columns1{
+                          flex-shrink: 3;
                        }"
       )
     ),

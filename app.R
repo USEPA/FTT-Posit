@@ -49,6 +49,7 @@ library("xlsx")
 library("devtools")
 library("shiny.pwa")
 library("shinyhelper")
+library("openxlsx")
 library(FishToxTranslator)
 
 # Add Sentry library
@@ -69,15 +70,16 @@ source("widgets.R")
 source("FT_UI.R")
 source("FT_Server.R")
 
-# Configure Sentry error handling
-configure_sentry(dsn = "https://3d3c74380d1a43e73b33b78dee00fb27@ccte-app-monitoring.epa.gov/57", 
-                 app_name = "fish-tox-translator", app_version = "1.0.0")
 
-error_handler <- function() {
-  capture_exception(error = geterrmessage())
-}
-
-options(shiny.error = error_handler)
-
+# # Configure Sentry error handling
+# configure_sentry(dsn = "https://3d3c74380d1a43e73b33b78dee00fb27@ccte-app-monitoring.epa.gov/57",
+#                  app_name = "fish-tox-translator", app_version = "1.0.0")
+# 
+# error_handler <- function() {
+#   capture_exception(error = geterrmessage())
+# }
+# 
+# options(shiny.error = error_handler)
+# 
 # This runs the Shiny App!
 shinyApp(ui <- FT_UI, server <- FT_Server)

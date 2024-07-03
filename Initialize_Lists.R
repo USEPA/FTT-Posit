@@ -58,6 +58,14 @@ endTimes <- c()
 inputPredeterminedGrowthEffectsData <- data.frame()
 
 # Styles for action buttons
-actionButton_Style1 <- "color: #fff; background-color: #337ab7; border-color: #2e6da4;"
-actionButton_Style2 <- "color: #fff; background-color: #337ab7; border-color: #2e6da4; height: 38px;"
 helper_Color <- "#4d8055"
+
+# Set name of tooltip input file.
+input <- "Tooltip_and_input_database.xlsx"
+
+# Read Excel file and corresponding tabs.
+GUI_Tooltip <- read.xlsx(xlsxFile = input,
+                         sheet = "Sheet1",
+                         check.names = FALSE,
+                         detectDates = FALSE)
+
