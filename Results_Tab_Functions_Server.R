@@ -68,23 +68,11 @@ plot_Transitional_Kernel <- function(inputScenariosForResults)
   }else
   {
     PlotTransitionKernel(unlist(modelRuns,recursive=F)[inputScenariosForResults])
-    # PlotTransitionKernel(modelOutputs[inputScenariosForResults])
   }
 }
 
+
 plot_Summary_Matrix <- function(inputScenariosForResults)
 {
-  if (is.null(inputScenariosForResults))
-  {
-    return(10)
-    
-  }else if (length(inputScenariosForResults) < 2)
-  {
-    return(10)
-    
-  }else
-  {
     PlotSummaryMatrix(unlist(modelRuns,recursive=F)[inputScenariosForResults])
-    # PlotSummaryMatrix(modelOutputs[inputScenariosForResults])
-  }
 }

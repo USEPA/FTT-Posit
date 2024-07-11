@@ -123,6 +123,10 @@ observeEvent(input$importScenario,
                  updateCheckboxGroupInput(session, "Check_Scenario_Names_Run",
                                           choices = as.list(scenario_names))
                  
+                 updateCheckboxInput(session, 
+                                     inputId = "All_Runs",
+                                     value = FALSE)
+                 
                  shinyjs::show(id = "Visualization_GRS")
                  
                  shinyjs::show(id = "Visualization_SPB")

@@ -22,15 +22,6 @@ observeEvent(input$add_BaselineScenario,
                shinyjs::enable(id = "upload_history_pars")
                shinyjs::enable(id = "download_history_parameters")
                shinyjs::enable(id = "spawn_algorithm")
-               shinyBS::addTooltip(session,
-                                   "spawn_algorithm", 
-                                   "A spawning algorithm generates daily spawning probabilities based on the iteroparous or semelparous life history parameters supplied",
-                                   "right", 
-                                   options = list(container = "body"))
-               bs_spawning_alg_button <- bsTooltip("spawn_algorithm",
-                                                   "A spawning algorithm generates daily spawning probabilities based on the iteroparous or semelparous life history parameters supplied",
-                                                   "right", 
-                                                   options = list(container = "body"))
              })
 
 ###################################################################################################
@@ -100,6 +91,7 @@ observeEvent(
     shinyjs::hide(id = "life_history_table_main")
     shinyjs::hide(id = "Spawning_Prob_main")
     shinyjs::hide(id = "baseline_selection_name")
+    shinyjs::hide(id = "upload_new_exposure_concentration")
     shinyjs::hide(id = "exposure_conc")
     shinyjs::hide(id = "chemicalEffectType")
     shinyjs::hide(id = "chemicalID")
@@ -257,6 +249,9 @@ observeEvent(input$spawn_algorithm,
                # updateCheckboxGroupInput(session, "Check_Scenario_Names_Run",
                #                          choices = as.list(scenario_names))
                
+               updateCheckboxInput(session, 
+                                   inputId = "All_Runs",
+                                   value = FALSE)
                
                subElement1 <- paste("#Check_Scenario_Names_Results input[value=", scenario_names,"]")
                delay(1, shinyjs::disable(selector = subElement1))
@@ -476,7 +471,7 @@ observeEvent(input$hyperlink_newtab,
 
 observeEvent(input$hyperlink_visualization_newtab,
              {
-               newtab <- "Visualize Built Scenario(s)"
+               newtab <- "Visualize Scenarios"
                updateNavbarPage(session, "fish_toxicity_app", newtab)
              }
 )
