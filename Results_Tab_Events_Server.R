@@ -52,19 +52,6 @@ observe({
   }
 })
 
-# observeEvent(input$Check_Scenario_Names_Results,
-#              {
-#                if (length(input$Check_Scenario_Names_Results) < 2){
-#                  shinyjs::hide(id = "summaryMatrix_out_Main")
-#                  if (summaryMatrix_flag == TRUE)
-#                  {
-#                    shinyjs::info("You must select at least 2 scenarios. If only one scenario was simulated and as a result only one is active, you won't be able to display a summary matrix.")
-#                    summaryMatrix_flag <- FALSE
-#                  }
-#                }
-#                
-#              }
-# )
 
 observeEvent(input$summary_results_table,
   {
@@ -986,7 +973,6 @@ output$Download_Results_Report <- downloadHandler(
                        startRow = 4, 
                        startColumn = 4)
                  
-      
       # Sheet 7: Growth Potential Image
       sheet_7 <- xlsx::createSheet(Results_Workbook, sheetName = "Growth_Potential_Image")
       image_path5 <- tempfile(pattern = "", fileext = ".png")
@@ -1002,7 +988,6 @@ output$Download_Results_Report <- downloadHandler(
                        startRow = 4, 
                        startColumn = 4)
                  
-      
       # Sheet 8: Transition Kernel Image
       sheet_8 <- xlsx::createSheet(Results_Workbook, sheetName = "Transition_Kernel_Image")
       image_path6 <- tempfile(pattern = "", fileext = ".png")
@@ -1012,11 +997,11 @@ output$Download_Results_Report <- downloadHandler(
           res = 300)
       plot_Transitional_Kernel(input$Check_Scenario_Names_Results)
       dev.off()
-      xlsx::addPicture(file = image_path6, 
-                 sheet = sheet_8, 
-                 scale = 1, 
-                 startRow = 4, 
-                 startColumn = 4)
+      xlsx::addPicture(file = image_path6,
+                       sheet = sheet_8, 
+                       scale = 1, 
+                       startRow = 4, 
+                       startColumn = 4)
       
       xlsx::saveWorkbook(Results_Workbook,file)
     }
