@@ -836,22 +836,22 @@ output$Download_Results_Report <- downloadHandler(
   },
   content = function(file) 
   {
-      Results_Workbook <- createWorkbook(type='xlsx')
+      Results_Workbook <- xlsx::createWorkbook(type='xlsx')
       
       # Sheet 0: results information
-      sheet_0 <- createSheet(Results_Workbook, sheetName = "Results_report_information")
+      sheet_0 <- xlsx::createSheet(Results_Workbook, sheetName = "Results_report_information")
       list1 <- input$Check_Scenario_Names_Results
       len_list1 <- length(list1)
       num_cols <- max(length(list1), 9)
-      rows  <- createRow(sheet_0, rowIndex = 1:7)       # 7 rows
-      cells <- createCell(rows, colIndex = 1:num_cols)  # columns in each row
-      setCellValue(cells[[1,1]], "Results Report Information")          # put in Row 1, Column 1
-      setCellValue(cells[[2,1]], "Scenarios:")                          # put in Row 2, Column 1
-      setCellValue(cells[[3,1]], "Descriptions:")                       # put in Row 3, Column 1
-      setCellValue(cells[[4,1]], "Report Date/Time:")                   # put in Row 4, Column 1
-      setCellValue(cells[[5,1]], "Report contents")                     # put in Row 5, Column 1
-      setCellValue(cells[[6,1]], "Fish Toxicity Translator Version:")   # put in Row 6, Column 1
-      setCellValue(cells[[7,1]], "For more information visit:")         # put in Row 7, Column 1
+      rows  <- xlsx::createRow(sheet_0, rowIndex = 1:7)       # 7 rows
+      cells <- xlsx::createCell(rows, colIndex = 1:num_cols)  # columns in each row
+      xlsx::setCellValue(cells[[1,1]], "Results Report Information")          # put in Row 1, Column 1
+      xlsx::setCellValue(cells[[2,1]], "Scenarios:")                          # put in Row 2, Column 1
+      xlsx::setCellValue(cells[[3,1]], "Descriptions:")                       # put in Row 3, Column 1
+      xlsx::setCellValue(cells[[4,1]], "Report Date/Time:")                   # put in Row 4, Column 1
+      xlsx::setCellValue(cells[[5,1]], "Report contents")                     # put in Row 5, Column 1
+      xlsx::setCellValue(cells[[6,1]], "Fish Toxicity Translator Version:")   # put in Row 6, Column 1
+      xlsx::setCellValue(cells[[7,1]], "For more information visit:")         # put in Row 7, Column 1
       
       for (i in 1:len_list1)
       {
@@ -867,53 +867,54 @@ output$Download_Results_Report <- downloadHandler(
           }
         }
         
-        setCellValue(cells[[2,j]], list1[[i]])
-        setCellValue(cells[[3,j]], scenario_desc)
+        xlsx::setCellValue(cells[[2,j]], list1[[i]])
+        xlsx::setCellValue(cells[[3,j]], scenario_desc)
       }
       
       # Date of report
-      setCellValue(cells[[4,2]], date()) 
+      xlsx::setCellValue(cells[[4,2]], date()) 
       
       # Report contents
-      setCellValue(cells[[5,2]], "Summary_Results_Table")
+      xlsx::setCellValue(cells[[5,2]], "Summary_Results_Table")
       if (length(input$Check_Scenario_Names_Results) >= 2)
       {
-        setCellValue(cells[[5,3]], "Summary_Matrix")
-        setCellValue(cells[[5,4]], "Summary_Matrix_Table")
-        setCellValue(cells[[5,5]], "Daily_Population_Image")
-        setCellValue(cells[[5,6]], "Population_Biomass_Image")
-        setCellValue(cells[[5,7]], "Mean_Size_Image")
-        setCellValue(cells[[5,8]], "Growth_Potential_Image")
-        setCellValue(cells[[5,9]], "Transition_Kernel_Image")
+        xlsx::setCellValue(cells[[5,3]], "Summary_Matrix")
+        xlsx::setCellValue(cells[[5,4]], "Summary_Matrix_Table")
+        xlsx::setCellValue(cells[[5,5]], "Daily_Population_Image")
+        xlsx::setCellValue(cells[[5,6]], "Population_Biomass_Image")
+        xlsx::setCellValue(cells[[5,7]], "Mean_Size_Image")
+        xlsx::setCellValue(cells[[5,8]], "Growth_Potential_Image")
+        xlsx::setCellValue(cells[[5,9]], "Transition_Kernel_Image")
       }else{
-        setCellValue(cells[[5,3]], "Daily_Population_Image")
-        setCellValue(cells[[5,4]], "Population_Biomass_Image")
-        setCellValue(cells[[5,5]], "Mean_Size_Image")
-        setCellValue(cells[[5,6]], "Growth_Potential_Image")
-        setCellValue(cells[[5,7]], "Transition_Kernel_Image")
+        xlsx::setCellValue(cells[[5,3]], "Daily_Population_Image")
+        xlsx::setCellValue(cells[[5,4]], "Population_Biomass_Image")
+        xlsx::setCellValue(cells[[5,5]], "Mean_Size_Image")
+        xlsx::setCellValue(cells[[5,6]], "Growth_Potential_Image")
+        xlsx::setCellValue(cells[[5,7]], "Transition_Kernel_Image")
       }
       
       
       # Fish Toxicity Translator Package version number
-      setCellValue(cells[[6,2]], packageVersion("FishToxTranslator"))
+      xlsx::setCellValue(cells[[6,2]], packageVersion("FishToxTranslator"))
       
       # Website
-      setCellValue(cells[[7,2]], "<link to website>")
+      xlsx::setCellValue(cells[[7,2]], "<link to website>")
       
       # Sheet 1: Summary Results Table
       summaryTable <- as.data.frame(SummaryTable(modelOutputs))
-      sheet_1 <- createSheet(Results_Workbook, sheetName = "Summary_Results_Table")
-      addDataFrame(summaryTable, 
-                   sheet = sheet_1, 
-                   startRow = 1, 
-                   startColumn = 1,
-                   row.names = FALSE)
-      setColumnWidth(sheet_1, colIndex = c(1:100), colWidth = 30)
+      sheet_1 <- xlsx::createSheet(Results_Workbook, sheetName = "Summary_Results_Table")
+      xlsx::addDataFrame(summaryTable,
+                         sheet = sheet_1, 
+                         startRow = 1, 
+                         startColumn = 1,
+                         row.names = FALSE)
+                   
+      xlsx::setColumnWidth(sheet_1, colIndex = c(1:100), colWidth = 30)
       
       if (length(input$Check_Scenario_Names_Results) >= 2)
       {
         # Sheet 2: Summary Matrix Image
-        sheet_2 <- createSheet(Results_Workbook, sheetName = "Summary_Matrix")
+        sheet_2 <- xlsx::createSheet(Results_Workbook, sheetName = "Summary_Matrix")
         image_path1 <- tempfile(pattern = "", fileext = ".png")
         png(image_path1,
             width = input$shiny_width * 4,
@@ -921,7 +922,7 @@ output$Download_Results_Report <- downloadHandler(
             res = 300)
         plot_Summary_Matrix(input$Check_Scenario_Names_Results)
         dev.off()
-        addPicture(file = image_path1, 
+        addPicture(file = image_path1,
                    sheet = sheet_2, 
                    scale = 1, 
                    startRow = 4, 
@@ -929,18 +930,19 @@ output$Download_Results_Report <- downloadHandler(
         
         # Sheet 3: Summary Matrix Table
         summMats <- as.data.frame(SummaryMatrix(modelOutputs))
-        sheet_3 <- createSheet(Results_Workbook, sheetName = "Summary_Matrix_Table")
-        addDataFrame(summMats, 
-                     sheet = sheet_3, 
-                     startRow = 1, 
-                     startColumn = 1,
-                     row.names = FALSE)
-        setColumnWidth(sheet_3, colIndex = c(1:100), colWidth = 30)
+        sheet_3 <- xlsx::createSheet(Results_Workbook, sheetName = "Summary_Matrix_Table")
+        xlsx::addDataFrame(summMats,
+                           sheet = sheet_3, 
+                           startRow = 1, 
+                           startColumn = 1,
+                           row.names = FALSE)
+                     
+        xlsx::setColumnWidth(sheet_3, colIndex = c(1:100), colWidth = 30)
       }
       
       
       # Sheet 4: Daily Population Image
-      sheet_4 <- createSheet(Results_Workbook, sheetName = "Daily_Population_Image")
+      sheet_4 <- xlsx::createSheet(Results_Workbook, sheetName = "Daily_Population_Image")
       image_path2 <- tempfile(pattern = "", fileext = ".png")
       png(image_path2,
           width = input$shiny_width * 2,
@@ -948,14 +950,14 @@ output$Download_Results_Report <- downloadHandler(
           res = 300)
       plot_Daily_Population(input$Check_Scenario_Names_Results)
       dev.off()
-      addPicture(file = image_path2, 
-                 sheet = sheet_4, 
-                 scale = 1, 
-                 startRow = 4, 
-                 startColumn = 4)
+      xlsx::addPicture(file = image_path2,
+                       sheet = sheet_4, 
+                       scale = 1, 
+                       startRow = 4, 
+                       startColumn = 4)
       
       # Sheet 5: Population Biomass Image
-      sheet_5 <- createSheet(Results_Workbook, sheetName = "Population_Biomass_Image")
+      sheet_5 <- xlsx::createSheet(Results_Workbook, sheetName = "Population_Biomass_Image")
       image_path3 <- tempfile(pattern = "", fileext = ".png")
       png(image_path3,
           width = input$shiny_width * 2,
@@ -963,14 +965,14 @@ output$Download_Results_Report <- downloadHandler(
           res = 300)
       plot_Population_Biomass(input$Check_Scenario_Names_Results)
       dev.off()
-      addPicture(file = image_path3, 
-                 sheet = sheet_5, 
-                 scale = 1, 
-                 startRow = 4, 
-                 startColumn = 4)
-      
+      xlsx::addPicture(file = image_path3,
+                       sheet = sheet_5, 
+                       scale = 1, 
+                       startRow = 4, 
+                       startColumn = 4)
+                 
       # Sheet 6: Mean Size Image
-      sheet_6 <- createSheet(Results_Workbook, sheetName = "Mean_Size_Image")
+      sheet_6 <- xlsx::createSheet(Results_Workbook, sheetName = "Mean_Size_Image")
       image_path4 <- tempfile(pattern = "", fileext = ".png")
       png(image_path4,
           width = input$shiny_width * 2,
@@ -978,14 +980,15 @@ output$Download_Results_Report <- downloadHandler(
           res = 300)
       plot_Mean_Size(input$Check_Scenario_Names_Results)
       dev.off()
-      addPicture(file = image_path4, 
-                 sheet = sheet_6, 
-                 scale = 1, 
-                 startRow = 4, 
-                 startColumn = 4)
+      xlsx::addPicture(file = image_path4,
+                       sheet = sheet_6, 
+                       scale = 1, 
+                       startRow = 4, 
+                       startColumn = 4)
+                 
       
       # Sheet 7: Growth Potential Image
-      sheet_7 <- createSheet(Results_Workbook, sheetName = "Growth_Potential_Image")
+      sheet_7 <- xlsx::createSheet(Results_Workbook, sheetName = "Growth_Potential_Image")
       image_path5 <- tempfile(pattern = "", fileext = ".png")
       png(image_path5,
           width = input$shiny_width * 2,
@@ -993,14 +996,15 @@ output$Download_Results_Report <- downloadHandler(
           res = 300)
       plot_Growth_Potential(input$Check_Scenario_Names_Results)
       dev.off()
-      addPicture(file = image_path5, 
-                 sheet = sheet_7, 
-                 scale = 1, 
-                 startRow = 4, 
-                 startColumn = 4)
+      xlsx::addPicture(file = image_path5,
+                       sheet = sheet_7, 
+                       scale = 1, 
+                       startRow = 4, 
+                       startColumn = 4)
+                 
       
       # Sheet 8: Transition Kernel Image
-      sheet_8 <- createSheet(Results_Workbook, sheetName = "Transition_Kernel_Image")
+      sheet_8 <- xlsx::createSheet(Results_Workbook, sheetName = "Transition_Kernel_Image")
       image_path6 <- tempfile(pattern = "", fileext = ".png")
       png(image_path6,
           width = input$shiny_width * 2,
@@ -1008,15 +1012,13 @@ output$Download_Results_Report <- downloadHandler(
           res = 300)
       plot_Transitional_Kernel(input$Check_Scenario_Names_Results)
       dev.off()
-      addPicture(file = image_path6, 
+      xlsx::addPicture(file = image_path6, 
                  sheet = sheet_8, 
                  scale = 1, 
                  startRow = 4, 
                  startColumn = 4)
       
-      saveWorkbook(Results_Workbook,file)
-      # Delete temporarily created files.
-      # unlink(file.path(tempdir(), "*"))
+      xlsx::saveWorkbook(Results_Workbook,file)
     }
  
 ) 
