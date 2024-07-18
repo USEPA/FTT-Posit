@@ -76,6 +76,10 @@ observeEvent(input$actionDeleteResults,
                updateCheckboxGroupInput(session, "Check_Scenario_Names_Results",
                                         choices = as.list(names(unlist(modelRuns, recursive = F))))
                
+               updateCheckboxInput(session, 
+                                   inputId = "All_Results",
+                                   value = FALSE)
+               
                updateSelectInput(session, "downloadResults",
                                  choices = c("None Selected", as.list(names(unlist(modelRuns, recursive = F)))),
                                  selected = "None Selected")

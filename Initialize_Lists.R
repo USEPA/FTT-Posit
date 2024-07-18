@@ -1,5 +1,6 @@
 ## Intialize data.frames and lists used throughout code
 parameters <- list() #list to store parameters for different scenarios
+ExposureConcentrations <- list()  # list used to store exposure concentration profiles.
 scenario_names <- vector() # Vector for storing scenario names
 CurrentBaselineScenarioName <- NA
 CurrentStressorScenarioName <- NA
@@ -23,6 +24,8 @@ submittedRunID <- c()
 submittedResultsName <- c()
 runID_Exists <- FALSE
 scenarioName_Exists <- FALSE
+
+summaryMatrix_flag <- FALSE
 
 # Initialize lists to store model output
 # temp List stores the most recent model runs
@@ -53,3 +56,16 @@ startTimes <- c()
 endTimes <- c()
 
 inputPredeterminedGrowthEffectsData <- data.frame()
+
+# Styles for action buttons
+helper_Color <- "#4d8055"
+
+# Set name of tooltip input file.
+input <- "Tooltip_and_input_database.xlsx"
+
+# Read Excel file and corresponding tabs.
+GUI_Tooltip <- read.xlsx(xlsxFile = input,
+                         sheet = "Sheet1",
+                         check.names = FALSE,
+                         detectDates = FALSE)
+

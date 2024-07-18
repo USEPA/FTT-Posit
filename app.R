@@ -20,9 +20,8 @@ rm(list = ls())
 #
 # # This command installs and loads the FishToxTranslator Package from the local tar.gz file
 install.packages("FishToxTranslator_0.1.11.tar.gz",type="source")
-# library(FishToxTranslator)
-
-#library(FishToxTranslator)
+#Install Sentry package
+#install.packages("sentryR")
 #devtools::install_github('npollesch/FishToxTranslator', upgrade="never")
 
 #### Web hosted package management ####
@@ -48,8 +47,13 @@ library("writexl")
 library("xlsx")
 #library("magick") #not in use
 library("devtools")
-
+library("shiny.pwa")
+library("shinyhelper")
+library("openxlsx")
 library(FishToxTranslator)
+
+# Add Sentry library
+library(sentryR)
 
 # This loads the local App Source Files
 source("Initialize_Lists.R")
@@ -60,11 +64,23 @@ source("DeleteResults_Tab_Functions_Server.R")
 source("ImportScenario_Tab_Functions_Server.R")
 source("ImportResults_Tab_Functions_Server.R")
 source("Visualize_Tab_Functions_Server.R")
-source("Run_Tab_Functions_Server_NP.R") ####
+source("Run_Tab_Functions_Server_NP.R")
 source("Results_Tab_Functions_Server.R")
 source("widgets.R")
 source("FT_UI.R")
 source("FT_Server.R")
 
+
+# Configure Sentry error handling
+configure_sentry(dsn = "https://3d3c74380d1a43e73b33b78dee00fb27@ccte-app-monitoring.epa.gov/57",
+                 app_name = "fish-tox-translator", app_version = "1.0.0")
+
+error_handler <- function() {
+  capture_exception(error = geterrmessage())
+}
+
+options(shiny.error = error_handler)
+
 # This runs the Shiny App!
 shinyApp(ui <- FT_UI, server <- FT_Server)
+

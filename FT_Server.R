@@ -1,5 +1,8 @@
 FT_Server <- function(input, output, session) {
   
+  observe_helpers(session = shiny::getDefaultReactiveDomain(),
+                  help_dir = "helpfiles", withMathJax = FALSE)
+  
   source("Baseline_Tab_Events_Server.R", local = TRUE)
   source("Stressor_Tab_Events_Server.R", local = TRUE)
   source("DownloadScenario_Tab_Events_Server.R", local = TRUE)
@@ -12,8 +15,12 @@ FT_Server <- function(input, output, session) {
   source("Run_Tab_Events_Server.R", local = TRUE)
   source("Results_Tab_Events_Server.R", local = TRUE)
   source("Reset_App.R", local = TRUE)
+
+  keep_alive <- shiny::reactiveTimer(intervalMs = 10000, session = shiny::getDefaultReactiveDomain())
+  shiny::observe({keep_alive()})
   
 }
+
     
   
     

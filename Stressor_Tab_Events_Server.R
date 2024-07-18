@@ -34,6 +34,10 @@ observeEvent(input$add_StressorScenario,
                updateSelectInput(session, "initial_distribution",
                                  selected = "None Selected")
                
+               updateSelectInput(session, "expconc_profile",
+                                 choices = c("None Selected", "New", names(ExposureConcentrations)),
+                                 selected = "None Selected")
+               
                updateNumericInput(session, inputId = "start_winter", value = 355)
                updateNumericInput(session, inputId = "end_winter", value = 91)
                
@@ -49,6 +53,7 @@ observeEvent(input$add_StressorScenario,
                shinyjs::hide(id = "Winter_Options")
                shinyjs::hide(id = "Density_Dependence_Options")
                shinyjs::hide(id = "predetermined_growth_effects")
+               shinyjs::hide(id = "upload_new_exposure_concentration")
                shinyjs::hide(id = "exposure_conc")
                shinyjs::hide(id = "chemicalEffectType")
                shinyjs::hide(id = "chemicalID")
@@ -109,27 +114,36 @@ observeEvent(input$stressor_type,
                if (input$stressor_type == "None Selected")
                {
                  shinyjs::hide("stressorNameDescription")
+                 shinyjs::hide(id = "upload_new_exposure_concentration")
                  shinyjs::hide(id = "exposure_conc")
                  shinyjs::hide(id = "Winter_Options")
+                 shinyjs::hide(id = "Density_Dependence_Options")
                }else if(input$stressor_type == "Chemical: Survival")
                {
                  shinyjs::show("stressorNameDescription")
-                 shinyjs::show(id = "exposure_conc")
+                 shinyjs::show(id = "upload_new_exposure_concentration")
+                 shinyjs::hide(id = "exposure_conc")
                  shinyjs::hide(id = "Winter_Options")
+                 shinyjs::hide(id = "Density_Dependence_Options")
                }else if(input$stressor_type == "Chemical: Growth")
                {
                  shinyjs::show("stressorNameDescription")
-                 shinyjs::show(id = "exposure_conc")
+                 shinyjs::show(id = "upload_new_exposure_concentration")
+                 shinyjs::hide(id = "exposure_conc")
                  shinyjs::hide(id = "Winter_Options")
+                 shinyjs::hide(id = "Density_Dependence_Options")
                }else if(input$stressor_type == "Non-chemical: Winter")
                {
                  shinyjs::show("stressorNameDescription")
                  shinyjs::show(id = "Winter_Options")
+                 shinyjs::hide(id = "upload_new_exposure_concentration")
                  shinyjs::hide(id = "exposure_conc")
+                 shinyjs::hide(id = "Density_Dependence_Options")
                }else if(input$stressor_type == "Non-chemical: Density Dependent Growth Response")
                {
                  shinyjs::show("stressorNameDescription")
                  shinyjs::show(id = "Density_Dependence_Options")
+                 shinyjs::hide(id = "upload_new_exposure_concentration")
                  shinyjs::hide(id = "exposure_conc")
                  shinyjs::hide(id = "Winter_Options")
                }
@@ -736,6 +750,37 @@ observeEvent(input$run_tcem,
 ####################################################################################################
 #  Exposure Concentrations
 ####################################################################################################
+observe({
+  if (input$expconc_profile == "None Selected")
+  {
+    shinyjs::hide(id = "exposure_conc")
+  }else if (input$expconc_profile == "New")
+  {
+    shinyjs::show(id = "exposure_conc")
+    shinyjs::show(id = "upload_new_exposure_concentration")
+  }else
+  {
+    assign_old_exposure_concentration(CurrentStressorScenarioName, input$expconc_profile)
+    output$Exposure_Concentration_out <- renderPlot(
+      {
+        plot_exposure_concentrations(CurrentStressorScenarioName)
+      }
+    )
+    shinyjs::show(id = "Exposure_Concentration_Main")
+    if (input$stressor_type == "Chemical: Survival")
+    {
+      shinyjs::show(id = "chemicalEffectType")
+    }
+    if (input$stressor_type == "Chemical: Growth")
+    {
+      shinyjs::show(id = "chemicalID")
+      shinyjs::enable(id = "predetermined_growth_effects")
+      shinyjs::show(id = "predetermined_growth_effects")
+    }
+  }
+})
+
+
 # Download exposure concentrations template for stressor scenario.
 output$download_exposure_concentration <- downloadHandler(
   filename = function() {
@@ -756,7 +801,7 @@ output$download_exposure_concentration <- downloadHandler(
 
 observeEvent(input$upload_exposure_concentrations,
              {
-               assign_exposure_concentrations(CurrentStressorScenarioName, input$upload_exposure_concentrations$datapath)
+               assign_exposure_concentrations(CurrentStressorScenarioName, input$upload_exposure_concentrations$datapath, input$upload_exposure_concentrations$name)
                output$Exposure_Concentration_out <- renderPlot(
                  {
                    plot_exposure_concentrations(CurrentStressorScenarioName)
@@ -830,6 +875,10 @@ observeEvent(input$upload_predetermined_effects,
                
                updateCheckboxGroupInput(session, "Check_Scenario_Names",
                                         choices = as.list(scenario_names))
+               
+               updateSelectInput(session, "expconc_profile",
+                                 choices = c("None Selected", "New", names(ExposureConcentrations)),
+                                 selected = "None Selected")
                
                # updateCheckboxGroupInput(session, "Check_Scenario_Names_Run",
                #                          choices = as.list(scenario_names))
@@ -965,6 +1014,10 @@ observeEvent(input$upload_predetermined_growth_effects,
                
                updateCheckboxGroupInput(session, "Check_Scenario_Names",
                                         choices = as.list(scenario_names))
+               
+               #updateSelectInput(session, "expconc_profile",
+               #                 choices = c("None Selected", "New", names(ExposureConcentrations)),
+               #                 selected = "None Selected")
                
                # updateCheckboxGroupInput(session, "Check_Scenario_Names_Run",
                #                          choices = as.list(scenario_names))
