@@ -96,7 +96,19 @@ tab2 <- tabPanel(
           h4(""),
           hr(),
           h4("Growth, survival, and reproduction by size for selected date"),
-          day_selection_button,
+          fluidRow(
+            column(
+              width = 3,
+              align = "left",
+              day_selection_button
+            ),
+            column(style = "margin-top: 60px; margin-left: 0; font-size: 120%; font-weight: bold;",
+              width = 9,
+              align = "left",
+              slider_calendar_text_out
+            )
+          ),
+          
           h4(""),
           slider_parameters_button,
           h4(""),

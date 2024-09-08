@@ -519,7 +519,8 @@ observe(
     cmonth <- month.name[month(cdate)]
     cday <- mday(cdate)
     lbl_str <- paste("Corresponding calendar date is ", cmonth, " ", cday)
-    updateSliderInput(session, inputId = "slider_parameters", label = lbl_str)
+    output$calendar_format <- renderText({lbl_str})
+#    updateSliderInput(session, inputId = "slider_parameters", label = lbl_str)
   }
 )
 

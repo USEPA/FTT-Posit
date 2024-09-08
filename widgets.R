@@ -703,7 +703,7 @@ slider_calendar_text_out <- textOutput("calendar_format")
 slider_parameters_button <-
   sliderInput(
     inputId = "slider_parameters",
-    label = "Day number:",
+    label = "",
     min = 1,
     max = 365,
     value = 91

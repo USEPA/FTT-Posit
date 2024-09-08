@@ -29,7 +29,7 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                         shinyjs::hidden(
                           div(
                             id = "options",
-                            h4("Gather life history parameters"),
+                            br(),
                             h4(""),
                             
                             conditionalPanel(
