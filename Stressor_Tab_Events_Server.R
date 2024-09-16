@@ -460,7 +460,7 @@ observeEvent(input$store_winter_params,
                shinyjs::show(id  = "stressor_verification")
                shinyjs::show(id = "Visualization_SPB")
                # shinyjs::show(id = "Visualization_SDEC")
-               shinyjs::show(id = "stressor_table_main")
+               # shinyjs::show(id = "stressor_table_main")
                
                shinyjs::disable(id = "stressorName")
                shinyjs::disable(id = "baselines")
@@ -996,7 +996,7 @@ observeEvent(input$upload_predetermined_growth_effects,
                )
                shinyjs::show(id  = "Growth_Percent_Main")
                shinyjs::show(id  = "stressor_verification")
-               shinyjs::show(id = "stressor_table_main")
+               # shinyjs::show(id = "stressor_table_main")
                
                result <- tolower(CurrentStressorScenarioName) %in% tolower(scenario_names)
                if (result == FALSE)
