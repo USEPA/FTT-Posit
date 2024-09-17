@@ -6,10 +6,11 @@ WORKDIR /home/app/
 COPY . .
 
 # Install OpenJDK-8
+RUN echo "deb http://deb.debian.org/debian buster-backports main" >> /etc/apt/sources.list
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk && \
-    apt-get install -y ant && \
-    apt-get clean;
+    apt-get install -y openjdk-8-jdk ant -t buster-backports && \
+    apt-get clean 
+   
 
 # Setup JAVA_HOME -- useful for docker commandline
 ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
