@@ -5,12 +5,9 @@ WORKDIR /home/app/
 
 COPY . .
 
-# Add backports repository
-RUN echo "deb http://deb.debian.org/debian buster-backports main" >> /etc/apt/sources.list
-
 # Install OpenJDK-8
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk -t buster-backports && \
+    apt-get install -y openjdk-11-jdk && \
     apt-get install -y ant && \
     apt-get clean;
    
