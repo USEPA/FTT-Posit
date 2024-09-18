@@ -5,28 +5,24 @@ WORKDIR /home/app/
 
 COPY . .
 
-RUN apt-get update && apt-get install -y software-properties-common
-RUN apt-add-repository ppa:openjdk-r/ppa
+# Download OpenJDK-11
+RUN wget -O - https://apt.corretto.aws/corretto.key | gpg --dearmor -o /usr/share/keyrings/corretto-keyring.gpg && \
+echo "deb [signed-by=/usr/share/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" | tee /etc/apt/sources.list.d/corretto.list
 
-# Install OpenJDK-8
+# Install JDK-11
 RUN apt-get update && \
-    apt-get install -y openjdk-8-jdk && \
+    apt-get install -y java-11-amazon-corretto-jdk && \
     apt-get install -y ant && \
     apt-get clean;
 
 # Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
-RUN export JAVA_HOME
-RUN echo $JAVA_HOME
-
-# Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
+ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
 RUN export JAVA_HOME
 RUN echo $JAVA_HOME
 
 RUN echo 'sanitize_errors off;disable_protocols xdr-streaming xhr-streaming iframe-eventsource iframe-htmlfile;' >> /etc/shiny-server/shiny-server.conf
 
-ENV LD_LIBRARY_PATH /usr/lib/jvm/java-8-openjdk-amd64/lib/amd64:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server
+ENV LD_LIBRARY_PATH /usr/lib/jvm/java-11-openjdk-amd64/lib/amd64:/usr/lib/jvm/java-11-openjdk-amd64/jre/lib/amd64/server
 RUN export LD_LIBRARY_PATH
 
 RUN ls -la
