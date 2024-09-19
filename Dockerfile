@@ -22,6 +22,9 @@ RUN echo 'sanitize_errors off;disable_protocols xdr-streaming xhr-streaming ifra
 ENV LD_LIBRARY_PATH /usr/lib/jvm/java-11-openjdk-amd64/lib/amd64:/usr/lib/jvm/java-11-openjdk-amd64/jre/lib/amd64/server
 RUN export LD_LIBRARY_PATH
 
+# Install xlsx package
+RUN R -e "install.packages('xlsx', repos='https://cloud.r-project.org/')"
+
 RUN ls -la
 RUN Rscript install_packages.R
 
