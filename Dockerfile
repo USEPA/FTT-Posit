@@ -5,27 +5,20 @@ WORKDIR /home/app/
 
 COPY . .
 
+# Install OpenJDK-8
 RUN apt-get update && \
-    apt-get install -y wget ca-certificates gnupg
-    
-# Download OpenJDK-11
-RUN get -qO - https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public | apt-key add - && \
-echo echo "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb stable main" | tee /etc/apt/sources.list.d/adoptopenjdk.list
-
-# Install JDK-11
-RUN apt-get update && \
-    apt-get install -y adoptopenjdk-11-hotspot && \
+    apt-get install -y openjdk-8-jdk && \
     apt-get install -y ant && \
     apt-get clean;
 
 # Setup JAVA_HOME -- useful for docker commandline
-ENV JAVA_HOME /usr/lib/jvm/adoptopenjdk-11-hotspot-amd64/
+ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64/
 RUN export JAVA_HOME
 RUN echo $JAVA_HOME
 
 RUN echo 'sanitize_errors off;disable_protocols xdr-streaming xhr-streaming iframe-eventsource iframe-htmlfile;' >> /etc/shiny-server/shiny-server.conf
 
-ENV LD_LIBRARY_PATH /usr/lib/jvm/adoptopenjdk-11-hotspot/lib/amd64:/usr/lib/jvm/adoptopenjdk-11-hotspot/jre/lib/amd64/server
+ENV LD_LIBRARY_PATH /usr/lib/jvm/java-8-openjdk-amd64/lib/amd64:/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/amd64/server
 RUN export LD_LIBRARY_PATH
 
 RUN ls -la
