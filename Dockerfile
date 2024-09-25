@@ -5,12 +5,11 @@ WORKDIR /home/app/
 
 COPY . .
 
-# Install-11
-RUN wget -O - https://apt.corretto.aws/corretto.key | gpg --dearmor -o /usr/share/keyrings/corretto-keyring.gpg && \
-echo "deb [signed-by=/usr/share/keyrings/corretto-keyring.gpg] https://apt.corretto.aws stable main" | tee /etc/apt/sources.list.d/corretto.list
-
+# Install-open-jdk11
 RUN apt-get update && \
-    apt-get install -y java-11-amazon-corretto-jdk
+    apt-get install -y openjdk-11-jdk && \
+    apt-get install -y ant && \
+    apt-get clean;
 
 # Setup JAVA_HOME -- useful for docker commandline
 ENV JAVA_HOME /usr/lib/jvm/java-11-openjdk-amd64/
