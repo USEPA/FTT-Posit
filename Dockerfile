@@ -5,7 +5,7 @@ WORKDIR /home/app/
 
 COPY . .
 
-# Install-open-jdk11
+# Install-open-jdk17
 RUN apt-get update && \
     apt-get install -y default-jdk && \
     apt-get install -y ant && \
