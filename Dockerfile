@@ -7,7 +7,7 @@ COPY . .
 
 # Install-open-jdk11
 RUN apt-get update && \
-    apt-get install -y openjdk-11-jdk && \
+    apt-get install -y default-jdk && \
     apt-get install -y ant && \
     apt-get clean;
 
