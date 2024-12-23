@@ -11,6 +11,7 @@ observe({
   if (is.null(input$Check_Scenario_Names_Results))
   {
     shinyjs::disable(id = "Download_Results_Report")
+    shinyjs::disable(id = "show_results_markdown_modal")
     shinyjs::hide(id = "summaryMatrix_out_Main")
     shinyjs::hide(id = "scenario_summary_results_main")
     updateSwitchInput(session, 
@@ -36,7 +37,9 @@ observe({
                       value = FALSE)
   }else if (length(input$Check_Scenario_Names_Results) == 1)
   {
+    SelectedSimulationRunScenarios <<- input$Check_Scenario_Names_Results
     shinyjs::enable(id = "Download_Results_Report")
+    shinyjs::enable(id = "show_results_markdown_modal")
     shinyjs::hide(id = "summaryMatrix_out_Main")
     if (summaryMatrix_flag == TRUE)
     {
@@ -48,7 +51,9 @@ observe({
                       value = FALSE)
   }else
   {
+    SelectedSimulationRunScenarios <<- input$Check_Scenario_Names_Results
     shinyjs::enable(id = "Download_Results_Report")
+    shinyjs::enable(id = "show_results_markdown_modal")
   }
 })
 
@@ -62,12 +67,15 @@ observeEvent(input$summary_results_table,
       return(10)
     }else
     {
-      # inputScenarioNamesResults <- input$Check_Scenario_Names_Results
+      SelectedSimulationRunScenarios <<- input$Check_Scenario_Names_Results
       output$scenario_summary_results_table <- DT::renderDataTable(
         {
           return_summary_results_table(input$Check_Scenario_Names_Results)
+          
         },
-        options = list(scrollX = TRUE)
+        options = list(
+          scrollX = TRUE
+        )
       )
       shinyjs::show(id = "scenario_summary_results_main")
     }
@@ -88,11 +96,14 @@ observeEvent(input$plot_clear_summary_results_table,
                    shinyjs::info("Error: no scenarios were selected. Please select one or more scenarios.")
                  }else
                  {
+                   SelectedSimulationRunScenarios <<- input$Check_Scenario_Names_Results
                    output$scenario_summary_results_table <- DT::renderDataTable(
                      {
                        return_summary_results_table(input$Check_Scenario_Names_Results)
                      },
-                     options = list(scrollX = TRUE)
+                     options = list(
+                       scrollX = TRUE
+                     )
                    )
                    shinyjs::show(id = "scenario_summary_results_main")
                  }
@@ -494,6 +505,7 @@ observeEvent(input$export_summaryResults_modal,
                  output$plotSummaryResults <- DT::renderDataTable(
                    {
                      return_summary_results_table(input$Check_Scenario_Names_Results)
+                               
                    },
                    options = list(scrollX = TRUE)
                  )
@@ -1006,4 +1018,75 @@ output$Download_Results_Report <- downloadHandler(
       xlsx::saveWorkbook(Results_Workbook,file)
     }
  
+) 
+
+################################################################################
+#  Render R markdown document
+################################################################################
+output$results_markdown <- renderUI(
+  {
+    req(input$Check_Scenario_Names_Results)
+    path_rmd <- "Results_Report.Rmd"
+    # Render into www/ folder.
+    path_html <- "www\\Results_Report.html"
+    render(
+      path_rmd,
+      output_file = path_html
+    )
+    tags$iframe(
+      style = "border-width: 0;",
+      width = "100%",
+      height = 1200,
+      # Filename relative to the www/ folder.
+      src = basename(path_html)
+    )
+  }
+)
+
+outputOptions(output, "results_markdown", suspendWhenHidden = FALSE)
+
+# observeEvent(input$show_results_markdown_modal,
+#              {
+#                output$results_markdown <- renderUI(
+#                  {
+#                    path_rmd <- "Results_Report.Rmd"
+#                    # Render into www/ folder.
+#                    path_html <- "www\\Results_Report.html"
+#                    render(
+#                      path_rmd,
+#                      output_file = path_html
+#                    )
+#                    tags$iframe(
+#                      style = "border-width: 0;",
+#                      width = "100%",
+#                      height = 1200,
+#                      # Filename relative to the www/ folder.
+#                      src = basename(path_html)
+#                    )
+#                    
+#                  }
+#                )
+#                
+#              },ignoreInit = TRUE)
+
+
+
+# R markdown
+output$downloadResultsMarkdown <- downloadHandler(
+  filename <- function()
+  {
+    paste("Results_Report", "pdf", sep = ".")
+  },
+  content = function(file) 
+  {
+    # src <- normalizePath('Species_Profile.Rmd')
+    # owd <- setwd(tempdir())
+    # on.exit(setwd(owd))
+    # file.copy(src, 'Species_Profile.Rmd')
+    # library(rmarkdown)
+    # library(tinytex)
+    # out <- render('Species_Profile.Rmd',pdf_document())
+    # file.rename(out, file)
+    file.rename(html_to_pdf(file_path = "www\\Results_Report.html"), file)
+  }
 ) 

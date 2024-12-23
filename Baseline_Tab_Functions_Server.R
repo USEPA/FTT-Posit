@@ -1,5 +1,24 @@
 # Baseline Tab Functions
 
+# This function formats numerical values.
+format_number <- function(value)
+{
+  if (value < 1.0E-03) {
+    if (value < .Machine$double.xmin){
+      value <- format(value, digits = 1, nsmall = 0, scientific = FALSE, 
+                      drop0trailing = TRUE)
+    } else {
+      value <- format(value, digits = 4, scientific = TRUE)
+    }
+  } else if (value > 1.0E+03) {
+    value <- format(value, digits = 4, scientific = TRUE)
+  } else {
+    value <- format(value, digits = 6, nsmall = 3, scientific = FALSE, 
+                    drop0trailing = TRUE)
+  }
+  return(value)
+}
+
 ####################################################################################################
 # Baseline Name
 ####################################################################################################

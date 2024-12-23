@@ -22,6 +22,7 @@ observeEvent(input$add_BaselineScenario,
                shinyjs::enable(id = "upload_history_pars")
                shinyjs::enable(id = "download_history_parameters")
                shinyjs::enable(id = "spawn_algorithm")
+               shinyjs::disable(id = "show_species_profile_modal")
              })
 
 ###################################################################################################
@@ -41,6 +42,7 @@ observeEvent(
     }else
     {
       TemporaryBaselineScenarioName <<- input$currentScenarioName
+      CurrentBaselineScenarioName <<- input$currentScenarioName
       # enter_baseline_scenario_name(input$currentScenarioName, input$textBaselineDescription)
       # scenario_name <- input$currentScenarioName
       output$text_basename <- renderText(
@@ -90,6 +92,7 @@ observeEvent(
     shinyjs::hide(id = "baseline_visualize")
     shinyjs::hide(id = "life_history_table_main")
     shinyjs::hide(id = "Spawning_Prob_main")
+    shinyjs::hide(id = "species_profile_html")
     shinyjs::hide(id = "baseline_selection_name")
     shinyjs::hide(id = "upload_new_exposure_concentration")
     shinyjs::hide(id = "exposure_conc")
@@ -129,22 +132,44 @@ observeEvent(input$baselines,
 ####################################################################################################
 # Display Tables
 ####################################################################################################
+# observeEvent(input$display_LifeHistory,
+#              {
+#                output$life_history_table <- DT::renderDataTable({
+#                  if (input$species == 'New')
+#                  {
+#                    file_history <- input$upload_history_pars$datapath
+#                    if (is.null(file_history)){
+#                      return()
+#                    }
+#                  }
+#                  return_history_pars(CurrentBaselineScenarioName)
+#                },  options = list(scrollX = TRUE))
+#                shinyjs::show(id = "life_history_table_main")
+#              }
+# )
+
 observeEvent(input$display_LifeHistory,
              {
-               output$life_history_table <- DT::renderDataTable({
-                 if (input$species == 'New')
-                 {
-                   file_history <- input$upload_history_pars$datapath
-                   if (is.null(file_history)){
-                     return()
+               if (input$display_LifeHistory)
+               {
+                 output$life_history_table <- DT::renderDataTable({
+                   if (input$species == 'New')
+                   {
+                     file_history <- input$upload_history_pars$datapath
+                     if (is.null(file_history)){
+                       return()
+                     }
                    }
-                 }
-                 return_history_pars(CurrentBaselineScenarioName)
-               },  options = list(scrollX = TRUE))
-               shinyjs::show(id = "life_history_table_main")
-             }
-)
-
+                   return_history_pars(CurrentBaselineScenarioName)
+                 },  options = list(scrollX = TRUE))
+                 shinyjs::show(id = "life_history_table_main")
+               }else
+               {
+                 shinyjs::hide(id = "life_history_table_main")
+               }
+               
+             },
+             ignoreInit = TRUE)
 
 ####################################################################################################
 # Download/Upload Events
@@ -153,7 +178,7 @@ observeEvent(input$upload_history_pars,
              {
                assign_history_pars(TemporaryBaselineScenarioName, input$upload_history_pars$datapath)
                label_str <- paste("View complete ", TemporaryBaselineScenarioName, " parameters")
-               updateActionButton(session, "display_LifeHistory", label = label_str)
+               # updateActionButton(session, "display_LifeHistory", label = label_str)
              }
 )
 
@@ -265,6 +290,8 @@ observeEvent(input$spawn_algorithm,
                output$text_runid <- NULL
                
                shinyjs::show(id = "Spawning_Prob_main")
+               
+               shinyjs::show(id = "species_profile_html")
 
                shinyjs::show(id = "baseline_visualize")
 
@@ -278,6 +305,7 @@ observeEvent(input$spawn_algorithm,
                shinyjs::show(id = "HideAddStressorScenarioButton")
                shinyjs::show(id = "HideAddSimulationRunButton")
                
+               shinyjs::enable(id = "show_species_profile_modal")
                shinyjs::disable(id = "currentScenarioName")
                shinyjs::disable(id = "textBaselineDescription")
                shinyjs::disable(id = "submit_name")
@@ -339,10 +367,20 @@ observeEvent(input$spawn_algorithm,
                                          style="font-size:200%"),
                                      size = "l",
                                      footer = modalButton(div("Close",style="font-size:160%"))), session)
+               
+               # md_out(rmarkdown::render("Species_Profile.Rmd"))
 
              }
-
+             
 )
+
+################################################################################
+#  Render R markdown document
+################################################################################
+
+output$rmark <- renderUI({
+  tags$iframe(srcdoc = HTML(readLines(rmarkdown::render("Species_Profile.Rmd"))), 
+              seamless = "seamless", height = 1200, width = 1480)})
 
 
 ####################################################################################################
@@ -361,14 +399,15 @@ observeEvent(input$export_baseline,
 observeEvent(input$load_fhm_parameters,
              {
                load_fhm_parameters(TemporaryBaselineScenarioName, input$species)
+               CurrentSpeciesName <<- input$species
                output$text_load_fhm <- renderText(
                  {
                    paste("Fathead Minnow parameters have been loaded into memory.")
                  }
                )
                label_str <- paste("View complete ", TemporaryBaselineScenarioName, " parameters")
-               updateActionButton(session, "display_LifeHistory", label = label_str)
-#               shinyjs::show(id = "HideExportScenarioButton")
+               # updateActionButton(session, "display_LifeHistory", label = label_str)
+               # shinyjs::show(id = "HideExportScenarioButton")
              }
 )
 
@@ -393,6 +432,7 @@ observe({
     shinyjs::hide(id = "scenario_options")
     shinyjs::hide(id = "life_history_table_main")
     shinyjs::hide(id = "Spawning_Prob_main")
+    shinyjs::hide(id = "species_profile_html")
     shinyjs::hide(id = "baseline_visualize")
   }
 
@@ -402,11 +442,13 @@ observe(
   {
     if (input$species == "Fathead Minnow")
     {
+      CurrentSpeciesName <<- "Fathead Minnow"
       output$text_load_fhm <- NULL
       shinyjs::show(id ="options")
       shinyjs::hide(id = "scenario_options")
       shinyjs::hide(id = "life_history_table_main")
       shinyjs::hide(id = "Spawning_Prob_main")
+      shinyjs::hide(id = "species_profile_html")
       shinyjs::hide(id = "baseline_visualize")
     }
   }
@@ -421,6 +463,7 @@ observe(
       shinyjs::hide(id = "scenario_options")
       shinyjs::hide(id = "life_history_table_main")
       shinyjs::hide(id = "Spawning_Prob_main")
+      shinyjs::hide(id = "species_profile_html")
       shinyjs::hide(id = "baseline_visualize")
     }
   }

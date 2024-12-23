@@ -1,0 +1,141 @@
+---
+output: html_document
+---
+
+```{css, echo=FALSE}
+h1, h2, h3 {
+  text-align: center;
+}
+```
+
+```{r echo=FALSE}
+index <- which(species_library$common_name == CurrentSpeciesName, arr.ind = TRUE)
+sname <- species_library$common_name[index]
+scname <- species_library$scientific_name[index]
+```
+
+## `r paste(sname," (",scname, ")" ,sep = "")`
+
+## Visual Species Profile
+
+## FishToxTranslator `r packageVersion("FishToxTranslator")`
+
+## Generated: `r format(Sys.time(), '%m/%d/%Y')`
+
+
+```{r echo=FALSE}
+dfs <<- parameters[[CurrentBaselineScenarioName]]
+```
+
+### Growth Parameters
+:::: {style="display: flex;"}
+
+::: {}
+
+```{r echo=FALSE}
+zhatch <- format_number(dfs$z_hatch[1])
+zinf <- format_number(dfs$z_inf[1])
+kg <- format_number(dfs$k_g[1])
+varkg <- format_number(dfs$var_k_g[1])
+vareg <- format_number(dfs$var_e_g[1])
+alloslope <- format_number(dfs$allo_slope[1])
+allointercept <- format_number(dfs$allo_intercept[1])
+
+dfnew1 <- data.frame(Value = c(zhatch, zinf, kg, varkg, vareg, alloslope, allointercept), Name = c(parameters_master[["name"]][parameters_master$id == "z_hatch"], parameters_master[["name"]][parameters_master$id == "z_inf"], parameters_master[["name"]][parameters_master$id == "z_hatch"], parameters_master[["name"]][parameters_master$id == "var_k_g"], 
+parameters_master[["name"]][parameters_master$id == "var_e_g"],
+parameters_master[["name"]][parameters_master$id == "allo_slope"],
+parameters_master[["name"]][parameters_master$id == "allo_slope"]))
+
+dfnew1 %>%
+  kbl(caption = "Growth Parameters") %>%
+  kable_material(c("striped", "hover"))
+```
+:::
+
+::: {}
+<div style="margin-left:60px;">
+</div>
+:::
+
+::: {}
+
+```{r  echo=FALSE}
+PlotGrowth(parameters[scenario_names[1]], 169)
+```
+:::
+
+::::
+
+### Survival Parameters
+:::: {style="display: flex;"}
+
+::: {}
+
+```{r echo=FALSE}
+smin <- format_number(dfs$s_min[1])
+smax <- format_number(dfs$s_max[1])
+sa <- format_number(dfs$s_a[1])
+sb <- format_number(dfs$s_b[1])
+psmort <- format_number(dfs$post_spawning_mortality[1])
+
+dfnew2 <- data.frame(Value = c(smin, smax, sa, sb, psmort), Name = c(parameters_master[["name"]][parameters_master$id == "s_min"], parameters_master[["name"]][parameters_master$id == "s_max"], parameters_master[["name"]][parameters_master$id == "s_a"], parameters_master[["name"]][parameters_master$id == "s_b"], 
+parameters_master[["name"]][parameters_master$id == "post_spawning_mortality"]))
+
+dfnew2 %>%
+  kbl(caption = "Survival Parameters") %>%
+  kable_material(c("striped", "hover"))
+```
+:::
+
+::: {}
+<div style="margin-left:60px;">
+</div>
+:::
+
+::: {}
+
+```{r  echo=FALSE}
+PlotSurvival(parameters[scenario_names[1]], 169)
+```
+:::
+
+::::
+
+### Reproduction Parameters
+:::: {style="display: flex;"}
+
+::: {}
+
+```{r echo=FALSE}
+zrepro <- format_number(dfs$z_repro[1])
+sexratio <- format_number(dfs$sex_ratio[1])
+fecuslope <- format_number(dfs$fecu_slope[1])
+fecuintercept <- format_number(dfs$fecu_intercept[1])
+hatchrate <- format_number(dfs$hatch_rate[1])
+pawnint <- format_number(dfs$spawn_int[1])
+spawnsmaxseason <- format_number(dfs$spawns_max_season[1])
+reprostart <- format_number(dfs$repro_start[1])
+reproend <- format_number(dfs$repro_end[1])
+
+dfnew3 <- data.frame(Value = c(zrepro, sexratio, fecuslope, fecuintercept, hatchrate, pawnint, spawnsmaxseason, reprostart, reproend), Name = c(parameters_master[["name"]][parameters_master$id == "z_repro"], parameters_master[["name"]][parameters_master$id == "sex_ratio"], parameters_master[["name"]][parameters_master$id == "fecu_slope"], parameters_master[["name"]][parameters_master$id == "fecu_intercept"], parameters_master[["name"]][parameters_master$id == "hatch_rate"], parameters_master[["name"]][parameters_master$id == "spawn_int"], parameters_master[["name"]][parameters_master$id == "spawns_max_season"], parameters_master[["name"]][parameters_master$id == "repro_start"], parameters_master[["name"]][parameters_master$id == "repro_end"]))
+
+dfnew3 %>%
+  kbl(caption = "Reproduction Parameters") %>%
+  kable_material(c("striped", "hover"))
+```
+:::
+
+::: {}
+<div style="margin-left:60px;">
+</div>
+:::
+
+::: {}
+
+```{r echo=FALSE}
+PlotReproduction(parameters[scenario_names[1]], 169)
+```
+
+:::
+
+::::

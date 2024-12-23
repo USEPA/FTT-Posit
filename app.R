@@ -50,6 +50,13 @@ library("devtools")
 library("shiny.pwa")
 library("shinyhelper")
 library("openxlsx")
+library("markdown")
+library("rmarkdown")
+library("knitr")
+library("kableExtra")
+library("psycModel")
+library("pagedown")
+library("pixiedust")
 library(FishToxTranslator)
 
 # Add Sentry library

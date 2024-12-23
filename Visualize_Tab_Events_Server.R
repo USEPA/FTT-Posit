@@ -527,6 +527,25 @@ observe(
 ####################################################################################################
 # Observe events that will trigger the opening of modal windows for downloading plots
 ####################################################################################################
+# R markdown
+output$downloadSpeciesProfile <- downloadHandler(
+  filename <- function()
+  {
+    paste("Species_Profile_Report", "pdf", sep = ".")
+  },
+  content = function(file) 
+  {
+    # src <- normalizePath('Species_Profile.Rmd')
+    # owd <- setwd(tempdir())
+    # on.exit(setwd(owd))
+    # file.copy(src, 'Species_Profile.Rmd')
+    # library(rmarkdown)
+    # library(tinytex)
+    # out <- render('Species_Profile.Rmd',pdf_document())
+    # file.rename(out, file)
+    file.rename(html_to_pdf(file_path = "Species_Profile.html"), file)
+  }
+) 
 
 # Growth Functions
 observeEvent(input$export_growth_modal,
