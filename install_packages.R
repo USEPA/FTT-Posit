@@ -1,6 +1,6 @@
 install.packages("tidyverse")
 
-install.packages("FishToxTranslator_0.1.17.tar.gz",type="source")
+install.packages("FishToxTranslator_0.1.18.tar.gz",type="source")
 
 install.packages("shiny")
 install.packages("shinyjs")
