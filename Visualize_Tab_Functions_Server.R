@@ -6,7 +6,7 @@ plot_growth_parameters <- function(inputScenariosToVis, dateInput)
     return(10)
   }else
   {
-    PlotGrowth(parameters[inputScenariosToVis],dateInput)
+    FishToxTranslator::PlotGrowth(parameters[inputScenariosToVis],dateInput)
   }
 }
 
@@ -17,7 +17,7 @@ plot_survival_parameters <- function(inputScenariosToVis, dateInput)
     return(10)
   }else
   {
-    PlotSurvival(parameters[inputScenariosToVis],dateInput)
+    FishToxTranslator::PlotSurvival(parameters[inputScenariosToVis],dateInput)
   }
 }
 
@@ -28,7 +28,7 @@ plot_reproduction_parameters <- function(inputScenariosToVis, dateInput)
     return(10)
   }else
   {
-    PlotReproduction(parameters[inputScenariosToVis],dateInput)
+    FishToxTranslator::PlotReproduction(parameters[inputScenariosToVis],dateInput)
   }
 }
 
@@ -39,7 +39,7 @@ plot_scenarios_spawning_probabilities <- function(inputScenariosToVis)
     return(10)
   }else
   {
-    PlotSpawningProbs(parameters[inputScenariosToVis])
+    FishToxTranslator::PlotSpawningProbs(parameters[inputScenariosToVis])
   }
 }
 
@@ -59,7 +59,7 @@ plot_scenarios_survival_decrements <- function(inputScenariosToVis)
     }
     if (surv_decr_exists == TRUE)
     {
-      PlotSurvivalDecrements(parameters[inputScenariosToVis])
+      FishToxTranslator::PlotSurvivalDecrements(parameters[inputScenariosToVis])
     }
     else
     {
@@ -85,7 +85,7 @@ plot_scenarios_growth_percents <- function(inputScenariosToVis)
     }
     if (growth_percents_exists == TRUE)
     {
-      PlotGrowthPercents(parameters[inputScenariosToVis])
+      FishToxTranslator::PlotGrowthPercents(parameters[inputScenariosToVis])
     }
     else
     {
@@ -111,7 +111,7 @@ plot_scenarios_exposure_concentrations <- function(inputScenariosToVis)
     }
     if (exp_conc_exists == TRUE)
     {
-      PlotExposureConcentrations(parameters[inputScenariosToVis])
+      FishToxTranslator::PlotExposureConcentrations(parameters[inputScenariosToVis])
     }
     else
     {

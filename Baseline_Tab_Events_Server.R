@@ -13,6 +13,12 @@ observeEvent(input$add_BaselineScenario,
                output$text_spawning_alg <- NULL
                updateSelectInput(session, "species",
                                  selected = "None Selected")
+               updateSwitchInput(session, 
+                                 inputId = "display_SpeciesParameters",
+                                 value = FALSE)
+               updateSwitchInput(session, 
+                                 inputId = "display_LifeHistory",
+                                 value = FALSE)
                
                shinyjs::enable(id = "currentScenarioName")
                shinyjs::enable(id = "textBaselineDescription")
@@ -22,7 +28,7 @@ observeEvent(input$add_BaselineScenario,
                shinyjs::enable(id = "upload_history_pars")
                shinyjs::enable(id = "download_history_parameters")
                shinyjs::enable(id = "spawn_algorithm")
-               shinyjs::disable(id = "show_species_profile_modal")
+               shinyjs::enable(id = "show_species_profile_modal")
              })
 
 ###################################################################################################
@@ -109,6 +115,7 @@ observeEvent(
     shinyjs::hide(id = "TCEM_Main")
     shinyjs::hide(id = "Survival_Decrement_Main")
     shinyjs::hide(id = "Winter_Survival_Main")
+    shinyjs::hide(id = "species_parameters_table_main")
   }
 )
 
@@ -147,6 +154,21 @@ observeEvent(input$baselines,
 #                shinyjs::show(id = "life_history_table_main")
 #              }
 # )
+observeEvent(input$display_SpeciesParameters,
+             {
+               if (input$display_SpeciesParameters)
+               {
+                 output$species_parameters_table <- DT::renderDataTable({
+                   return_species_pars(CurrentSpeciesName)
+                 }, options = list(scrollX = TRUE))
+                 shinyjs::show("species_parameters_table_main")
+               }else
+               {
+                 shinyjs::hide("species_parameters_table_main")
+               }
+             },
+             ignoreInit = TRUE
+)
 
 observeEvent(input$display_LifeHistory,
              {
@@ -378,10 +400,42 @@ observeEvent(input$spawn_algorithm,
 #  Render R markdown document
 ################################################################################
 
-output$rmark <- renderUI({
-  tags$iframe(srcdoc = HTML(readLines(rmarkdown::render("Species_Profile.Rmd"))), 
-              seamless = "seamless", height = 1200, width = 1480)})
+# output$rmark <- renderUI({
+#   tags$iframe(srcdoc = HTML(readLines(rmarkdown::render("Species_Profile.Rmd"))), 
+#               seamless = "seamless", height = 1200, width = 1480)})
 
+generate_species_markdown <- reactive({
+  req(input$species)
+  if (length(input$species) >= 1)
+  {
+    return(TRUE)
+  }else 
+  {
+    return(FALSE)
+  }
+})
+
+output$rmark <- renderUI(
+  {
+    if (generate_species_markdown() == TRUE)
+    {
+      path_rmd <- "Species_Profile.Rmd"
+      # Render into www/ folder.
+      path_html <- paste("www\\",CurrentSpeciesName,"_Profile.html",sep = "")
+      render(
+         path_rmd,
+         output_file = path_html
+      )
+      tags$iframe(
+        style = "border-width: 0;",
+        width = "100%",
+        height = 1200,
+        # Filename relative to the www/ folder.
+        src = basename(path_html)
+      )
+    }
+  }
+)
 
 ####################################################################################################
 # Export Events
@@ -402,7 +456,7 @@ observeEvent(input$load_fhm_parameters,
                CurrentSpeciesName <<- input$species
                output$text_load_fhm <- renderText(
                  {
-                   paste("Fathead Minnow parameters have been loaded into memory.")
+                   paste(CurrentSpeciesName, " parameters have been loaded into memory.")
                  }
                )
                label_str <- paste("View complete ", TemporaryBaselineScenarioName, " parameters")
@@ -434,15 +488,16 @@ observe({
     shinyjs::hide(id = "Spawning_Prob_main")
     shinyjs::hide(id = "species_profile_html")
     shinyjs::hide(id = "baseline_visualize")
+    shinyjs::hide(id = "species_parameters_table_main")
   }
 
 })
 
 observe(
   {
-    if (input$species == "Fathead Minnow")
+    if (input$species %in% species_library$common_name)
     {
-      CurrentSpeciesName <<- "Fathead Minnow"
+      CurrentSpeciesName <<- input$species
       output$text_load_fhm <- NULL
       shinyjs::show(id ="options")
       shinyjs::hide(id = "scenario_options")

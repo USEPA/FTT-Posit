@@ -1023,27 +1023,48 @@ output$Download_Results_Report <- downloadHandler(
 ################################################################################
 #  Render R markdown document
 ################################################################################
+generate_markdown <- reactive({
+  req(input$Check_Scenario_Names_Results)
+  # output$results_markdown <- NULL
+  if (length(input$Check_Scenario_Names_Results) >= 1)
+  {
+    return(TRUE)
+  }else 
+  {
+    return(FALSE)
+  }
+})
+  
 output$results_markdown <- renderUI(
   {
-    req(input$Check_Scenario_Names_Results)
-    path_rmd <- "Results_Report.Rmd"
-    # Render into www/ folder.
-    path_html <- "www\\Results_Report.html"
-    render(
-      path_rmd,
-      output_file = path_html
-    )
-    tags$iframe(
-      style = "border-width: 0;",
-      width = "100%",
-      height = 1200,
-      # Filename relative to the www/ folder.
-      src = basename(path_html)
-    )
+    if (generate_markdown() == TRUE)
+    {
+      path_rmd <- "Results_Report.Rmd"
+      # Render into www/ folder.
+      path_html <- "www\\Results_Report.html"
+      render(
+        path_rmd,
+        output_file = path_html
+      )
+      tags$iframe(
+        style = "border-width: 0;",
+        width = "100%",
+        height = 1200,
+        # Filename relative to the www/ folder.
+        src = basename(path_html)
+      )
+    }
   }
 )
 
-outputOptions(output, "results_markdown", suspendWhenHidden = FALSE)
+# outputOptions(output, "results_markdown", suspendWhenHidden = TRUE)
+
+# observeEvent(input$close_markd_window,
+#              {
+#                output$results_markdown <- renderUI({})
+#                on.exit(removeModal())
+#              }
+# )
 
 # observeEvent(input$show_results_markdown_modal,
 #              {

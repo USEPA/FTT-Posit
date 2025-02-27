@@ -86,7 +86,7 @@ choose_species_DropDownMenu <-
 
 load_fhm_parameters_button_element <-
   actionButton(inputId = "load_fhm_parameters",
-               label = "Load Fathead Minnow Parameters",
+               label = "Load Species Parameters",
                class = "actButton")
 
 load_fhm_parameters_button <-
@@ -177,6 +177,27 @@ species_profile_modal_window <- bsModal(
     class = "download_Button"
   )
 )
+
+display_species_parameters_table_button_element <-
+  switchInput(
+    inputId = "display_SpeciesParameters",
+    label = "Display",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
+
+display_species_parameters_table_button <-
+  helper(
+    display_species_parameters_table_button_element,
+    icon = "question-circle",
+    colour = helper_Color,
+    type = "inline",
+    title = "Species Parameters",
+    content = "Table containing a list of all the parameters available for a given fish species."
+  )
 
 hyperlink_newtab_button <- actionLink(
   inputId = "hyperlink_newtab",
@@ -578,7 +599,7 @@ density_dependence_rate_element <-
   numericInput(
     inputId = "density_dependence_rate",
     label = as.character(parameters_master$name[which(parameters_master$id == 'dd_g')]),
-    value = get(species_library$parameter_data)$value[which(parameters_master$id == 'dd_g')]
+    value = parameters[[CurrentStressorScenarioName]]$value[which(parameters[[CurrentStressorScenarioName]]$id == 'dd_g')]
   )
 
 
@@ -1588,9 +1609,12 @@ results_markdown_modal_window <- bsModal(
     outputId = "downloadResultsMarkdown",
     label = "Download",
     class = "download_Button"
-  )
+  ),
+  actionButton(inputId = "close_markd_window", label = "Close")
 )
 
+results_markdown_modal_window <- tagAppendAttributes(results_markdown_modal_window,
+                                                     class = "modal1class")
 
 delete_results_button <- actionButton(inputId = "Delete_Results",
                                       label = "Delete Results",

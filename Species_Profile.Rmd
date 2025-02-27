@@ -24,7 +24,9 @@ scname <- species_library$scientific_name[index]
 
 
 ```{r echo=FALSE}
-dfs <<- parameters[[CurrentBaselineScenarioName]]
+cSDO <- as.character(species_library$parameter_data[which(species_library$common_name==sname)])
+cLHP <- get(cSDO)
+dfs <<- FishToxTranslator::TemplateToDataFrame(cLHP)
 ```
 
 ### Growth Parameters
@@ -60,7 +62,44 @@ dfnew1 %>%
 ::: {}
 
 ```{r  echo=FALSE}
-PlotGrowth(parameters[scenario_names[1]], 169)
+FishToxTranslator::PlotGrowth(forProfile = TRUE, species = sname)
+# PlotGrowth(parameters[scenario_names[1]], 169)
+```
+:::
+
+::::
+
+### Growth Trajectory
+:::: {style="display: fixed;"}
+
+::: {}
+
+```{r, echo=FALSE, warnings=FALSE, message=FALSE,fig.align='right'}
+FishToxTranslator::PlotGrowthTrajectory(species = sname)
+```
+:::
+
+::::
+
+### Survival Trajectory
+:::: {style="display: fixed;"}
+
+::: {}
+
+```{r echo=FALSE, fig.align='right', warning=FALSE, warnings=FALSE}
+FishToxTranslator:::PlotSurvivalTrajectory(species = sname)
+```
+:::
+
+::::
+
+### Length to Mass
+:::: {style="display: fixed;"}
+
+::: {}
+
+```{r, echo=FALSE, fig.align='right'}
+FishToxTranslator::PlotLengthToMass(species = sname)
 ```
 :::
 
@@ -95,7 +134,7 @@ dfnew2 %>%
 ::: {}
 
 ```{r  echo=FALSE}
-PlotSurvival(parameters[scenario_names[1]], 169)
+FishToxTranslator::PlotSurvival(forProfile = TRUE, species = sname)
 ```
 :::
 
@@ -132,8 +171,8 @@ dfnew3 %>%
 
 ::: {}
 
-```{r echo=FALSE}
-PlotReproduction(parameters[scenario_names[1]], 169)
+```{r, echo=FALSE}
+FishToxTranslator::PlotReproduction(forProfile = TRUE, species = sname)
 ```
 
 :::

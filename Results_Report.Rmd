@@ -72,8 +72,9 @@ new_names <- c("Scenario Name", "Starting Population", "Final Population",
 
 colnames(dfr) <- new_names
 
-dfr1 <- dfr[, 1:6]
-dfr2 <- dfr[, 7:12]
+dfr1 <- dfr[, 1:7]
+cols <- c(1, 8:12)
+dfr2 <- dfr[, cols]
 
 datatable(dfr1,
           options = list(
@@ -194,6 +195,6 @@ plot_Growth_Potential(SelectedSimulationRunScenarios)
 
 ### Transition Kernel
 ```{r, echo=FALSE, fig.width=10, fig.height=7}
-plot_Transitional_Kernel(SelectedSimulationRunScenarios)
+# plot_Transitional_Kernel(SelectedSimulationRunScenarios)
 ```
 

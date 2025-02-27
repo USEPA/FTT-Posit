@@ -61,7 +61,7 @@ load_fhm_parameters <- function(currentScenarioName, chosenSpecies)
 {
   chosenSpeciesDataObject <- as.character(species_library$parameter_data[which(species_library$common_name==chosenSpecies)])
   chosenLifeHistoryParameters <- get(chosenSpeciesDataObject)
-  parameters[[currentScenarioName]] <<- TemplateToDataFrame(chosenLifeHistoryParameters)
+  parameters[[currentScenarioName]] <<- FishToxTranslator::TemplateToDataFrame(chosenLifeHistoryParameters)
 }
 
 ####################################################################################################
@@ -82,7 +82,12 @@ assign_history_pars <- function(currentScenarioName, input_life_history)
 {
   newLifeHistory <- read.csv(file = input_life_history, header = TRUE,
                              stringsAsFactors = FALSE, check.names = FALSE)
-  parameters[[currentScenarioName]] <<- TemplateToDataFrame(newLifeHistory)
+  parameters[[currentScenarioName]] <<- FishToxTranslator::TemplateToDataFrame(newLifeHistory)
+}
+
+return_species_pars <- function(chosenSpecies)
+{
+  return(get(species_library$parameter_data[which(species_library$common_name==chosenSpecies)]))
 }
 
 return_history_pars <- function(currentScenarioName)
