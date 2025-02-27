@@ -33,9 +33,26 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                             h4(""),
                             
                             conditionalPanel(
-                              condition = "input.species == 'Fathead Minnow'",
-                              load_fhm_parameters_button,
-                              load_fhm_parameters_out_text
+                              condition = "input.species != 'New'",
+                              fluidRow(
+                                column(width = 4, h4("")),
+                                column(width = 8, h4("Species Parameters Table"))
+                              ),
+                              fluidRow(
+                                column(width = 4, export_species_profile_button),
+                                column(width = 8, display_species_parameters_table_button)
+                              ),
+                              fluidRow(
+                                column(width = 4, species_profile_modal_window),
+                                column(width = 8, h4(""))
+                              ),
+                              br(),
+                              fluidRow(
+                                column(width = 12, load_fhm_parameters_button)
+                              ),
+                              fluidRow(
+                                column(width = 12, load_fhm_parameters_out_text)
+                              )
                             ),
                             
                             conditionalPanel(
@@ -59,7 +76,12 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                             h4("Generate spawning probabilities"),
                             h4(""),
                             spawning_alg_button,
-                            h5(spawning_alg_out_text)
+                            h5(spawning_alg_out_text),
+                            br()
+                            # h4("Export Species Profile Markdown"),
+                            # export_species_profile_button,
+                            # h4(""),
+                            # species_profile_modal_window
                           )
                         ),
                         
@@ -67,6 +89,7 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                           div(
                             id = "baseline_visualize",
                             hr(),
+                            h4("Show Life History Parameters"),
                             display_life_history_table_button,
                             h4(""),
                             hr(),
@@ -83,6 +106,12 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                       ),
                       
                       mainPanel(shinyjs::hidden(
+                        div(
+                          id = "species_parameters_table_main",
+                          DT::dataTableOutput(outputId = "species_parameters_table", width = "100%")
+                        )
+                      ),
+                        shinyjs::hidden(
                         div(
                           id = "life_history_table_main",
                           DT::dataTableOutput(outputId = "life_history_table", width = "100%")
@@ -234,8 +263,8 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                 id = "stressor_verification",
                                 
                                 h4(""),
-                                hr(),
-                                h4(""),
+                                br(),
+                                h4("Display Stressor Parameters Table"),
                                 display_stressor_table_button,
                                 h4(""),
                                 hyperlink_stressor_newtab_button,
@@ -582,7 +611,20 @@ subtab41 <- tabPanel("Visualize Results", sidebarLayout(
           offset = 0,
           export_results_report_button
         )
-      )
+      ),
+      
+      br(),
+      
+      fluidRow(
+        column(width = 6, h4("Export Results Markdown")),
+        column(
+          width = 6,
+          offset = 0,
+          export_results_markdown_button
+        )
+      ),
+      h4(""),
+      results_markdown_modal_window
     )
   ), width = 4),
   

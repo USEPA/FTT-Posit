@@ -86,7 +86,7 @@ choose_species_DropDownMenu <-
 
 load_fhm_parameters_button_element <-
   actionButton(inputId = "load_fhm_parameters",
-               label = "Load Fathead Minnow Parameters",
+               label = "Load Species Parameters",
                class = "actButton")
 
 load_fhm_parameters_button <-
@@ -156,6 +156,49 @@ spawning_alg_out_text <- textOutput("text_spawning_alg")
 baseline_scenario_complete_text_out <-
   htmlOutput("baseline_scenario_complete")
 
+export_species_profile_button <-
+  actionButton(
+    inputId = "show_species_profile_modal",
+    label = "Display Species Profile",
+    width = "100%",
+    class = "actButton"
+  )
+
+species_profile_modal_window <- bsModal(
+  id = "species_profile_Popup",
+  title = "Species Profile",
+  trigger = "show_species_profile_modal",
+  size = "large",
+  tags$head(tags$style("#species_profile_Popup .modal-footer{ display:none}")),
+  uiOutput("rmark"),
+  downloadButton(
+    outputId = 'downloadSpeciesProfile',
+    label = 'Download',
+    class = "download_Button"
+  )
+)
+
+display_species_parameters_table_button_element <-
+  switchInput(
+    inputId = "display_SpeciesParameters",
+    label = "Display",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
+
+display_species_parameters_table_button <-
+  helper(
+    display_species_parameters_table_button_element,
+    icon = "question-circle",
+    colour = helper_Color,
+    type = "inline",
+    title = "Species Parameters",
+    content = "Table containing a list of all the parameters available for a given fish species."
+  )
+
 hyperlink_newtab_button <- actionLink(
   inputId = "hyperlink_newtab",
   label = "Move to creating a stressor scenario",
@@ -183,14 +226,24 @@ visualize_text_out <- textOutput("text_visualize")
 
 run_baseline_text_out <- textOutput("text_run_baseline")
 
-display_life_history_table_button_element <-
-  actionButton(
-    inputId = "display_LifeHistory",
-    label = "Display Life-History Parameters Table",
-    width = '250px',
-    class = "actButton"
-  )
+#display_life_history_table_button_element <-
+#  actionButton(
+#    inputId = "display_LifeHistory",
+#    label = "Display Life-History Parameters Table",
+#    width = '250px',
+#    class = "actButton"
+#  )
 
+display_life_history_table_button_element <-
+  switchInput(
+    inputId = "display_LifeHistory",
+    label = "Display",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
 
 display_life_history_table_button <-
   helper(
@@ -546,7 +599,7 @@ density_dependence_rate_element <-
   numericInput(
     inputId = "density_dependence_rate",
     label = as.character(parameters_master$name[which(parameters_master$id == 'dd_g')]),
-    value = get(species_library$parameter_data)$value[which(parameters_master$id == 'dd_g')]
+    value = parameters[[CurrentStressorScenarioName]]$value[which(parameters[[CurrentStressorScenarioName]]$id == 'dd_g')]
   )
 
 
@@ -649,12 +702,33 @@ store_density_dependence_parameters_button <-
     class = "actButton"
   )
 
-display_stressor_table_button <-
-  actionButton(
+# display_stressor_table_button <-
+#   actionButton(
+#     inputId = "display_stressor_table",
+#     label = "Display Stressor Parameters Table",
+#     width = '250px',
+#     class = "actButton"
+#   )
+
+display_stressor_table_button_element <-
+  switchInput(
     inputId = "display_stressor_table",
-    label = "Display Stressor Parameters Table",
-    width = '250px',
-    class = "actButton"
+    label = "Display",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
+
+display_stressor_table_button <-
+  helper(
+    display_stressor_table_button_element,
+    icon = "question-circle",
+    colour = helper_Color,
+    type = "inline",
+    title = "Stressor Parameters",
+    content = "Stressor Parameters Table"
   )
 
 stressor_scenario_complete_text_out <-
@@ -1515,6 +1589,32 @@ export_results_report_button <-
     content = "Creates an excel workbook with all data and information for the currently selected scenario results."
   )
 
+
+export_results_markdown_button <-
+  actionButton(
+    inputId = "show_results_markdown_modal",
+    label = "Markdown",
+    width = "100%",
+    class = "actButtonD1"
+  )
+
+results_markdown_modal_window <- bsModal(
+  id = "results_markdown_Popup",
+  title = "Results",
+  trigger = "show_results_markdown_modal",
+  size = "large",
+  tags$head(tags$style("#results_markdown_Popup .modal-footer{ display:none}")),
+  uiOutput("results_markdown"),
+  downloadButton(
+    outputId = "downloadResultsMarkdown",
+    label = "Download",
+    class = "download_Button"
+  ),
+  actionButton(inputId = "close_markd_window", label = "Close")
+)
+
+results_markdown_modal_window <- tagAppendAttributes(results_markdown_modal_window,
+                                                     class = "modal1class")
 
 delete_results_button <- actionButton(inputId = "Delete_Results",
                                       label = "Delete Results",

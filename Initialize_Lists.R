@@ -5,6 +5,7 @@ scenario_names <- vector() # Vector for storing scenario names
 CurrentBaselineScenarioName <- NA
 CurrentStressorScenarioName <- NA
 CurrentImportedScenarioName <- NA
+CurrentSpeciesName <- NA
 
 TemporaryBaselineScenarioName <- NA
 
@@ -68,4 +69,3 @@ GUI_Tooltip <- read.xlsx(xlsxFile = input,
                          sheet = "Sheet1",
                          check.names = FALSE,
                          detectDates = FALSE)
-

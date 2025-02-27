@@ -1,0 +1,200 @@
+---
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<style>
+body {
+    position: absolute;
+    left: 0px;}
+</style>
+
+```{css, echo=FALSE}
+h1, h2, h3 {
+  text-align: center;
+}
+```
+
+```{r, echo=FALSE}
+index <- which(species_library$common_name == CurrentSpeciesName, arr.ind = TRUE)
+sname <- species_library$common_name[index]
+scname <- species_library$scientific_name[index]
+
+headerCallback1 <- c(
+  "function(thead, data, start, end, display){",
+  "  var $ths = $(thead).find('th');",
+  "  $ths.css({'vertical-align': 'bottom', 'white-space': 'nowrap'});",
+  "  var betterCells = [];",
+  "  $ths.each(function(){",
+  "    var cell = $(this);",
+  "    var newDiv = $('<div>', {height: 'auto', width: cell.height()});",
+  "    var newInnerDiv = $('<div>', {text: cell.text()});",
+  "    newDiv.css({margin: 'auto'});",
+  "    newInnerDiv.css({",
+  "      transform: 'rotate(210deg)',",
+  "      'writing-mode': 'vertical-rl',",
+  "      'white-space': 'nowrap'",
+  "    });",
+  "    newDiv.append(newInnerDiv);",
+  "    betterCells.push(newDiv);",
+  "  });",
+  "  $ths.each(function(i){",
+  "    $(this).html(betterCells[i]);",
+  "  });",
+  "}"
+)
+
+```
+
+## `r paste(sname," (",scname, ")" ,sep = "")`
+
+## Visual Results Report
+
+## FishToxTranslator `r packageVersion("FishToxTranslator")`
+
+## Generated: `r format(Sys.time(), '%m/%d/%Y')`
+
+### Summary Results Table
+
+```{r, echo=FALSE}
+
+dfr <- as.data.frame(return_summary_results_table(SelectedSimulationRunScenarios))
+
+new_names <- c("Scenario Name", "Starting Population", "Final Population", 
+               "Starting Biomass", "Final Biomass", "Starting Mean Size", 
+               "Final Mean Size", "Minimum Daily Growth Potential", 
+               "Maximum Daily Growth Potential", "Annual Lambda", 
+               "Annual Minimum Growth Potential", "Annual Maximum Growth Potential")
+
+colnames(dfr) <- new_names
+
+dfr1 <- dfr[, 1:7]
+cols <- c(1, 8:12)
+dfr2 <- dfr[, cols]
+
+datatable(dfr1,
+          options = list(
+                       dom = 't',
+                       ordering = FALSE,
+                       searching = FALSE)
+                     )
+
+datatable(dfr2,
+          options = list(
+                       dom = 't',
+                       ordering = FALSE,
+                       searching = FALSE)
+                     )  
+
+# datatable(dfr, rownames = F, class = c("compact"),
+#           options = list(
+#             dom = 't',
+#             paging = F, autoWidth = F,
+#             ordering = FALSE,
+#             searching = FALSE,
+#             scrollX = F,
+#             initComplete = JS("function(settings, json) {
+#                                 $(this.api().table().header()).css({
+#                                   'font-size' : '12px'});}"),
+#             headerCallback = JS("function(thead, data, start, end, display){
+#                                 var $ths = $(thead).find('th');
+#                                 $ths.css({'vertical-align': 'top', 'padding': '4px 0px', 
+#                                           'transform': 'rotate(180deg)', 'border': 'none'}); 
+#                                 var betterCells = [];
+#                                 $ths.each(function(){
+#                                   var cell = $(this);
+#                                   var newDiv = $('<div>', {width: '13px', float: 'left'});
+#                                   var newInnerDiv = $('<div>', {text: cell.text()});
+#                                   newDiv.css({margin: 'auto'});
+#                                   newInnerDiv.css({
+#                                     'writing-mode': 'vertical-rl',
+#                                     'white-space': 'nowrap',
+#                                     'text-align': 'left',
+#                                     'transform-origin': 'top left',
+#                                     'transform': 'rotate(45deg)',
+#                                     'overflow': 'visible'
+#                                   });
+#                                   newDiv.append(newInnerDiv);
+#                                   betterCells.push(newDiv);
+#                                 });
+#                                 $ths.each(function(i){
+#                                   $(this).html(betterCells[i]);
+#                                 });}"))) %>% 
+#   formatStyle(columns = c(1:12), `font-size` = '12px')
+
+# DT::datatable(dfr, options = list(
+#                       dom = 't',
+#                       ordering = FALSE,
+#                       headerCallback = JS(headerCallback1),
+#                       columnDefs = list(
+#                         list(targets = "_all", className = "dt-center")
+#                       )
+#                     ))
+                    
+# dust(dfr1) %>%
+#   sprinkle(rotate_degree = -90,
+#            height = 150,
+#            height_units = "pt",
+#            halign = "right",
+#            fixed = FALSE,
+#            part = "head") %>%
+#   sprinkle(pad = 0) %>%
+#   medley_bw()
+# 
+# dust(dfr2) %>%
+#   sprinkle(rotate_degree = -90,
+#            height = 150,
+#            height_units = "pt",
+#            halign = "left",
+#            fixed = FALSE,
+#            part = "head") %>%
+#   sprinkle(pad = 0) %>%
+#   medley_bw()
+
+# df <- as.data.frame(return_summary_results_table(SelectedSimulationRunScenarios))
+
+# df %>%
+#  kbl(caption = "Summary Results Table") %>%
+#  kable_material(c("striped", "hover"))
+```
+
+### Summary Matrix
+```{r, echo=FALSE, fig.width=11, fig.height=10}
+if (length(SelectedSimulationRunScenarios) > 1) 
+{
+  plot_Summary_Matrix(SelectedSimulationRunScenarios)
+}else
+{
+  cat("There is no summary matrix to display because only one scenario was selected.")
+}
+```
+
+### Daily Population
+```{r, echo=FALSE, fig.width=9.5, fig.height=7}
+plot_Daily_Population(SelectedSimulationRunScenarios)
+```
+
+### Population Biomass
+```{r, echo=FALSE, fig.width=9.5, fig.height=7}
+plot_Population_Biomass(SelectedSimulationRunScenarios)
+```
+
+### Mean Size
+```{r, echo=FALSE, fig.width=9.5, fig.height=7}
+plot_Mean_Size(SelectedSimulationRunScenarios)
+```
+
+### Growth Potential
+```{r, echo=FALSE, fig.width=9.5, fig.height=7}
+plot_Growth_Potential(SelectedSimulationRunScenarios)
+```
+
+### Transition Kernel
+```{r, echo=FALSE, fig.width=10, fig.height=7}
+# plot_Transitional_Kernel(SelectedSimulationRunScenarios)
+```
+

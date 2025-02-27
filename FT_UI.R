@@ -6,6 +6,30 @@ fnpath <-
              full.names = TRUE,
              recursive = TRUE)
 
+headerCallback <- c(
+  "function(thead, data, start, end, display){",
+  "  var $ths = $(thead).find('th');",
+  "  $ths.css({'vertical-align': 'bottom', 'white-space': 'nowrap'});",
+  "  var betterCells = [];",
+  "  $ths.each(function(){",
+  "    var cell = $(this);",
+  "    var newDiv = $('<div>', {height: 'auto', width: cell.height()});",
+  "    var newInnerDiv = $('<div>', {text: cell.text()});",
+  "    newDiv.css({margin: 'auto'});",
+  "    newInnerDiv.css({",
+  "      transform: 'rotate(180deg)',",
+  "      'writing-mode': 'tb-rl',",
+  "      'white-space': 'nowrap'",
+  "    });",
+  "    newDiv.append(newInnerDiv);",
+  "    betterCells.push(newDiv);",
+  "  });",
+  "  $ths.each(function(i){",
+  "    $(this).html(betterCells[i]);",
+  "  });",
+  "}"
+)
+
 FT_UI <- function(req) {
   fluidPage(
     useShinyjs(),
@@ -18,6 +42,16 @@ FT_UI <- function(req) {
                 var myWidth = $(window).width();
                 Shiny.onInputChange('shiny_width',myWidth)});"
     ),
+    
+    # 
+    # tags$head(tags$style(HTML('#scenario_summary_results_table table {border-collapse:collapse;} 
+    #                          #scenario_summary_results_table table th {
+    #                            height: 200px;
+    #                            width: 5px;
+    #                            transform: 
+    #                              translate(0px, 5px)
+    #                              rotate(-90deg);
+    #                          }'))),
     
     tags$script(
       "$(document).on('shiny:connected', function(event) {
@@ -242,6 +276,13 @@ FT_UI <- function(req) {
       tab4,
       tab5,
       id = "fish_toxicity_app"
+    ),
+    
+    tags$head(
+      tags$style(
+        ".modal-lg {
+        width: 1500px;}"
+      )
     ),
     
     tags$head(

@@ -41,6 +41,10 @@ observeEvent(input$add_StressorScenario,
                updateNumericInput(session, inputId = "start_winter", value = 355)
                updateNumericInput(session, inputId = "end_winter", value = 91)
                
+               updateSwitchInput(session,
+                                 inputId = "display_stressor_table",
+                                 value = FALSE)
+               
                reset("upload_exposure_concentrations")
                reset("upload_predetermined_effects")
                reset("upload_predetermined_growth_effects")
@@ -1051,38 +1055,45 @@ observeEvent(input$upload_predetermined_growth_effects,
 ####################################################################################################
 observeEvent(input$display_stressor_table,
              {
-               inputStressorType <- input$stressor_type
-               inputEffectType <- input$effect_type
-               output$stressor_table <- DT::renderDataTable(
-                 {
-                   if (inputStressorType == 'Chemical: Survival')
+               if (input$display_stressor_table)
+               {
+                 inputStressorType <- input$stressor_type
+                 inputEffectType <- input$effect_type
+                 output$stressor_table <- DT::renderDataTable(
                    {
-                     file_stressor <- input$upload_exposure_concentrations$name
-                     if (is.null(file_stressor)){
-                       return()
-                     }
-                     if (inputEffectType == 'GUTS' || inputEffectType == 'None Selected')
+                     if (inputStressorType == 'Chemical: Survival')
+                     {
+                       file_stressor <- input$upload_exposure_concentrations$name
+                       if (is.null(file_stressor)){
+                         return()
+                       }
+                       if (inputEffectType == 'GUTS' || inputEffectType == 'None Selected')
+                       {
+                         return()
+                       }
+                     }else if (inputStressorType == 'None Selected')
                      {
                        return()
                      }
-                   }else if (inputStressorType == 'None Selected')
-                   {
-                     return()
-                   }
-                   if (inputStressorType == 'Chemical: Growth')
-                   {
-                     file_stressor <- input$upload_exposure_concentrations$name
-                     if (is.null(file_stressor)){
-                       return()
+                     if (inputStressorType == 'Chemical: Growth')
+                     {
+                       file_stressor <- input$upload_exposure_concentrations$name
+                       if (is.null(file_stressor)){
+                         return()
+                       }
                      }
-                   }
-                   return_stressor_parameters(CurrentStressorScenarioName)
-                 },
-                 options = list(scrollX = TRUE)
-               )
-               shinyjs::show(id = "stressor_table_main")
-             }
-)
+                     return_stressor_parameters(CurrentStressorScenarioName)
+                   },
+                   options = list(scrollX = TRUE)
+                 )
+                 shinyjs::show(id = "stressor_table_main")
+               }else
+               {
+                 shinyjs::hide(id = "stressor_table_main")
+               }
+               
+             },
+             ignoreInit = TRUE)
 
 
 

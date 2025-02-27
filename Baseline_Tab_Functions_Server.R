@@ -1,5 +1,24 @@
 # Baseline Tab Functions
 
+# This function formats numerical values.
+format_number <- function(value)
+{
+  if (value < 1.0E-03) {
+    if (value < .Machine$double.xmin){
+      value <- format(value, digits = 1, nsmall = 0, scientific = FALSE, 
+                      drop0trailing = TRUE)
+    } else {
+      value <- format(value, digits = 4, scientific = TRUE)
+    }
+  } else if (value > 1.0E+03) {
+    value <- format(value, digits = 4, scientific = TRUE)
+  } else {
+    value <- format(value, digits = 6, nsmall = 3, scientific = FALSE, 
+                    drop0trailing = TRUE)
+  }
+  return(value)
+}
+
 ####################################################################################################
 # Baseline Name
 ####################################################################################################
@@ -42,7 +61,7 @@ load_fhm_parameters <- function(currentScenarioName, chosenSpecies)
 {
   chosenSpeciesDataObject <- as.character(species_library$parameter_data[which(species_library$common_name==chosenSpecies)])
   chosenLifeHistoryParameters <- get(chosenSpeciesDataObject)
-  parameters[[currentScenarioName]] <<- TemplateToDataFrame(chosenLifeHistoryParameters)
+  parameters[[currentScenarioName]] <<- FishToxTranslator::TemplateToDataFrame(chosenLifeHistoryParameters)
 }
 
 ####################################################################################################
@@ -63,7 +82,12 @@ assign_history_pars <- function(currentScenarioName, input_life_history)
 {
   newLifeHistory <- read.csv(file = input_life_history, header = TRUE,
                              stringsAsFactors = FALSE, check.names = FALSE)
-  parameters[[currentScenarioName]] <<- TemplateToDataFrame(newLifeHistory)
+  parameters[[currentScenarioName]] <<- FishToxTranslator::TemplateToDataFrame(newLifeHistory)
+}
+
+return_species_pars <- function(chosenSpecies)
+{
+  return(get(species_library$parameter_data[which(species_library$common_name==chosenSpecies)]))
 }
 
 return_history_pars <- function(currentScenarioName)
