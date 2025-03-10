@@ -44,7 +44,7 @@ chosenSpecies<-speciesChoices[1] # This chooses "Fathead Minnow" (the only choic
 species_library$parameter_data[which(species_library$common_name==chosenSpecies)]
 chosenSpeciesDataObject<-as.character(species_library$parameter_data[which(species_library$common_name==chosenSpecies)])
 chosenLifeHistoryParameters<-get(chosenSpeciesDataObject)
-parameters[[currentScenarioName]]<-TemplateToDataFrame(chosenLifeHistoryParameters)
+parameters[[currentScenarioName]]<-TemplateToParameters(chosenLifeHistoryParameters)
 
 
 # GUI: Offer life history parameter template if "New" species chosen
@@ -55,7 +55,7 @@ lifeHistoryTemplate<-lifeHistoryTemplate[,1:5]
 write.csv(lifeHistoryTemplate,"lifeHistoryTemplate_1.csv",row.names=F)
 # Note each value in the template created must be filled out
 newLifeHistory<-read.csv("newLifeHistory.csv")
-parameters[[currentScenarioName]]<-TemplateToDataFrame(newLifeHistory)
+parameters[[currentScenarioName]]<-TemplateToParameters(newLifeHistory)
 
 
 # GUI: Run Spawning Algorithm

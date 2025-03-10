@@ -19,7 +19,7 @@ rm(list = ls())
 #                "xlsx", "magick")
 #
 # # This command installs and loads the FishToxTranslator Package from the local tar.gz file
-install.packages("FishToxTranslator_0.1.19.4.tar.gz",type="source")
+install.packages("FishToxTranslator_0.1.19.5.tar.gz",type="source")
 #Install Sentry package
 #install.packages("sentryR")
 #devtools::install_github('npollesch/FishToxTranslator', upgrade="never")
