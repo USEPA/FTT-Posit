@@ -26,7 +26,7 @@ scname <- species_library$scientific_name[index]
 ```{r echo=FALSE}
 cSDO <- as.character(species_library$parameter_data[which(species_library$common_name==sname)])
 cLHP <- get(cSDO)
-dfs <<- FishToxTranslator::TemplateToDataFrame(cLHP)
+dfs <<- FishToxTranslator::TemplateToParameters(cLHP)
 ```
 
 ### Growth Parameters
