@@ -261,6 +261,7 @@ FT_UI <- function(req) {
       )
     ),
     
+    
     navbarPage(
       title = "Fish Toxicity Translator v0.1",
       pwa(
