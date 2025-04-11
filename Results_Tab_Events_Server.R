@@ -557,11 +557,20 @@ observeEvent(input$export_summaryMatrix_modal,
                  output$textMessageSummaryMatrix <- NULL
                  summaryMatrix_flag <- TRUE
                  shinyjs::enable(id = "downloadPlotSummaryMatrix")
-                 output$plotSummaryMatrix <- renderPlot(
+                 output$plotSummaryMatrix <- renderPlot({
                    plot_Summary_Matrix(input$Check_Scenario_Names_Results)
-                 )
+                 }, height = function() {
+                   session$clientData$output_plotSummaryMatrix_width*0.8
+                 })
                }
              }
+)
+
+# Summary Matrix
+output$SMatrix <- renderUI(
+  {
+    plotOutput("plotSummaryMatrix", height = "auto")
+  }
 )
 
 output$downloadPlotSummaryMatrix <- downloadHandler(
@@ -1001,19 +1010,19 @@ output$Download_Results_Report <- downloadHandler(
                        startColumn = 4)
                  
       # Sheet 8: Transition Kernel Image
-      sheet_8 <- xlsx::createSheet(Results_Workbook, sheetName = "Transition_Kernel_Image")
-      image_path6 <- tempfile(pattern = "", fileext = ".png")
-      png(image_path6,
-          width = input$shiny_width * 2,
-          height = input$shiny_height * 2,
-          res = 300)
-      plot_Transitional_Kernel(input$Check_Scenario_Names_Results)
-      dev.off()
-      xlsx::addPicture(file = image_path6,
-                       sheet = sheet_8, 
-                       scale = 1, 
-                       startRow = 4, 
-                       startColumn = 4)
+      # sheet_8 <- xlsx::createSheet(Results_Workbook, sheetName = "Transition_Kernel_Image")
+      # image_path6 <- tempfile(pattern = "", fileext = ".png")
+      # png(image_path6,
+      #     width = input$shiny_width * 2,
+      #     height = input$shiny_height * 2,
+      #     res = 300)
+      # plot_Transitional_Kernel(input$Check_Scenario_Names_Results)
+      # dev.off()
+      # xlsx::addPicture(file = image_path6,
+      #                  sheet = sheet_8, 
+      #                  scale = 1, 
+      #                  startRow = 4, 
+      #                  startColumn = 4)
       
       xlsx::saveWorkbook(Results_Workbook,file)
     }

@@ -3,18 +3,6 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                       sidebarPanel(
                         add_baseline_scenario_button,
                         
-                        shinyjs::hidden((
-                          div(
-                            id = "BuildBaselineScenario",
-                            baseline_scenario_name,
-                            h4(""),
-                            baseline_description_textArea,
-                            h4(""),
-                            submit_baselinename_button,
-                            h5(baseline_name_out_text)
-                          )
-                        )),
-                        
                         shinyjs::hidden(
                           div(
                             id = "base_name",
@@ -34,22 +22,76 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                             
                             conditionalPanel(
                               condition = "input.species != 'New'",
+                              h4("Visualize Chosen Species Data", class = "header4"),
+                              br(),
+                              species_profile_textLabel,
                               fluidRow(
-                                column(width = 4, h4("")),
-                                column(width = 8, h4("Species Parameters Table"))
-                              ),
-                              fluidRow(
-                                column(width = 4, export_species_profile_button),
-                                column(width = 8, display_species_parameters_table_button)
+                                column(width = 6, display_species_parameters_table_button_element),
+                                column(width = 6, export_species_profile_button)
                               ),
                               fluidRow(
                                 column(width = 4, species_profile_modal_window),
                                 column(width = 8, h4(""))
                               ),
+                              fluidRow(
+                                column(width = 12, h4("Growth Increments by Size"))
+                              ),
+                              fluidRow(
+                                column(width = 6, align = "left", plot_clear_species_growth_button),
+                                column(width = 6, align = "right", export_species_growth_button)
+                              ),
+                              fluidRow(
+                                column(width = 12, h4("Yearly Growth Trajectory by Day"))
+                              ),
+                              fluidRow(
+                                column(width = 6, align = "left", plot_clear_species_growth_trajectory_button),
+                                column(width = 6, align = "right", export_species_growth_trajectory_button)
+                              ),
+                              fluidRow(
+                                column(width = 12, h4("Yearly Survival Trajectory by Day"))
+                              ),
+                              fluidRow(
+                                column(width = 6, align = "left", plot_clear_species_survival_trajectory_button),
+                                column(width = 6, align = "right", export_species_survival_trajectory_button)
+                              ),
+                              fluidRow(
+                                column(width = 12, h4("Allometry: Length (TL) to Mass"))
+                              ),
+                              fluidRow(
+                                column(width = 6, align = "left", plot_clear_species_length_mass_button),
+                                column(width = 6, align = "right", export_species_length_mass_button)
+                              ),
+                              fluidRow(
+                                column(width = 12, h4("Survival Probability by Size"))
+                              ),
+                              fluidRow(
+                                column(width = 6, align = "left", plot_clear_species_survival_button),
+                                column(width = 6, align = "right", export_species_survival_button)
+                              ),
+                              fluidRow(
+                                column(width = 12, h4("Daily Maximum Reproduction by Size"))
+                              ),
+                              fluidRow(
+                                column(width = 6, align = "left", plot_clear_species_reproduction_button),
+                                column(width = 6, align = "right", export_species_reproduction_button)
+                              ),
+                              br(),
+                              shinyjs::hidden((
+                                div(
+                                  id = "BuildBaselineScenario",
+                                  baseline_scenario_name,
+                                  h4(""),
+                                  baseline_description_textArea,
+                                  h4("")
+                                  # submit_baselinename_button,
+                                  # h5(baseline_name_out_text)
+                                )
+                              )),
                               br(),
                               fluidRow(
                                 column(width = 12, load_fhm_parameters_button)
                               ),
+                              br(),
                               fluidRow(
                                 column(width = 12, load_fhm_parameters_out_text)
                               )
@@ -69,27 +111,27 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                           )
                         ),
                         
-                        shinyjs::hidden(
-                          div(
-                            id = "scenario_options",
-                            hr(),
-                            h4("Generate spawning probabilities"),
-                            h4(""),
-                            spawning_alg_button,
-                            h5(spawning_alg_out_text),
-                            br()
-                            # h4("Export Species Profile Markdown"),
-                            # export_species_profile_button,
-                            # h4(""),
-                            # species_profile_modal_window
-                          )
-                        ),
+                        # shinyjs::hidden(
+                        #   div(
+                        #     id = "scenario_options",
+                        #     hr(),
+                        #     h4("Generate spawning probabilities"),
+                        #     h4(""),
+                        #     spawning_alg_button,
+                        #     h5(spawning_alg_out_text),
+                        #     br()
+                        #     # h4("Export Species Profile Markdown"),
+                        #     # export_species_profile_button,
+                        #     # h4(""),
+                        #     # species_profile_modal_window
+                        #   )
+                        # ),
                         
                         shinyjs::hidden(
                           div(
                             id = "baseline_visualize",
                             hr(),
-                            h4("Show Life History Parameters"),
+                            h4("Life History Parameters"),
                             display_life_history_table_button,
                             h4(""),
                             hr(),
@@ -111,6 +153,61 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                           DT::dataTableOutput(outputId = "species_parameters_table", width = "100%")
                         )
                       ),
+                      
+                      shinyjs::hidden(
+                        div(
+                          id = "Species_Growth_out_Main", 
+                          plotOutput(outputId = "Species_Growth_out")
+                          )
+                        ),
+                      
+                      species_growth_modal_window,
+                      
+                      shinyjs::hidden(
+                        div(
+                          id = "Species_Growth_Trajectory_out_Main", 
+                          plotOutput(outputId = "Species_Growth_Trajectory_out")
+                        )
+                      ),
+                      
+                      species_growth_trajectory_modal_window,
+                      
+                      shinyjs::hidden(
+                        div(
+                          id = "Species_Survival_Trajectory_out_Main", 
+                          plotOutput(outputId = "Species_Survival_Trajectory_out")
+                        )
+                      ),
+                      
+                      species_survival_trajectory_modal_window,
+                      
+                      shinyjs::hidden(
+                        div(
+                          id = "Species_Length_Mass_out_Main", 
+                          plotOutput(outputId = "Species_Length_Mass_out")
+                        )
+                      ),
+                      
+                      species_length_mass_modal_window,
+                      
+                      shinyjs::hidden(
+                        div(
+                          id = "Species_Survival_out_Main", 
+                          plotOutput(outputId = "Species_Survival_out")
+                        )
+                      ),
+                      
+                      species_survival_modal_window,
+                      
+                      shinyjs::hidden(
+                        div(
+                          id = "Species_Reproduction_out_Main", 
+                          plotOutput(outputId = "Species_Reproduction_out")
+                        )
+                      ),
+                      
+                      species_reproduction_modal_window,
+                      
                         shinyjs::hidden(
                         div(
                           id = "life_history_table_main",
@@ -167,12 +264,10 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                             ),
                             h4(""),
                             shinyjs::hidden(div(id = "exposure_conc", fluidRow(
-                              column(
-                                width = 12,
-                                upload_exposure_concentration,
-                                download_exposure_concentration
+                              column(width = 7, upload_exposure_concentration),
+                              column(width = 4, offset = 1, download_exposure_concentration)
                               )
-                            ))),
+                            )),
                             br(),
                             shinyjs::hidden(div(id = "chemicalEffectType", select_chemical_effect_type)),
                             shinyjs::hidden(
@@ -455,20 +550,22 @@ subtab41 <- tabPanel("Visualize Results", sidebarLayout(
             align = "left",
             plot_clear_summary_matrix_button
           ),
-          column(
-            width = 6,
-            fluidRow(column(
-              width = 12, align = "right", export_matrix_button
-            )),
-            fluidRow(column(width = 12, br())),
-            fluidRow(
-              column(
-                width = 12,
-                align = "right",
-                export_summaryMatrixTable_button
-              )
-            )
-          )
+          column(width = 3, export_matrix_button),
+          column(width = 3, export_summaryMatrixTable_button)
+          # column(
+          #   width = 6,
+          #   fluidRow(column(
+          #     width = 12, align = "right", export_matrix_button
+          #   )),
+          #   fluidRow(column(width = 12, br())),
+          #   fluidRow(
+          #     column(
+          #       width = 12,
+          #       align = "right",
+          #       export_summaryMatrixTable_button
+          #     )
+          #   )
+          # )
         )
       )),
       
@@ -575,31 +672,31 @@ subtab41 <- tabPanel("Visualize Results", sidebarLayout(
         )
       )),
       
-      br(),
-      fluidRow(column(
-        width = 12, fluidRow(column(
-          width = 12,
-          helper(
-            shiny_tag = h4("Transition Kernel", class = "header4"),
-            icon = "question-circle",
-            colour = helper_Color,
-            type = "inline",
-            title = "Transition Kernel",
-            content = GUI_Tooltip[GUI_Tooltip$Name == "Transition Kernel", ]$tooltip
-          ),
-        )), fluidRow(
-          column(
-            width = 6,
-            align = "left",
-            plot_clear_transitionalKernel_button
-          ),
-          column(
-            width = 6,
-            align = "right",
-            export_transitionalKernel_button
-          )
-        )
-      )),
+      # br(),
+      # fluidRow(column(
+      #   width = 12, fluidRow(column(
+      #     width = 12,
+      #     helper(
+      #       shiny_tag = h4("Transition Kernel", class = "header4"),
+      #       icon = "question-circle",
+      #       colour = helper_Color,
+      #       type = "inline",
+      #       title = "Transition Kernel",
+      #       content = GUI_Tooltip[GUI_Tooltip$Name == "Transition Kernel", ]$tooltip
+      #     ),
+      #   )), fluidRow(
+      #     column(
+      #       width = 6,
+      #       align = "left",
+      #       plot_clear_transitionalKernel_button
+      #     ),
+      #     column(
+      #       width = 6,
+      #       align = "right",
+      #       export_transitionalKernel_button
+      #     )
+      #   )
+      # )),
       
       br(),
       hr(),

@@ -30,20 +30,20 @@ baseline_scenario_name <- helper(
   content = GUI_Tooltip[GUI_Tooltip$Name == "name_baseline_scenario", ]$tooltip
 )
 
-submit_baselinename_button_element <- actionButton(inputId = "submit_name",
-                                                   label = "Submit \"Baseline\" scenario information",
-                                                   class = "actButton")
-                                           
-submit_baselinename_button <- helper(
-  submit_baselinename_button_element,
-  icon = "question-circle",
-  colour = helper_Color,
-  type = "inline",
-  title = "Submit Baseline Scenario",
-  content = GUI_Tooltip[GUI_Tooltip$Name == "submit_baseline_scenario", ]$tooltip
-)
+# submit_baselinename_button_element <- actionButton(inputId = "submit_name",
+#                                                    label = "Submit \"Baseline\" scenario information",
+#                                                    class = "actButton")
+#                                            
+# submit_baselinename_button <- helper(
+#   submit_baselinename_button_element,
+#   icon = "question-circle",
+#   colour = helper_Color,
+#   type = "inline",
+#   title = "Submit Baseline Scenario",
+#   content = GUI_Tooltip[GUI_Tooltip$Name == "submit_baseline_scenario", ]$tooltip
+# )
 
-baseline_name_out_text <- textOutput("text_basename")
+# baseline_name_out_text <- textOutput("text_basename")
 
 baseline_description_textArea_element <-
   textAreaInput(
@@ -86,7 +86,7 @@ choose_species_DropDownMenu <-
 
 load_fhm_parameters_button_element <-
   actionButton(inputId = "load_fhm_parameters",
-               label = "Load Species Parameters",
+               label = "Create Scenario",
                class = "actButton")
 
 load_fhm_parameters_button <-
@@ -137,21 +137,33 @@ upload_history_button <- helper(
 )
 
 
-spawning_alg_button_element <-
-  actionButton(inputId = "spawn_algorithm",
-               label = "Run Spawning Algorithm",
-               class = "actButton")
+# spawning_alg_button_element <-
+#   actionButton(inputId = "spawn_algorithm",
+#                label = "Run Spawning Algorithm",
+#                class = "actButton")
+# 
+# spawning_alg_button <- helper(
+#   spawning_alg_button_element,
+#   icon = "question-circle",
+#   colour = helper_Color,
+#   type = "inline",
+#   title = "Spawning Algorithm",
+#   content = GUI_Tooltip[GUI_Tooltip$Name == "run_spawning_algorithm", ]$tooltip
+# )
 
-spawning_alg_button <- helper(
-  spawning_alg_button_element,
+species_profile_textLabel_element <-
+  h4("Species Life History Parameters")
+
+species_profile_textLabel <- helper(
+  species_profile_textLabel_element,
   icon = "question-circle",
   colour = helper_Color,
   type = "inline",
-  title = "Spawning Algorithm",
-  content = GUI_Tooltip[GUI_Tooltip$Name == "run_spawning_algorithm", ]$tooltip
+  title = "Species Profile Data",
+  content = "Table containing a list of all the parameters available for a given fish species."
 )
 
-spawning_alg_out_text <- textOutput("text_spawning_alg")
+# spawning_alg_out_text <- textOutput("text_spawning_alg")
 
 baseline_scenario_complete_text_out <-
   htmlOutput("baseline_scenario_complete")
@@ -159,9 +171,9 @@ baseline_scenario_complete_text_out <-
 export_species_profile_button <-
   actionButton(
     inputId = "show_species_profile_modal",
-    label = "Display Species Profile",
+    label = div("Generate Visual Species Profile (PDF)", icon("download")),
     width = "100%",
-    class = "actButton"
+    class = "actButtonD1"
   )
 
 species_profile_modal_window <- bsModal(
@@ -178,10 +190,211 @@ species_profile_modal_window <- bsModal(
   )
 )
 
+# Switches and download GUI elements for species-specific plots
+
+# Incremental Growth
+plot_clear_species_growth_button <-
+  switchInput(
+    inputId = "plot_clear_species_growth",
+    label = "Plot",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
+
+export_species_growth_button <-
+  actionButton(
+    inputId = "export_species_growth_modal",
+    label = NULL,
+    class = "actButtonD1",
+    icon = icon("download")
+  )
+
+species_growth_modal_window <- bsModal(
+  id = "species_growth_Popup",
+  title = "Species Growth",
+  trigger = "export_species_growth_modal",
+  size = "large",
+  uiOutput("SGrowthPlot"),
+  downloadButton(
+    outputId = 'downloadPlotSpeciesGrowth',
+    label = 'Download',
+    class = "download_Button"
+  )
+)
+
+# Growth Trajectory
+plot_clear_species_growth_trajectory_button <-
+  switchInput(
+    inputId = "plot_clear_species_growth_trajectory",
+    label = "Plot",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
+
+export_species_growth_trajectory_button <-
+  actionButton(
+    inputId = "export_species_growth_trajectory_modal",
+    label = NULL,
+    class = "actButtonD1",
+    icon = icon("download")
+  )
+
+species_growth_trajectory_modal_window <- bsModal(
+  id = "species_growth_trajectory_Popup",
+  title = "Species Growth Trajectory",
+  trigger = "export_species_growth_trajectory_modal",
+  size = "large",
+  uiOutput("SGrowthTrajectoryPlot"),
+  downloadButton(
+    outputId = 'downloadPlotSpeciesGrowthTrajectory',
+    label = 'Download',
+    class = "download_Button"
+  )
+)
+
+# Survival Trajectory
+plot_clear_species_survival_trajectory_button <-
+  switchInput(
+    inputId = "plot_clear_species_survival_trajectory",
+    label = "Plot",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
+
+export_species_survival_trajectory_button <-
+  actionButton(
+    inputId = "export_species_survival_trajectory_modal",
+    label = NULL,
+    class = "actButtonD1",
+    icon = icon("download")
+  )
+
+species_survival_trajectory_modal_window <- bsModal(
+  id = "species_survival_trajectory_Popup",
+  title = "Species Survival Trajectory",
+  trigger = "export_species_survival_trajectory_modal",
+  size = "large",
+  uiOutput("SSurvivalTrajectoryPlot"),
+  downloadButton(
+    outputId = 'downloadPlotSpeciesSurvivalTrajectory',
+    label = 'Download',
+    class = "download_Button"
+  )
+)
+
+# Length to Mass
+plot_clear_species_length_mass_button <-
+  switchInput(
+    inputId = "plot_clear_species_length_mass",
+    label = "Plot",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
+
+export_species_length_mass_button <-
+  actionButton(
+    inputId = "export_species_length_mass_modal",
+    label = NULL,
+    class = "actButtonD1",
+    icon = icon("download")
+  )
+
+species_length_mass_modal_window <- bsModal(
+  id = "species_length_mass_Popup",
+  title = "Species Length to Mass",
+  trigger = "export_species_length_mass_modal",
+  size = "large",
+  uiOutput("SLengthMassPlot"),
+  downloadButton(
+    outputId = 'downloadPlotSpeciesLengthMass',
+    label = 'Download',
+    class = "download_Button"
+  )
+)
+
+# Survival
+plot_clear_species_survival_button <-
+  switchInput(
+    inputId = "plot_clear_species_survival",
+    label = "Plot",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
+
+export_species_survival_button <-
+  actionButton(
+    inputId = "export_species_survival_modal",
+    label = NULL,
+    class = "actButtonD1",
+    icon = icon("download")
+  )
+
+species_survival_modal_window <- bsModal(
+  id = "species_survival_Popup",
+  title = "Species Survival",
+  trigger = "export_species_survival_modal",
+  size = "large",
+  uiOutput("SSurvivalPlot"),
+  downloadButton(
+    outputId = 'downloadPlotSpeciesSurvival',
+    label = 'Download',
+    class = "download_Button"
+  )
+)
+
+# Reproduction
+plot_clear_species_reproduction_button <-
+  switchInput(
+    inputId = "plot_clear_species_reproduction",
+    label = "Plot",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
+
+export_species_reproduction_button <-
+  actionButton(
+    inputId = "export_species_reproduction_modal",
+    label = NULL,
+    class = "actButtonD1",
+    icon = icon("download")
+  )
+
+species_reproduction_modal_window <- bsModal(
+  id = "species_reproduction_Popup",
+  title = "Species Reproduction",
+  trigger = "export_species_reproduction_modal",
+  size = "large",
+  uiOutput("SReproductionPlot"),
+  downloadButton(
+    outputId = 'downloadPlotSpeciesReproduction',
+    label = 'Download',
+    class = "download_Button"
+  )
+)
+
+# Species Parameters Table
 display_species_parameters_table_button_element <-
   switchInput(
     inputId = "display_SpeciesParameters",
-    label = "Display",
+    label = "Table",
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
@@ -226,18 +439,10 @@ visualize_text_out <- textOutput("text_visualize")
 
 run_baseline_text_out <- textOutput("text_run_baseline")
 
-#display_life_history_table_button_element <-
-#  actionButton(
-#    inputId = "display_LifeHistory",
-#    label = "Display Life-History Parameters Table",
-#    width = '250px',
-#    class = "actButton"
-#  )
-
 display_life_history_table_button_element <-
   switchInput(
     inputId = "display_LifeHistory",
-    label = "Display",
+    label = "Table",
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
@@ -370,8 +575,8 @@ upload_exposure_concentration_element <-
     inputId = "upload_exposure_concentrations",
     label = NULL,
     accept = c("text/csv", "text/comma-separated-values,text/plain", ".csv"),
-    width = '500px',
-    buttonLabel = "Upload Exposure Concentrations",
+    width = '300px',
+    buttonLabel = "Upload",
     placeholder = "No file selected",
     multiple = FALSE
   )
@@ -1537,8 +1742,9 @@ matrix_modal_window <- bsModal(
   title = "Summary Matrix",
   trigger = "export_summaryMatrix_modal",
   size = "large",
+  tags$head(tags$style("#summaryMatrixPopup .modal-body{ min-height:800px}")),
+  uiOutput("SMatrix"),
   textOutput("textMessageSummaryMatrix"),
-  plotOutput("plotSummaryMatrix"),
   downloadButton(
     outputId = 'downloadPlotSummaryMatrix',
     label = 'Download',
@@ -1609,8 +1815,8 @@ results_markdown_modal_window <- bsModal(
     outputId = "downloadResultsMarkdown",
     label = "Download",
     class = "download_Button"
-  ),
-  actionButton(inputId = "close_markd_window", label = "Close")
+  )
+  # actionButton(inputId = "close_markd_window", label = "Close")
 )
 
 results_markdown_modal_window <- tagAppendAttributes(results_markdown_modal_window,
