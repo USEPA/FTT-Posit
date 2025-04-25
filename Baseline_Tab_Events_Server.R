@@ -873,7 +873,7 @@ output$rmark <- renderUI(
     {
       path_rmd <- "Species_Profile.Rmd"
       # Render into www/ folder.
-      path_html <- paste(CurrentSpeciesName,"_Profile.html",sep = "")
+      path_html <- paste("www/",CurrentSpeciesName,"_Profile.html",sep = "")
       render(
          path_rmd,
          output_format = "html_document",
@@ -885,7 +885,7 @@ output$rmark <- renderUI(
         width = "100%",
         height = 1200,
         # Filename relative to the www/ folder.
-        src = basename(path_html)
+        src = path_html
       )
     }
   }
