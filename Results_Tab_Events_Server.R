@@ -1050,7 +1050,11 @@ output$results_markdown <- renderUI(
     {
       path_rmd <- "Results_Report.Rmd"
       # Render into www/ folder.
-      path_html <- "www\\Results_Report.html"
+      
+      system.name<-Sys.info()[["sysname"]]
+      path_html<-ifelse(system.name=="Windows", "www\\Results_Report.html","www/Results_Report.html")
+      
+      #path_html <- "www\\Results_Report.html"
       render(
         path_rmd,
         output_file = path_html
@@ -1060,7 +1064,7 @@ output$results_markdown <- renderUI(
         width = "100%",
         height = 1200,
         # Filename relative to the www/ folder.
-        src = basename(path_html)
+        src = "Results_Report.html"
       )
     }
   }
