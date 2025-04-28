@@ -873,8 +873,8 @@ output$rmark <- renderUI(
     {
       path_rmd <- "Species_Profile.Rmd"
       # Render into www/ folder.
-      sname<-Sys.info()[["sysname]]
-      path_html<-ifelse(sname=="Windows", paste("www\\",CurrentSpeciesName,"_Profile.html",sep = ""),paste("www/",CurrentSpeciesName,"_Profile.html",sep = ""))
+      system.name<-Sys.info()[["sysname"]]
+      path_html<-ifelse(system.name=="Windows", paste("www\\",CurrentSpeciesName,"_Profile.html",sep = ""),paste("www/",CurrentSpeciesName,"_Profile.html",sep = ""))
       # path_html <- paste("www/",CurrentSpeciesName,"_Profile.html",sep = "")
       render(
          path_rmd,
