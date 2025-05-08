@@ -1049,18 +1049,22 @@ output$results_markdown <- renderUI(
     if (generate_markdown() == TRUE)
     {
       path_rmd <- "Results_Report.Rmd"
-      # Render into www/ folder.
-      path_html <- "www\\Results_Report.html"
+      # Render into www folder.
+      system.name <- Sys.info()[["sysname"]]
+      path_html <- ifelse(system.name=="Windows", paste("www\\","Results_Report.html",sep = ""),paste("www/","Results_Report.html",sep = ""))
       render(
         path_rmd,
-        output_file = path_html
+        output_format = "html_document",
+        output_file = path_html,
+        envir = new.env()
       )
       tags$iframe(
         style = "border-width: 0;",
         width = "100%",
         height = 1200,
+        src = paste("Results_Report.html",sep = "")
         # Filename relative to the www/ folder.
-        src = basename(path_html)
+        # src = basename(path_html)
       )
     }
   }
@@ -1117,6 +1121,9 @@ output$downloadResultsMarkdown <- downloadHandler(
     # library(tinytex)
     # out <- render('Species_Profile.Rmd',pdf_document())
     # file.rename(out, file)
-    file.rename(html_to_pdf(file_path = "www\\Results_Report.html"), file)
+    system.name <- Sys.info()[["sysname"]]
+    report_html <- "Results_Report.html"
+    path_html <- ifelse(system.name=="Windows", paste("www\\",report_html,sep = ""), paste("www/",report_html,sep = ""))
+    file.rename(html_to_pdf(file_path = path_html), file)
   }
 ) 

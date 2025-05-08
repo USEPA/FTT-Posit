@@ -10,7 +10,7 @@ observeEvent(input$reset_clear_app,
                  }
                }
                
-               updateTextInput(session, "currentScenarioName", value = "Baseline")
+               updateTextInput(session, "currentScenarioName", value = "")
                updateTextAreaInput(session, inputId = "textBaselineDescription", value = "")
                output$text_load_fhm <- NULL
                

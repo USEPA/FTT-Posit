@@ -6,7 +6,7 @@ observeEvent(input$add_BaselineScenario,
                shinyjs::show(id = "BuildBaselineScenario")
                shinyjs::show(id = "base_name")
                
-               updateTextInput(session, "currentScenarioName", value = "Baseline")
+               updateTextInput(session, "currentScenarioName", value = "")
                updateTextAreaInput(session, inputId = "textBaselineDescription", value = "")
                output$text_load_fhm <- NULL
                updateSelectInput(session, "species",
@@ -18,6 +18,9 @@ observeEvent(input$add_BaselineScenario,
                                  inputId = "display_LifeHistory",
                                  value = FALSE)
                
+               updateSwitchInput(session,
+                                 inputId = "plot_all_on_off",
+                                 value = FALSE)
                updateSwitchInput(session,
                                  inputId = "plot_clear_species_growth",
                                  value = FALSE)
@@ -184,6 +187,9 @@ observeEvent(input$display_LifeHistory,
                      shinyjs::hide(id = "Species_Reproduction_out_Main")
                      
                      updateSwitchInput(session,
+                                       inputId = "plot_all_on_off",
+                                       value = FALSE)
+                     updateSwitchInput(session,
                                        inputId = "plot_clear_species_growth",
                                        value = FALSE)
                      updateSwitchInput(session,
@@ -220,6 +226,76 @@ observeEvent(input$display_LifeHistory,
 ####################################################################################################
 # Species-specific plots
 ####################################################################################################
+# All on/off switch
+observeEvent(input$plot_all_on_off,
+             {
+               if (input$plot_all_on_off)
+               {
+                 if (input$species != "New")
+                 {
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_growth",
+                                     value = TRUE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_growth_trajectory",
+                                     value = TRUE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_survival_trajectory",
+                                     value = TRUE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_length_mass",
+                                     value = TRUE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_survival",
+                                     value = TRUE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_reproduction",
+                                     value = TRUE)
+                 }else
+                 {
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_growth",
+                                     value = FALSE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_growth_trajectory",
+                                     value = FALSE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_survival_trajectory",
+                                     value = FALSE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_length_mass",
+                                     value = FALSE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_survival",
+                                     value = FALSE)
+                   updateSwitchInput(session,
+                                     inputId = "plot_clear_species_reproduction",
+                                     value = FALSE)
+                 }
+               }else
+               {
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_growth",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_growth_trajectory",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_survival_trajectory",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_length_mass",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_survival",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_reproduction",
+                                   value = FALSE)
+               }
+             }
+)
+
 # Species growth
 observeEvent(input$plot_clear_species_growth,
              {
@@ -754,6 +830,10 @@ observeEvent(input$load_fhm_parameters,
                                      inputId = "All_Runs",
                                      value = FALSE)
                  
+                 updateSwitchInput(session, 
+                                   inputId = "display_LifeHistory",
+                                   value = TRUE)
+                 
                  subElement1 <- paste("#Check_Scenario_Names_Results input[value=", scenario_names,"]")
                  delay(1, shinyjs::disable(selector = subElement1))
                  
@@ -787,6 +867,32 @@ observeEvent(input$load_fhm_parameters,
                  shinyjs::disable(id = "species")
                  shinyjs::disable(id = "upload_history_pars")
                  shinyjs::disable(id = "download_history_parameters")
+                 
+                 updateSwitchInput(session, 
+                                   inputId = "display_SpeciesParameters",
+                                   value = FALSE)
+                 
+                 updateSwitchInput(session,
+                                   inputId = "plot_all_on_off",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_growth",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_growth_trajectory",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_survival_trajectory",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_length_mass",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_survival",
+                                   value = FALSE)
+                 updateSwitchInput(session,
+                                   inputId = "plot_clear_species_reproduction",
+                                   value = FALSE)
                  
                  output$textMessageResetApp <- renderText(
                    {
@@ -872,8 +978,10 @@ output$rmark <- renderUI(
     if (generate_species_markdown() == TRUE)
     {
       path_rmd <- "Species_Profile.Rmd"
-      # Render into www/ folder.
-      path_html <- paste("www\\",CurrentSpeciesName,"_Profile.html",sep = "")
+      # Render into www folder.
+      system.name <- Sys.info()[["sysname"]]
+      fish_name <- sub(" ", "_", CurrentSpeciesName)
+      path_html <- ifelse(system.name=="Windows", paste("www\\",fish_name,"_Profile.html",sep = ""),paste("www/",fish_name,"_Profile.html",sep = ""))
       render(
          path_rmd,
          output_format = "html_document",
@@ -884,8 +992,9 @@ output$rmark <- renderUI(
         style = "border-width: 0;",
         width = "100%",
         height = 1200,
-        # Filename relative to the www/ folder.
-        src = basename(path_html)
+        src = paste(fish_name,"_Profile.html",sep = "")
+        # Filename relative to the www folder.
+        # src = basename(path_html)
       )
     }
   }
@@ -955,6 +1064,9 @@ observe({
                       inputId = "display_SpeciesParameters",
                       value = FALSE)
     updateSwitchInput(session,
+                      inputId = "plot_all_on_off",
+                      value = FALSE)
+    updateSwitchInput(session,
                       inputId = "plot_clear_species_growth",
                       value = FALSE)
     updateSwitchInput(session,
@@ -996,6 +1108,9 @@ observe(
       shinyjs::hide(id = "Species_Survival_out_Main")
       shinyjs::hide(id = "Species_Reproduction_out_Main")
       
+      updateSwitchInput(session,
+                        inputId = "plot_all_on_off",
+                        value = FALSE)
       updateSwitchInput(session, 
                         inputId = "display_SpeciesParameters",
                         value = FALSE)
@@ -1040,6 +1155,9 @@ observe(
       shinyjs::hide(id = "Species_Survival_out_Main")
       shinyjs::hide(id = "Species_Reproduction_out_Main")
       
+      updateSwitchInput(session,
+                        inputId = "plot_all_on_off",
+                        value = FALSE)
       updateSwitchInput(session, 
                         inputId = "display_SpeciesParameters",
                         value = FALSE)
