@@ -18,7 +18,7 @@ add_baseline_scenario_button <- helper(
 baseline_scenario_name_element <-
   textInput(inputId = "currentScenarioName",
             label = "Name scenario",
-            value = "Baseline")
+            value = "")
                                             
 
 baseline_scenario_name <- helper(
@@ -185,12 +185,24 @@ species_profile_modal_window <- bsModal(
   uiOutput("rmark"),
   downloadButton(
     outputId = 'downloadSpeciesProfile',
-    label = 'Download',
+    label = 'PDF',
     class = "download_Button"
   )
 )
 
 # Switches and download GUI elements for species-specific plots
+
+# All on/off switch
+plot_all_on_off_button <-
+  switchInput(
+    inputId = "plot_all_on_off",
+    label = "Plot",
+    value = FALSE,
+    onStatus = "danger",
+    offStatus = "info",
+    size = "large",
+    width = NULL
+  )
 
 # Incremental Growth
 plot_clear_species_growth_button <-
@@ -220,7 +232,7 @@ species_growth_modal_window <- bsModal(
   uiOutput("SGrowthPlot"),
   downloadButton(
     outputId = 'downloadPlotSpeciesGrowth',
-    label = 'Download',
+    label = 'PNG',
     class = "download_Button"
   )
 )
@@ -253,7 +265,7 @@ species_growth_trajectory_modal_window <- bsModal(
   uiOutput("SGrowthTrajectoryPlot"),
   downloadButton(
     outputId = 'downloadPlotSpeciesGrowthTrajectory',
-    label = 'Download',
+    label = 'PNG',
     class = "download_Button"
   )
 )
@@ -286,7 +298,7 @@ species_survival_trajectory_modal_window <- bsModal(
   uiOutput("SSurvivalTrajectoryPlot"),
   downloadButton(
     outputId = 'downloadPlotSpeciesSurvivalTrajectory',
-    label = 'Download',
+    label = 'PNG',
     class = "download_Button"
   )
 )
@@ -319,7 +331,7 @@ species_length_mass_modal_window <- bsModal(
   uiOutput("SLengthMassPlot"),
   downloadButton(
     outputId = 'downloadPlotSpeciesLengthMass',
-    label = 'Download',
+    label = 'PNG',
     class = "download_Button"
   )
 )
@@ -352,7 +364,7 @@ species_survival_modal_window <- bsModal(
   uiOutput("SSurvivalPlot"),
   downloadButton(
     outputId = 'downloadPlotSpeciesSurvival',
-    label = 'Download',
+    label = 'PNG',
     class = "download_Button"
   )
 )
@@ -385,7 +397,7 @@ species_reproduction_modal_window <- bsModal(
   uiOutput("SReproductionPlot"),
   downloadButton(
     outputId = 'downloadPlotSpeciesReproduction',
-    label = 'Download',
+    label = 'PNG',
     class = "download_Button"
   )
 )
@@ -456,7 +468,7 @@ display_life_history_table_button <-
     icon = "question-circle",
     colour = helper_Color,
     type = "inline",
-    title = "Life History Parameters",
+    title = "Scenario Parameters",
     content = GUI_Tooltip[GUI_Tooltip$Name == "view_complete_baseline_parameters", ]$tooltip
   )
 
@@ -918,7 +930,7 @@ store_density_dependence_parameters_button <-
 display_stressor_table_button_element <-
   switchInput(
     inputId = "display_stressor_table",
-    label = "Display",
+    label = "Table",
     value = FALSE,
     onStatus = "danger",
     offStatus = "info",
@@ -1777,31 +1789,31 @@ matrixTable_modal_window <- bsModal(
 )
 
 
-export_results_report_button_element <-
+export_results_report_button <-
   downloadButton(
     outputId = "Download_Results_Report",
-    label = "Results",
+    label = "Excel",
     class = "download_Button"
   )
 
 
-export_results_report_button <-
-  helper(
-    export_results_report_button_element,
-    icon = "question-circle",
-    colour = helper_Color,
-    type = "inline",
-    title = "Export Results Report",
-    content = "Creates an excel workbook with all data and information for the currently selected scenario results."
-  )
+# export_results_report_button <-
+#   helper(
+#     export_results_report_button_element,
+#     icon = "question-circle",
+#     colour = helper_Color,
+#     type = "inline",
+#     title = "Export Results Report",
+#     content = "Creates an excel workbook with all data and information for the currently selected scenario results."
+#   )
 
 
 export_results_markdown_button <-
   actionButton(
     inputId = "show_results_markdown_modal",
-    label = "Markdown",
-    width = "100%",
-    class = "actButtonD1"
+    label = "PDF",
+    class = "actButtonD1",
+    icon = icon("download")
   )
 
 results_markdown_modal_window <- bsModal(

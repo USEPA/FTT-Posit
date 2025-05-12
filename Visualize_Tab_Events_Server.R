@@ -531,7 +531,8 @@ observe(
 output$downloadSpeciesProfile <- downloadHandler(
   filename <- function()
   {
-    paste("Species_Profile_Report", "pdf", sep = ".")
+    fish_name <- sub(" ", "_", CurrentSpeciesName)
+    paste(fish_name, "_Profile.pdf", sep = "")
   },
   content = function(file) 
   {
@@ -543,7 +544,10 @@ output$downloadSpeciesProfile <- downloadHandler(
     # library(tinytex)
     # out <- render('Species_Profile.Rmd',pdf_document())
     # file.rename(out, file)
-    file.rename(html_to_pdf(file_path = "Species_Profile.html"), file)
+    system.name <- Sys.info()[["sysname"]]
+    fish_name <- sub(" ", "_", CurrentSpeciesName)
+    path_html <- ifelse(system.name=="Windows", paste("www\\",fish_name,"_Profile.html",sep = ""),paste("www/",fish_name,"_Profile.html",sep = ""))
+    file.rename(html_to_pdf(file_path = path_html), file)
   }
 ) 
 

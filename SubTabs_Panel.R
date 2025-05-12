@@ -34,6 +34,12 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                                 column(width = 8, h4(""))
                               ),
                               fluidRow(
+                                column(width = 12, h4("Show or Hide all Plots at once"))
+                              ),
+                              fluidRow(
+                                column(width = 12, align = "left", plot_all_on_off_button)
+                              ),
+                              fluidRow(
                                 column(width = 12, h4("Growth Increments by Size"))
                               ),
                               fluidRow(
@@ -131,7 +137,7 @@ subtab1 <- tabPanel("Build a Baseline Life History Scenario",
                           div(
                             id = "baseline_visualize",
                             hr(),
-                            h4("Life History Parameters"),
+                            h4("Scenario Parameters"),
                             display_life_history_table_button,
                             h4(""),
                             hr(),
@@ -359,7 +365,7 @@ subtab2 <- tabPanel("Build a Stressor Scenario",
                                 
                                 h4(""),
                                 br(),
-                                h4("Display Stressor Parameters Table"),
+                                h4("Stressor Parameters Table"),
                                 display_stressor_table_button,
                                 h4(""),
                                 hyperlink_stressor_newtab_button,
@@ -419,7 +425,7 @@ subtab3 <- tabPanel("Export Scenario", sidebarLayout(
       id = "DownloadScenarioButton",
       downloadButton(
         outputId = "Download_Scenario",
-        label = "Export Scenario",
+        label = "Excel",
         class = "download_Button"
       )
       # export_scenario_out_text
@@ -546,12 +552,12 @@ subtab41 <- tabPanel("Visualize Results", sidebarLayout(
           ),
         )), fluidRow(
           column(
-            width = 6,
+            width = 4,
             align = "left",
             plot_clear_summary_matrix_button
           ),
-          column(width = 3, export_matrix_button),
-          column(width = 3, export_summaryMatrixTable_button)
+          column(width = 4, align = "right", export_matrix_button),
+          column(width = 4, align = "right", export_summaryMatrixTable_button)
           # column(
           #   width = 6,
           #   fluidRow(column(
@@ -702,22 +708,29 @@ subtab41 <- tabPanel("Visualize Results", sidebarLayout(
       hr(),
       
       fluidRow(
-        column(width = 6, h4("Export Results Report")),
+        column(width = 4, 
+               align = "left", 
+               div(
+                 helper(
+                   shiny_tag = h4("Export Results", class = "header4"),
+                   icon = "question-circle",
+                   colour = helper_Color,
+                   type = "inline",
+                   title = "Export Results Report",
+                   content = "Create and download a report containing all of the data and information for the currently selected scenario results in PDF or Excel format."
+                 )
+               )),
         column(
-          width = 6,
+          width = 4,
           offset = 0,
-          export_results_report_button
-        )
-      ),
-      
-      br(),
-      
-      fluidRow(
-        column(width = 6, h4("Export Results Markdown")),
-        column(
-          width = 6,
-          offset = 0,
+          align = "right",
           export_results_markdown_button
+        ),
+        column(
+          width = 4,
+          offset = 0,
+          align = "right",
+          export_results_report_button
         )
       ),
       h4(""),
@@ -807,7 +820,7 @@ subtab42 <- tabPanel("Export Results", sidebarLayout(
       id = "DownloadResultsButton",
       downloadButton(
         outputId = "Download_Results",
-        label = "Export Results",
+        label = "Excel",
         class = "download_Button"
       )
     ))

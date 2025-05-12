@@ -679,6 +679,10 @@ observeEvent(input$run_tcem,
                updateCheckboxGroupInput(session, "Check_Scenario_Names",
                                         choices = as.list(scenario_names))
                
+               updateSwitchInput(session, 
+                                 inputId = "display_stressor_table",
+                                 value = TRUE)
+               
                # updateCheckboxGroupInput(session, "Check_Scenario_Names_Run",
                #                          choices = as.list(scenario_names))
                
