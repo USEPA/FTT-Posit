@@ -978,6 +978,7 @@ output$rmark <- renderUI(
     if (generate_species_markdown() == TRUE)
     {
       path_rmd <- "Species_Profile.Rmd"
+
       # Render into www folder.
       system.name <- Sys.info()[["sysname"]]
       fish_name <- sub(" ", "_", CurrentSpeciesName)
@@ -995,6 +996,7 @@ output$rmark <- renderUI(
         src = paste(fish_name,"_Profile.html",sep = "")
         # Filename relative to the www folder.
         # src = basename(path_html)
+
       )
     }
   }

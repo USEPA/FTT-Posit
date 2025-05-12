@@ -1049,6 +1049,7 @@ output$results_markdown <- renderUI(
     if (generate_markdown() == TRUE)
     {
       path_rmd <- "Results_Report.Rmd"
+
       # Render into www folder.
       system.name <- Sys.info()[["sysname"]]
       path_html <- ifelse(system.name=="Windows", paste("www\\","Results_Report.html",sep = ""),paste("www/","Results_Report.html",sep = ""))
@@ -1064,7 +1065,7 @@ output$results_markdown <- renderUI(
         height = 1200,
         src = paste("Results_Report.html",sep = "")
         # Filename relative to the www/ folder.
-        # src = basename(path_html)
+
       )
     }
   }
