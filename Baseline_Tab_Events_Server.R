@@ -361,7 +361,8 @@ output$downloadPlotSpeciesGrowth <- downloadHandler(
     sname <- species_library$common_name[index]
     FishToxTranslator::PlotGrowth(forProfile = TRUE, species = sname)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Species growth trajectory
@@ -428,7 +429,8 @@ output$downloadPlotSpeciesGrowthTrajectory <- downloadHandler(
     sname <- species_library$common_name[index]
     FishToxTranslator::PlotGrowthTrajectory(species = sname)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Species survival trajectory
@@ -495,7 +497,8 @@ output$downloadPlotSpeciesSurvivalTrajectory <- downloadHandler(
     sname <- species_library$common_name[index]
     FishToxTranslator:::PlotSurvivalTrajectory(species = sname)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Species length to mass
@@ -562,7 +565,8 @@ output$downloadPlotSpeciesLengthMass <- downloadHandler(
     sname <- species_library$common_name[index]
     FishToxTranslator::PlotLengthToMass(species = sname)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Species survival
@@ -629,7 +633,8 @@ output$downloadPlotSpeciesSurvival <- downloadHandler(
     sname <- species_library$common_name[index]
     FishToxTranslator::PlotSurvival(forProfile = TRUE, species = sname)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Species reproduction
@@ -696,7 +701,8 @@ output$downloadPlotSpeciesReproduction <- downloadHandler(
     sname <- species_library$common_name[index]
     FishToxTranslator::PlotReproduction(forProfile = TRUE, species = sname)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 ####################################################################################################
@@ -733,7 +739,8 @@ output$download_history_parameters <- downloadHandler(
   content = function(file) {
     template_file <- LifeHistory_Parameters()
     write.csv(template_file, file, row.names = FALSE)
-  }
+  },
+  contentType = "csv"
 )
 
 output$download_baseline_parameters_button <- renderUI(
@@ -756,7 +763,8 @@ output$download_baseline_parameters <- downloadHandler(
   content = function(file) {
     df_params <- parameters[[TemporaryBaselineScenarioName]]
     write.csv(df_params, file, row.names = FALSE)
-  }
+  },
+  contentType = "csv"
 )
 
 
