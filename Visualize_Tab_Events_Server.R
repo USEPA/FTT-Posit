@@ -529,26 +529,19 @@ observe(
 ####################################################################################################
 # R markdown
 output$downloadSpeciesProfile <- downloadHandler(
-  filename <- function()
+  pdf_filename <- function()
   {
     fish_name <- sub(" ", "_", CurrentSpeciesName)
     paste(fish_name, "_Profile.pdf", sep = "")
   },
-  content = function(file) 
+  content = function(pdf_filename) 
   {
-    # src <- normalizePath('Species_Profile.Rmd')
-    # owd <- setwd(tempdir())
-    # on.exit(setwd(owd))
-    # file.copy(src, 'Species_Profile.Rmd')
-    # library(rmarkdown)
-    # library(tinytex)
-    # out <- render('Species_Profile.Rmd',pdf_document())
-    # file.rename(out, file)
     system.name <- Sys.info()[["sysname"]]
     fish_name <- sub(" ", "_", CurrentSpeciesName)
     path_html <- ifelse(system.name=="Windows", paste("www\\",fish_name,"_Profile.html",sep = ""),paste("www/",fish_name,"_Profile.html",sep = ""))
-    file.rename(html_to_pdf(file_path = path_html), file)
-  }
+    file.rename(html_to_pdf(file_path = path_html, dir = "www", render_exist = TRUE), pdf_filename)
+  },
+  contentType = "pdf"
 ) 
 
 # Growth Functions
@@ -578,7 +571,7 @@ observeEvent(input$export_growth_modal,
 output$downloadPlotGrowth <- downloadHandler(
   filename <- function()
   {
-    paste("Growth_Functions", "png", sep = ".")
+    paste("Growth_Functions", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -588,7 +581,8 @@ output$downloadPlotGrowth <- downloadHandler(
         res = 300)
     plot_growth_parameters(input$Check_Scenario_Names, input$slider_parameters)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Survival Functions
@@ -619,7 +613,7 @@ observeEvent(input$export_survival_modal,
 output$downloadPlotSurvival <- downloadHandler(
   filename <- function()
   {
-    paste("Survival_Functions", "png", sep = ".")
+    paste("Survival_Functions", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -629,7 +623,8 @@ output$downloadPlotSurvival <- downloadHandler(
         res = 300)
     plot_survival_parameters(input$Check_Scenario_Names, input$slider_parameters)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Reproduction Functions
@@ -660,7 +655,7 @@ observeEvent(input$export_reproduction_modal,
 output$downloadPlotReproduction <- downloadHandler(
   filename <- function()
   {
-    paste("Reproduction_Functions", "png", sep = ".")
+    paste("Reproduction_Functions", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -670,7 +665,8 @@ output$downloadPlotReproduction <- downloadHandler(
         res = 300)
     plot_reproduction_parameters(input$Check_Scenario_Names, input$slider_parameters)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Spawning Probabilities
@@ -701,7 +697,7 @@ observeEvent(input$export_spawning_modal,
 output$downloadPlotSpawning <- downloadHandler(
   filename <- function()
   {
-    paste("Spawning_Functions", "png", sep = ".")
+    paste("Spawning_Functions", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -711,7 +707,8 @@ output$downloadPlotSpawning <- downloadHandler(
         res = 300)
     plot_scenarios_spawning_probabilities(input$Check_Scenario_Names)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Survival Decrements
@@ -742,7 +739,7 @@ observeEvent(input$export_survivalDecrement_modal,
 output$downloadPlotSurvivalDecrement <- downloadHandler(
   filename <- function()
   {
-    paste("Survival_Decrement", "png", sep = ".")
+    paste("Survival_Decrement", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -752,7 +749,8 @@ output$downloadPlotSurvivalDecrement <- downloadHandler(
         res = 300)
     plot_scenarios_survival_decrements(input$Check_Scenario_Names)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Growth Percents
@@ -783,7 +781,7 @@ observeEvent(input$export_growthPercents_modal,
 output$downloadGrowthPercents <- downloadHandler(
   filename <- function()
   {
-    paste("Growth_Percents", "png", sep = ".")
+    paste("Growth_Percents", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -793,7 +791,8 @@ output$downloadGrowthPercents <- downloadHandler(
         res = 300)
     plot_scenarios_growth_percents(input$Check_Scenario_Names)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 
@@ -825,7 +824,7 @@ observeEvent(input$export_exposureConcentration_modal,
 output$downloadPlotExposureConcentration <- downloadHandler(
   filename <- function()
   {
-    paste("Exposure_Concentrations", "png", sep = ".")
+    paste("Exposure_Concentrations", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -835,5 +834,6 @@ output$downloadPlotExposureConcentration <- downloadHandler(
         res = 300)
     plot_scenarios_exposure_concentrations(input$Check_Scenario_Names)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
