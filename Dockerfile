@@ -5,11 +5,12 @@ WORKDIR /home/app/
 
 COPY . .
 
-# Install Snap and Chromium
+# Install dependencies and add the Chromium PPA
 RUN apt-get update && \
-    apt-get install -y snapd && \
-    snap install core && \
-    snap install chromium
+    apt-get install -y software-properties-common && \
+    add-apt-repository ppa:canonical-chromium-builds/stage && \
+    apt-get update && \
+    apt-get install -y chromium-browser
 
 # Install xlsx package
 RUN R -e "install.packages('xlsx', repos='https://cloud.r-project.org/')"
