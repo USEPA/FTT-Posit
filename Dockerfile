@@ -5,12 +5,8 @@ WORKDIR /home/app/
 
 COPY . .
 
-# Install dependencies and add the Chromium PPA
-RUN apt-get update && \
-    apt-get install -y software-properties-common && \
-    add-apt-repository ppa:canonical-chromium-builds/stage && \
-    apt-get update && \
-    apt-get install -y chromium-browser
+# Install Chromium
+RUN apt-get update && apt-get install -y chromium chromium-driver
 
 # Install xlsx package
 RUN R -e "install.packages('xlsx', repos='https://cloud.r-project.org/')"
