@@ -5,8 +5,18 @@ WORKDIR /home/app/
 
 COPY . .
 
+# Install Chromium
+RUN apt-get update && apt-get install -y \
+    wget \
+    gnupg \
+    ca-certificates \
+    --no-install-recommends \
+    chromium-browser \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Install xlsx package
 RUN R -e "install.packages('xlsx', repos='https://cloud.r-project.org/')"
+
 
 RUN ls -la
 RUN Rscript install_packages.R
