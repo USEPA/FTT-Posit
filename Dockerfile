@@ -11,7 +11,7 @@ RUN ls -la
 # Execute additional R script for package installation
 RUN Rscript install_packages.R
 
-RUN R -e "install.packages('xlsx', repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages('xlsx', repos = 'http://cran.us.r-project.org')"
 
 EXPOSE 3838
 
