@@ -18,10 +18,6 @@ ENV PATH=$JAVA_HOME/bin:$PATH
 # Reconfigure rJava
 RUN R CMD javareconf
 
-# Install rJava and xlsx packages in R
-RUN R -e "install.packages('rJava', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('xlsx', repos='http://cran.rstudio.com/')"
-
 # List directory contents for debugging
 RUN ls -la
 
