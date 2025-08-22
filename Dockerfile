@@ -5,19 +5,6 @@ WORKDIR /home/app/
 
 COPY . .
 
-# Install Java
-RUN apt-get update && \
-    apt-get install -y default-jdk && \
-    apt-get clean
-
-# Set JAVA_HOME environment variable
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-ENV LD_LIBRARY_PATH=$JAVA_HOME/lib/server
-ENV PATH=$JAVA_HOME/bin:$PATH
-
-# Reconfigure rJava
-RUN R CMD javareconf
-
 # List directory contents for debugging
 RUN ls -la
 
