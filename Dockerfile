@@ -9,7 +9,21 @@ COPY . .
 # RUN apt-get update && apt-get install -y chromium chromium-driver
 
 # Install xlsx package
-RUN R -e "install.packages('xlsx', repos='https://cloud.r-project.org/')"
+# Install Java
+RUN apt-get update && \
+    apt-get install -y default-jdk && \
+    apt-get clean
+
+# Set JAVA_HOME environment variable
+ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+ENV PATH=$JAVA_HOME/bin:$PATH
+
+# Reconfigure rJava
+RUN R CMD javareconf
+
+# Install rJava and xlsx packages in R
+RUN R -e "install.packages('rJava', repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('xlsx', repos='http://cran.rstudio.com/')"
 
 
 RUN ls -la
