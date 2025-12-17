@@ -1,0 +1,1498 @@
+################################################################################
+# Events used for handling the building of a stressor scenario.
+################################################################################
+
+#-------------------------------------------------------------------------------
+#  Add stressor's scenario event.
+#-------------------------------------------------------------------------------
+observeEvent(input$add_StressorScenario, {
+  shinyjs::hide(id = "baseline_selection_name")
+  shinyjs::show(id = "underlying_scenario")
+  updateSelectInput(
+    session,
+    "baselines",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateTextInput(session, "stressorName", value = "")
+  
+  updateTextAreaInput(session, inputId = "textStressorDescription", value = "")
+  
+  updateTextInput(session, inputId = "chemical_id", value = "")
+  
+  output$text_chemicalID <- NULL
+  
+  updateSelectInput(session, "stressor_type", selected = "None Selected")
+  
+  updateSelectInput(session, "effect_type", selected = "None Selected")
+  
+  updateSelectInput(
+    session,
+    "downloadScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateSelectInput(
+    session,
+    "deleteScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateSelectInput(session, "initial_distribution", selected = "None Selected")
+  
+  updateSelectInput(
+    session,
+    "expconc_profile",
+    choices = c("None Selected", "New", names(ExposureConcentrations)),
+    selected = "None Selected"
+  )
+  
+  updateNumericInput(session, inputId = "start_winter", value = 355)
+  updateNumericInput(session, inputId = "end_winter", value = 91)
+  
+  updateSwitchInput(session, inputId = "display_stressor_table", value = FALSE)
+  
+  reset("upload_exposure_concentrations")
+  reset("upload_predetermined_effects")
+  reset("upload_predetermined_growth_effects")
+  
+  output$text_stressorName <- NULL
+  output$text_runid <- NULL
+  output$density_dependence_rate <- NULL
+  
+  shinyjs::hide(id = "stressorType")
+  shinyjs::hide(id = "Winter_Options")
+  shinyjs::hide(id = "Density_Dependence_Options")
+  shinyjs::hide(id = "predetermined_growth_effects")
+  shinyjs::hide(id = "upload_new_exposure_concentration")
+  shinyjs::hide(id = "exposure_conc")
+  shinyjs::hide(id = "chemicalEffectType")
+  shinyjs::hide(id = "chemicalID")
+  shinyjs::hide(id = "tcem")
+  shinyjs::hide(id = "predetermined_effects")
+  shinyjs::hide(id = "guts")
+  shinyjs::hide(id = "stressor_verification")
+  shinyjs::hide(id = "stressor_table_main")
+  shinyjs::hide(id = "Exposure_Concentration_Main")
+  shinyjs::hide(id = "TCEM_Main")
+  shinyjs::hide(id = "Survival_Decrement_Main")
+  shinyjs::hide(id = "Growth_Percent_Main")
+  shinyjs::hide(id = "Winter_Survival_Main")
+  shinyjs::hide(id = "Predetermined_Initial_Distribution_Main")
+  shinyjs::hide(id = "Summary_Table_Main")
+  shinyjs::hide(id = "run_simulations_section")
+  output$Summary_Table_out <- NULL
+  
+  shinyjs::enable(id = "baselines")
+  shinyjs::enable(id = "stressorName")
+  shinyjs::enable(id = "submit_stressorName")
+  shinyjs::enable(id = "textStressorDescription")
+  shinyjs::enable(id = "stressor_type")
+  shinyjs::enable(id = "download_exposure_concentration")
+  shinyjs::enable(id = "upload_exposure_concentrations")
+  shinyjs::enable(id = "effect_type")
+  shinyjs::enable(id = "tcem_lc_conc")
+  shinyjs::enable(id = "tcem_lc_percent")
+  shinyjs::enable(id = "run_tcem")
+  shinyjs::enable(id = "download_predetermined_effects")
+  shinyjs::enable(id = "upload_predetermined_effects")
+  shinyjs::enable(id = "download_predetermined_growth_effects")
+  shinyjs::enable(id = "upload_predetermined_growth_effects")
+  shinyjs::enable(id = "chemicalID")
+  shinyjs::enable(id = "store_chemicalID")
+  shinyjs::enable(id = "winter_cutoff")
+  shinyjs::enable(id = "start_winter")
+  shinyjs::enable(id = "end_winter")
+  shinyjs::enable(id = "store_winter_params")
+  shinyjs::enable(id = "density_dependence_rate")
+  shinyjs::enable(id = "store_density_dependent_params")
+})
+
+observeEvent(input$baselines, {
+  if (input$baselines != "None Selected")
+  {
+    shinyjs::show(id = "stressorType")
+  }
+}, ignoreInit = TRUE)
+
+observeEvent(input$stressor_type, {
+  if (input$stressor_type == "None Selected")
+  {
+    shinyjs::hide("stressorNameDescription")
+    shinyjs::hide(id = "upload_new_exposure_concentration")
+    shinyjs::hide(id = "exposure_conc")
+    shinyjs::hide(id = "Winter_Options")
+    shinyjs::hide(id = "Density_Dependence_Options")
+  } else if (input$stressor_type == "Chemical: Survival")
+  {
+    shinyjs::show("stressorNameDescription")
+    shinyjs::show(id = "upload_new_exposure_concentration")
+    shinyjs::hide(id = "exposure_conc")
+    shinyjs::hide(id = "Winter_Options")
+    shinyjs::hide(id = "Density_Dependence_Options")
+  } else if (input$stressor_type == "Chemical: Growth")
+  {
+    shinyjs::show("stressorNameDescription")
+    shinyjs::show(id = "upload_new_exposure_concentration")
+    shinyjs::hide(id = "exposure_conc")
+    shinyjs::hide(id = "Winter_Options")
+    shinyjs::hide(id = "Density_Dependence_Options")
+  } else if (input$stressor_type == "Non-chemical: Winter")
+  {
+    shinyjs::show("stressorNameDescription")
+    shinyjs::show(id = "Winter_Options")
+    shinyjs::hide(id = "upload_new_exposure_concentration")
+    shinyjs::hide(id = "exposure_conc")
+    shinyjs::hide(id = "Density_Dependence_Options")
+  } else if (input$stressor_type == "Non-chemical: Density Dependent Growth Response")
+  {
+    shinyjs::show("stressorNameDescription")
+    shinyjs::show(id = "Density_Dependence_Options")
+    shinyjs::hide(id = "upload_new_exposure_concentration")
+    shinyjs::hide(id = "exposure_conc")
+    shinyjs::hide(id = "Winter_Options")
+  }
+}, ignoreNULL = TRUE)
+
+
+#-------------------------------------------------------------------------------
+#  Stressor Name
+#-------------------------------------------------------------------------------
+observeEvent(input$submit_stressorName, {
+  if (is.null(input$stressorName) ||
+      (trimws(input$stressorName) == ""))
+  {
+    shinyjs::info("Input textbox is empty. Please enter a name.")
+    
+  } else if (verifyScenarioName(input$stressorName))
+  {
+    msg <- paste(input$stressorName,
+                 " has been assigned before. Please enter a different name.")
+    shinyjs::info(msg)
+    
+  } else
+  {
+    enter_stressor_scenario_name(input$baselines,
+                                 input$stressorName,
+                                 input$textStressorDescription)
+    stressor_scenario_name <- CurrentStressorScenarioName
+    output$text_stressorName <- renderText({
+      paste("This scenario has been named ",
+            stressor_scenario_name,
+            ".")
+    })
+    
+    updateSelectInput(session, "effect_type", selected = "None Selected")
+    
+    updateSelectInput(session, "initial_distribution", selected = "None Selected")
+    
+    updateNumericInput(session, inputId = "start_winter", value = 355)
+    updateNumericInput(session, inputId = "end_winter", value = 91)
+    
+    output$text_runid <- NULL
+    
+    shinyjs::show(id = "baseline_selection_name")
+    output$Summary_Table_out <- NULL
+    shinyjs::disable(id = "stressorName")
+    shinyjs::disable(id = "baselines")
+    shinyjs::disable(id = "submit_stressorName")
+    shinyjs::disable(id = "textStressorDescription")
+    shinyjs::disable(id = "stressor_type")
+    
+  }
+})
+
+
+#-------------------------------------------------------------------------------
+#  Show/Hide Events
+#-------------------------------------------------------------------------------
+
+observe({
+  if (input$effect_type == "GUTS")
+  {
+    shinyjs::show((id = "guts"))
+    output$text_guts <- renderText({
+      paste("This effect is currently under development.")
+    })
+    shinyjs::hide(id = "chemicalID")
+    shinyjs::hide(id = "tcem")
+    shinyjs::hide(id = "predetermined_effects")
+    shinyjs::hide(id = "predetermined_growth_effects")
+    shinyjs::hide(id = "stressor_verification")
+    shinyjs::hide(id = "stressor_table_main")
+    shinyjs::show(id = "Exposure_Concentration_Main")
+    shinyjs::hide(id = "TCEM_Main")
+    shinyjs::hide(id = "Survival_Decrement_Main")
+    shinyjs::hide(id = "Winter_Survival_Main")
+  } else if (input$effect_type == "Threshold Effects Model: TCEM")
+  {
+    shinyjs::show(id = "chemicalID")
+    shinyjs::show(id = "tcem")
+    text_label <- paste(
+      as.character(parameters_master$name[26]),
+      ": ",
+      " (LC ",
+      input$tcem_lc_percent * 100,
+      ")"
+    )
+    updateNumericInput(session, inputId = "tcem_lc_conc", label = text_label)
+    output$text_tcem <- NULL
+    shinyjs::hide(id = "predetermined_effects")
+    shinyjs::hide(id = "predetermined_growth_effects")
+    shinyjs::hide(id = "guts")
+    shinyjs::hide(id = "stressor_verification")
+    shinyjs::hide(id = "stressor_table_main")
+    shinyjs::show(id = "Exposure_Concentration_Main")
+    shinyjs::hide(id = "TCEM_Main")
+    shinyjs::hide(id = "Survival_Decrement_Main")
+    shinyjs::hide(id = "Winter_Survival_Main")
+  } else if (input$effect_type == "Pre-determined effects")
+  {
+    shinyjs::show(id = "chemicalID")
+    shinyjs::show(id = "predetermined_effects")
+    reset("upload_predetermined_effects")
+    shinyjs::hide(id = "predetermined_growth_effects")
+    shinyjs::hide(id = "tcem")
+    shinyjs::hide(id = "guts")
+    shinyjs::hide(id = "stressor_verification")
+    shinyjs::hide(id = "stressor_table_main")
+    shinyjs::show(id = "Exposure_Concentration_Main")
+    shinyjs::hide(id = "TCEM_Main")
+    shinyjs::hide(id = "Survival_Decrement_Main")
+    shinyjs::hide(id = "Winter_Survival_Main")
+  } else if (input$effect_type == "None Selected")
+  {
+    shinyjs::hide(id = "chemicalID")
+    shinyjs::hide(id = "tcem")
+    shinyjs::hide(id = "predetermined_effects")
+    shinyjs::hide(id = "predetermined_growth_effects")
+    shinyjs::hide(id = "guts")
+    shinyjs::hide(id = "stressor_verification")
+    shinyjs::hide(id = "stressor_table_main")
+    shinyjs::hide(id = "Exposure_Concentration_Main")
+    shinyjs::hide(id = "TCEM_Main")
+    shinyjs::hide(id = "Survival_Decrement_Main")
+    shinyjs::hide(id = "Winter_Survival_Main")
+  }
+})
+
+
+#-------------------------------------------------------------------------------
+#  Download Events
+#-------------------------------------------------------------------------------
+# Downloadable csv of selected dataset
+output$downloadStressorParams <- downloadHandler(
+  filename = function() {
+    paste("stressor_scenario_parameters-", Sys.Date(), ".csv", sep = "")
+  },
+  content = function(file) {
+    df_params <- parameters[[CurrentStressorScenarioName]]
+    write.csv(df_params, file, row.names = FALSE)
+  }
+)
+
+#-------------------------------------------------------------------------------
+#  Winter Events
+#-------------------------------------------------------------------------------
+output$firstDay_winter <- renderText({
+  wdate <- as.POSIXct("2018-10-31")
+  wdate1 <- update(wdate, year = 2018, yday = input$start_winter)
+  wmonth1 <- month.name[month(wdate1)]
+  wday1 <- mday(wdate1)
+  paste("Calendar date is ", wmonth1, " ", wday1)
+})
+
+output$lastDay_winter <- renderText({
+  wdate <- as.POSIXct("2018-10-31")
+  wdate2 <- update(wdate, year = 2018, yday = input$end_winter)
+  wmonth2 <- month.name[month(wdate2)]
+  wday2 <- mday(wdate2)
+  paste("Calendar date is ", wmonth2, " ", wday2)
+})
+
+observeEvent(input$store_winter_params, {
+  store_winter_parameters(
+    CurrentStressorScenarioName,
+    input$start_winter,
+    input$end_winter,
+    input$winter_cutoff
+  )
+  
+  output$Winter_Survival_out <- renderPlot({
+    plot_winter_decreasing_survival(
+      CurrentStressorScenarioName,
+      input$start_winter,
+      input$end_winter,
+      input$winter_cutoff
+    )
+  })
+  
+  updateSelectInput(
+    session,
+    "downloadScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateSelectInput(
+    session,
+    "deleteScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateCheckboxGroupInput(session, "Check_Scenario_Names", choices = as.list(scenario_names))
+  
+  shinyjs::show(id = "Winter_Survival_Main")
+  shinyjs::show(id  = "stressor_verification")
+  shinyjs::show(id = "Visualization_SPB")
+  # shinyjs::show(id = "Visualization_SDEC")
+  # shinyjs::show(id = "stressor_table_main")
+  
+  shinyjs::disable(id = "stressorName")
+  shinyjs::disable(id = "baselines")
+  shinyjs::disable(id = "submit_stressorName")
+  shinyjs::disable(id = "textStressorDescription")
+  shinyjs::disable(id = "stressor_type")
+  shinyjs::disable(id = "winter_cutoff")
+  shinyjs::disable(id = "start_winter")
+  shinyjs::disable(id = "end_winter")
+  shinyjs::disable(id = "store_winter_params")
+  output$textMessageResetApp <- renderText({
+    text1 <- paste("The following scenarios and runs will be deleted upon clicking the Reset App button.")
+    ns <- length(scenario_names)
+    nr <- length(runID)
+    text2 <- ""
+    text3 <- ""
+    if (ns > 0 || nr > 0)
+    {
+      if (ns > 0)
+      {
+        for (i in 1:ns)
+        {
+          if (i == 1)
+          {
+            text2 <- paste("Scenarios: ", scenario_names[1])
+          } else
+          {
+            text2 <- paste(text2, ",", scenario_names[i])
+          }
+          
+        }
+      }
+      
+      if (nr > 0)
+      {
+        lr <- names(unlist(modelRuns, recursive = F))
+        for (i in 1:nr)
+        {
+          if (i == 1)
+          {
+            text3 <- paste("Runs: ", lr[1])
+          } else
+          {
+            text3 <- paste(text3, ",", lr[i])
+          }
+          
+        }
+      }
+      
+      paste(text1, text2, text3, sep = "\n")
+    }
+    
+  })
+  
+  showModal(modalDialog(
+    div(
+      paste(
+        "The ",
+        CurrentStressorScenarioName,
+        " scenario is now complete.",
+        sep = ""
+      ),
+      style = "font-size:200%"
+    ),
+    size = "l",
+    footer = modalButton(div("Close", style =
+                               "font-size:160%"))
+  ), session)
+  
+})
+
+
+#-------------------------------------------------------------------------------
+# Observe event for storing density dependent growth response parameters.
+#-------------------------------------------------------------------------------
+observeEvent(input$store_density_dependent_params, {
+  store_density_dependent_parameters(CurrentStressorScenarioName,
+                                     input$density_dependence_rate)
+  
+  updateSelectInput(
+    session,
+    "downloadScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateSelectInput(
+    session,
+    "deleteScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateCheckboxGroupInput(session, "Check_Scenario_Names", choices = as.list(scenario_names))
+  
+  
+  shinyjs::disable(id = "stressorName")
+  shinyjs::disable(id = "baselines")
+  shinyjs::disable(id = "submit_stressorName")
+  shinyjs::disable(id = "textStressorDescription")
+  shinyjs::disable(id = "stressor_type")
+  shinyjs::disable(id = "winter_cutoff")
+  shinyjs::disable(id = "start_winter")
+  shinyjs::disable(id = "end_winter")
+  shinyjs::disable(id = "density_dependence_rate")
+  shinyjs::disable(id = "store_density_dependent_params")
+  
+  output$density_dependence_rate <- renderText({
+    paste(
+      "The density dependent growth rate, ",
+      input$density_dependence_rate,
+      ", was stored in the program."
+    )
+    
+  })
+  
+  output$textMessageResetApp <- renderText({
+    text1 <- paste("The following scenarios and runs will be deleted upon clicking the Reset App button.")
+    ns <- length(scenario_names)
+    nr <- length(runID)
+    text2 <- ""
+    text3 <- ""
+    if (ns > 0 || nr > 0)
+    {
+      if (ns > 0)
+      {
+        for (i in 1:ns)
+        {
+          if (i == 1)
+          {
+            text2 <- paste("Scenarios: ", scenario_names[1])
+          } else
+          {
+            text2 <- paste(text2, ",", scenario_names[i])
+          }
+          
+        }
+      }
+      
+      if (nr > 0)
+      {
+        lr <- names(unlist(modelRuns, recursive = F))
+        for (i in 1:nr)
+        {
+          if (i == 1)
+          {
+            text3 <- paste("Runs: ", lr[1])
+          } else
+          {
+            text3 <- paste(text3, ",", lr[i])
+          }
+          
+        }
+      }
+      
+      paste(text1, text2, text3, sep = "\n")
+    }
+    
+  })
+  showModal(modalDialog(
+    div(
+      paste(
+        "The ",
+        CurrentStressorScenarioName,
+        " scenario is now complete.",
+        sep = ""
+      ),
+      style = "font-size:200%"
+    ),
+    size = "l",
+    footer = modalButton(div("Close", style =
+                               "font-size:160%"))
+  ), session)
+  
+})
+
+
+#-------------------------------------------------------------------------------
+#  TCEM events
+#-------------------------------------------------------------------------------
+observeEvent(input$run_tcem, {
+  output$TCEM_out <- renderPlot({
+    run_tcem(CurrentStressorScenarioName,
+             input$tcem_lc_conc,
+             input$tcem_lc_percent)
+    showModal(modalDialog(
+      div(
+        paste(
+          "The ",
+          CurrentStressorScenarioName,
+          " scenario is now complete.",
+          sep = ""
+        ),
+        style = "font-size:200%"
+      ),
+      size = "l",
+      footer = modalButton(div("Close", style =
+                                 "font-size:160%"))
+    ), session)
+  })
+  
+  output$text_tcem <- renderText({
+    paste("The TCEM algorithm is finished.")
+  })
+  
+  result1 <- tolower(CurrentStressorScenarioName) %in% tolower(scenario_names)
+  if (result1 == FALSE)
+  {
+    scenario_names <<- c(scenario_names, CurrentStressorScenarioName)
+  }
+  
+  updateSelectInput(
+    session,
+    "downloadScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateSelectInput(
+    session,
+    "deleteScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateCheckboxGroupInput(session, "Check_Scenario_Names", choices = as.list(scenario_names))
+  
+  updateSwitchInput(session, inputId = "display_stressor_table", value = TRUE)
+  
+  shinyjs::show(id = "TCEM_Main")
+  shinyjs::show(id  = "stressor_verification")
+  shinyjs::show(id = "Visualization_SPB")
+  
+  shinyjs::disable(id = "stressorName")
+  shinyjs::disable(id = "baselines")
+  shinyjs::disable(id = "submit_stressorName")
+  shinyjs::disable(id = "textStressorDescription")
+  shinyjs::disable(id = "stressor_type")
+  shinyjs::disable(id = "effect_type")
+  shinyjs::disable(id = "tcem_lc_percent")
+  shinyjs::disable(id = "tcem_lc_conc")
+  shinyjs::disable(id = "run_tcem")
+  shinyjs::disable(id = "download_exposure_concentration")
+  shinyjs::disable(id = "upload_exposure_concentrations")
+  shinyjs::disable(id = "download_predetermined_effects")
+  shinyjs::disable(id = "upload_predetermined_effects")
+  shinyjs::disable(id = "chemical_id")
+  shinyjs::disable(id = "store_chemicalID")
+  output$textMessageResetApp <- renderText({
+    text1 <- paste("The following scenarios and runs will be deleted upon clicking the Reset App button.")
+    ns <- length(scenario_names)
+    nr <- length(runID)
+    text2 <- ""
+    text3 <- ""
+    if (ns > 0 || nr > 0)
+    {
+      if (ns > 0)
+      {
+        for (i in 1:ns)
+        {
+          if (i == 1)
+          {
+            text2 <- paste("Scenarios: ", scenario_names[1])
+          } else
+          {
+            text2 <- paste(text2, ",", scenario_names[i])
+          }
+          
+        }
+      }
+      
+      if (nr > 0)
+      {
+        lr <- names(unlist(modelRuns, recursive = F))
+        for (i in 1:nr)
+        {
+          if (i == 1)
+          {
+            text3 <- paste("Runs: ", lr[1])
+          } else
+          {
+            text3 <- paste(text3, ",", lr[i])
+          }
+          
+        }
+      }
+      
+      paste(text1, text2, text3, sep = "\n")
+    }
+    
+  })
+  removeModal(session)
+})
+
+#-------------------------------------------------------------------------------
+#  Exposure Concentrations
+#-------------------------------------------------------------------------------
+observe({
+  if (input$expconc_profile == "None Selected")
+  {
+    shinyjs::hide(id = "exposure_conc")
+  } else if (input$expconc_profile == "New")
+  {
+    shinyjs::show(id = "exposure_conc")
+    shinyjs::show(id = "upload_new_exposure_concentration")
+  } else
+  {
+    assign_old_exposure_concentration(CurrentStressorScenarioName, input$expconc_profile)
+    output$Exposure_Concentration_out <- renderPlot({
+      plot_exposure_concentrations(CurrentStressorScenarioName)
+    })
+    shinyjs::show(id = "Exposure_Concentration_Main")
+    if (input$stressor_type == "Chemical: Survival")
+    {
+      shinyjs::show(id = "chemicalEffectType")
+    }
+    if (input$stressor_type == "Chemical: Growth")
+    {
+      shinyjs::show(id = "chemicalID")
+      shinyjs::enable(id = "predetermined_growth_effects")
+      shinyjs::show(id = "predetermined_growth_effects")
+    }
+  }
+})
+
+#-------------------------------------------------------------------------------
+# Download exposure concentrations template for stressor scenario.
+#-------------------------------------------------------------------------------
+output$download_exposure_concentration <- downloadHandler(
+  filename = function() {
+    paste("exposure_concentrations_", Sys.Date(), ".csv", sep = "")
+  },
+  content = function(file) {
+    template_file <- generate_ExposureConcentration_Template()
+    write.csv(template_file, file, row.names = FALSE)
+  }
+)
+
+
+observeEvent(input$upload_exposure_concentrations, {
+  assign_exposure_concentrations(
+    CurrentStressorScenarioName,
+    input$upload_exposure_concentrations$datapath,
+    input$upload_exposure_concentrations$name
+  )
+  output$Exposure_Concentration_out <- renderPlot({
+    plot_exposure_concentrations(CurrentStressorScenarioName)
+  })
+  shinyjs::show(id = "Exposure_Concentration_Main")
+  if (input$stressor_type == "Chemical: Survival")
+  {
+    shinyjs::show(id = "chemicalEffectType")
+  }
+  if (input$stressor_type == "Chemical: Growth")
+  {
+    shinyjs::show(id = "chemicalID")
+    shinyjs::enable(id = "predetermined_growth_effects")
+    shinyjs::show(id = "predetermined_growth_effects")
+  }
+  
+})
+
+#-------------------------------------------------------------------------------
+#  Pre-determined Effects
+#-------------------------------------------------------------------------------
+# Download predetermined effects template for stressor scenario.
+output$download_predetermined_effects <- downloadHandler(
+  filename = function() {
+    paste("Predetermined_Effects_Template_", Sys.Date(), ".csv", sep = "")
+  },
+  content = function(file) {
+    template_file <- generate_Predetermined_Effects_Template()
+    write.csv(template_file, file, row.names = FALSE)
+  }
+)
+
+observeEvent(input$upload_predetermined_effects, {
+  assign_predetermined_effects(CurrentStressorScenarioName,
+                               input$upload_predetermined_effects$datapath)
+  output$Survival_Decrement_out <- renderPlot({
+    plot_survival_decrement(CurrentStressorScenarioName)
+    showModal(modalDialog(
+      div(
+        paste(
+          "The ",
+          CurrentStressorScenarioName,
+          " scenario is now complete.",
+          sep = ""
+        ),
+        style = "font-size:200%"
+      ),
+      size = "l",
+      footer = modalButton(div("Close", style =
+                                 "font-size:160%"))
+    ), session)
+    
+  })
+  shinyjs::show(id  = "Survival_Decrement_Main")
+  shinyjs::show(id  = "stressor_verification")
+  
+  result <- tolower(CurrentStressorScenarioName) %in% tolower(scenario_names)
+  if (result == FALSE)
+  {
+    scenario_names <<- c(scenario_names, CurrentStressorScenarioName)
+  }
+  
+  updateSelectInput(
+    session,
+    "downloadScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateSelectInput(
+    session,
+    "deleteScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateCheckboxGroupInput(session, "Check_Scenario_Names", choices = as.list(scenario_names))
+  
+  updateSelectInput(
+    session,
+    "expconc_profile",
+    choices = c("None Selected", "New", names(ExposureConcentrations)),
+    selected = "None Selected"
+  )
+  
+  shinyjs::disable(id = "baselines")
+  shinyjs::disable(id = "stressorName")
+  shinyjs::disable(id = "submit_stressorName")
+  shinyjs::disable(id = "textStressorDescription")
+  shinyjs::disable(id = "stressor_type")
+  shinyjs::disable(id = "effect_type")
+  shinyjs::disable(id = "tcem_lc_percent")
+  shinyjs::disable(id = "tcem_lc_conc")
+  shinyjs::disable(id = "run_tcem")
+  shinyjs::disable(id = "download_exposure_concentration")
+  shinyjs::disable(id = "upload_exposure_concentrations")
+  shinyjs::disable(id = "download_predetermined_effects")
+  shinyjs::disable(id = "upload_predetermined_effects")
+  shinyjs::disable(id = "chemical_id")
+  shinyjs::disable(id = "store_chemicalID")
+  output$textMessageResetApp <- renderText({
+    text1 <- paste("The following scenarios and runs will be deleted upon clicking the Reset App button.")
+    ns <- length(scenario_names)
+    nr <- length(runID)
+    text2 <- ""
+    text3 <- ""
+    if (ns > 0 || nr > 0)
+    {
+      if (ns > 0)
+      {
+        for (i in 1:ns)
+        {
+          if (i == 1)
+          {
+            text2 <- paste("Scenarios: ", scenario_names[1])
+          } else
+          {
+            text2 <- paste(text2, ",", scenario_names[i])
+          }
+          
+        }
+      }
+      
+      if (nr > 0)
+      {
+        lr <- names(unlist(modelRuns, recursive = F))
+        for (i in 1:nr)
+        {
+          if (i == 1)
+          {
+            text3 <- paste("Runs: ", lr[1])
+          } else
+          {
+            text3 <- paste(text3, ",", lr[i])
+          }
+          
+        }
+      }
+      
+      paste(text1, text2, text3, sep = "\n")
+    }
+    
+  })
+  removeModal(session)
+})
+
+observeEvent(input$store_chemicalID, {
+  inputChemicalID <- input$chemical_id
+  if (is.null(inputChemicalID) || (trimws(inputChemicalID) == ""))
+  {
+    shinyjs::info("Input textbox is empty. Please enter a chemical name.")
+  } else
+  {
+    store_chemicalID(CurrentStressorScenarioName, inputChemicalID)
+    stressor_chemicalID <- inputChemicalID
+    output$text_chemicalID <- renderText({
+      paste(stressor_chemicalID, " was stored in the code.")
+    })
+  }
+})
+
+#-------------------------------------------------------------------------------
+# Download predetermined growth effects template for stressor scenario.
+#-------------------------------------------------------------------------------
+output$download_predetermined_growth_effects <- downloadHandler(
+  filename = function() {
+    paste("Predetermined_Growth_Effects_Template_",
+          Sys.Date(),
+          ".csv",
+          sep = "")
+  },
+  content = function(file) {
+    template_file <- generate_Predetermined_Growth_Effects_Template()
+    write.csv(template_file, file, row.names = FALSE)
+  }
+)
+
+
+observeEvent(input$upload_predetermined_growth_effects, {
+  assign_predetermined_growth_effects(
+    CurrentStressorScenarioName,
+    input$upload_predetermined_growth_effects$datapath
+  )
+  output$Growth_Percent_out <- renderPlot({
+    plot_growth_percent(CurrentStressorScenarioName)
+  })
+  shinyjs::show(id  = "Growth_Percent_Main")
+  shinyjs::show(id  = "stressor_verification")
+  # shinyjs::show(id = "stressor_table_main")
+  
+  result <- tolower(CurrentStressorScenarioName) %in% tolower(scenario_names)
+  if (result == FALSE)
+  {
+    scenario_names <<- c(scenario_names, CurrentStressorScenarioName)
+  }
+  
+  updateSelectInput(
+    session,
+    "downloadScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateSelectInput(
+    session,
+    "deleteScenario",
+    choices = c("None Selected", scenario_names),
+    selected = "None Selected"
+  )
+  
+  updateCheckboxGroupInput(session, "Check_Scenario_Names", choices = as.list(scenario_names))
+  
+  shinyjs::disable(id = "baselines")
+  shinyjs::disable(id = "stressorName")
+  shinyjs::disable(id = "submit_stressorName")
+  shinyjs::disable(id = "textStressorDescription")
+  shinyjs::disable(id = "stressor_type")
+  shinyjs::disable(id = "effect_type")
+  shinyjs::disable(id = "tcem_lc_percent")
+  shinyjs::disable(id = "tcem_lc_conc")
+  shinyjs::disable(id = "download_exposure_concentration")
+  shinyjs::disable(id = "upload_exposure_concentrations")
+  shinyjs::disable(id = "download_predetermined_effects")
+  shinyjs::disable(id = "upload_predetermined_effects")
+  shinyjs::disable(id = "download_predetermined_growth_effects")
+  shinyjs::disable(id = "upload_predetermined_growth_effects")
+  shinyjs::disable(id = "chemical_id")
+  shinyjs::disable(id = "store_chemicalID")
+  
+  showModal(modalDialog(
+    div(
+      paste(
+        "The ",
+        CurrentStressorScenarioName,
+        " scenario is now complete.",
+        sep = ""
+      ),
+      style = "font-size:200%"
+    ),
+    size = "l",
+    footer = modalButton(div("Close", style =
+                               "font-size:160%"))
+  ), session)
+})
+
+#-------------------------------------------------------------------------------
+#  Display Table(s)
+#-------------------------------------------------------------------------------
+observeEvent(input$display_stressor_table, {
+  if (input$display_stressor_table)
+  {
+    inputStressorType <- input$stressor_type
+    inputEffectType <- input$effect_type
+    output$stressor_table <- DT::renderDataTable({
+      if (inputStressorType == 'Chemical: Survival')
+      {
+        file_stressor <- input$upload_exposure_concentrations$name
+        if (is.null(file_stressor)) {
+          return()
+        }
+        if (inputEffectType == 'GUTS' ||
+            inputEffectType == 'None Selected')
+        {
+          return()
+        }
+      } else if (inputStressorType == 'None Selected')
+      {
+        return()
+      }
+      if (inputStressorType == 'Chemical: Growth')
+      {
+        file_stressor <- input$upload_exposure_concentrations$name
+        if (is.null(file_stressor)) {
+          return()
+        }
+      }
+      return_stressor_parameters(CurrentStressorScenarioName)
+    }, options = list(scrollX = TRUE))
+    shinyjs::show(id = "stressor_table_main")
+  } else
+  {
+    shinyjs::hide(id = "stressor_table_main")
+  }
+  
+}, ignoreInit = TRUE)
+
+
+
+output$text_visualize_stressor <- renderText({
+  paste("Visualize the ", CurrentStressorScenarioName, " scenario.")
+})
+
+output$text_run_stressor <- renderText({
+  paste("Run the ", CurrentStressorScenarioName, " simulation.")
+})
+
+#-------------------------------------------------------------------------------
+#  Hyperlink to a new tab
+#-------------------------------------------------------------------------------
+observeEvent(input$hyperlink_stressor_newtab, {
+  newtab <- "Visualize Scenarios"
+  updateNavbarPage(session, "fish_toxicity_app", newtab)
+})
+
+observeEvent(input$hyperlink_run_stressor, {
+  newtab <- "Run Scenarios"
+  updateNavbarPage(session, "fish_toxicity_app", newtab)
+})
+
+
+################################################################################
+#  Functions used for the building of the stressor scenario.
+################################################################################
+
+#-------------------------------------------------------------------------------
+# Stressor's scenario name
+#-------------------------------------------------------------------------------
+enter_stressor_scenario_name <- function(baselineScenarioName,
+                                         stressorScenarioName,
+                                         currentScenarioDescription)
+{
+  CurrentStressorScenarioName <<- stressorScenarioName
+  # scenario_names <<- c(scenario_names, stressorScenarioName)
+  parameters[[stressorScenarioName]] <<- parameters[[baselineScenarioName]]
+  
+  CurrentScenarioDescription <<- currentScenarioDescription
+  scenarioDescriptions[[stressorScenarioName]] <<- currentScenarioDescription
+}
+
+#-------------------------------------------------------------------------------
+# Winter functions
+#-------------------------------------------------------------------------------
+store_winter_parameters <- function(inputStressorScenarioName,
+                                    inputWinterStart,
+                                    inputWinterEnd,
+                                    inputWinterSizeCutoff)
+{
+  parameters[[inputStressorScenarioName]]$z_winter <<- inputWinterSizeCutoff
+  
+  # Set winter dates
+  winterDates <- SetWinterDates(winterStartDate = inputWinterStart, winterEndDate =
+                                  inputWinterEnd)
+  parameters[[inputStressorScenarioName]]$is_winter <<- winterDates
+  
+  # Calculate Winter daily survival: Needs winter start and end dates
+  winterSurvivalProbs <- GenerateWinterSurvival(winterStartDate = inputWinterStart, winterEndDate =
+                                                  inputWinterEnd)
+  parameters[[inputStressorScenarioName]]$s_winter <<- winterSurvivalProbs
+  
+  result <- tolower(inputStressorScenarioName) %in% tolower(scenario_names)
+  if (result == FALSE)
+  {
+    scenario_names <<- c(scenario_names, CurrentStressorScenarioName)
+  }
+}
+
+plot_winter_decreasing_survival <- function(inputStressorScenarioName,
+                                            inputWinterStart,
+                                            inputWinterEnd,
+                                            inputWinterSizeCutoff)
+{
+  # Plot decreasing survival over winter based on duration and size cutoff
+  winterLength <- length(DateDuration(inputWinterStart, inputWinterEnd))
+  dailyWinterSurvival <- 0.0001 ^ (1 / winterLength)
+  plot(
+    dailyWinterSurvival ^ (1:winterLength),
+    xlab = "Winter day",
+    ylab = "Cumulative survival probability",
+    main = paste(
+      "Cumulative winter survival for individuals < ",
+      inputWinterSizeCutoff,
+      " mm",
+      sep = ""
+    )
+  )
+}
+
+#-------------------------------------------------------------------------------
+# Density dependent growth response
+#-------------------------------------------------------------------------------
+store_density_dependent_parameters <- function(inputStressorScenarioName, input_dd_g)
+{
+  parameters[[inputStressorScenarioName]]$dd_g <<- input_dd_g
+  parameters[[inputStressorScenarioName]]$is_density_dependent <<- 1
+  
+  result <- tolower(inputStressorScenarioName) %in% tolower(scenario_names)
+  if (result == FALSE)
+  {
+    scenario_names <<- c(scenario_names, CurrentStressorScenarioName)
+  }
+}
+
+#-------------------------------------------------------------------------------
+# TCEM functions
+#-------------------------------------------------------------------------------
+run_tcem <- function(inputStressorScenarioName, tcem1, tcem2)
+{
+  TCEMNeeds <- parameters_master$id[grepl("TCEM", parameters_master$called_by)]
+  
+  # Can filter this against known/entered parameters in the scenario to determine which are needed
+  TCEMInputsRequest <- TCEMNeeds[!TCEMNeeds %in% names(parameters[[inputStressorScenarioName]])]
+  parameters[[inputStressorScenarioName]][, as.character(TCEMInputsRequest)] <<- NA
+  
+  # GUI: Get TCEM Parameters and append to parameters data.frame
+  parameters[[inputStressorScenarioName]]$lc_percent <<- tcem2
+  parameters[[inputStressorScenarioName]]$lc_conc <<- tcem1
+  
+  # Run the TCEM algorithm
+  TCEMOutput <- TCEM(
+    exposure_concentrations = parameters[[inputStressorScenarioName]]$exp_concentrations,
+    lc_con = parameters[[inputStressorScenarioName]]$lc_con[1],
+    lc_percent = parameters[[inputStressorScenarioName]]$lc_percent[1]
+  )
+  
+  # Plot the TCEM predicted daily survival decrement
+  # Note: The negative of the TCEM function output is plotted here to show survival
+  # decrement (although that value is positive)
+  plot(
+    -TCEMOutput,
+    main = "TCEM Daily Survival Decrements",
+    xlab = "Ordinal Date",
+    ylab = "Daily Survival Decrement",
+    type = "l"
+  )
+  
+  # Add TCEM output to parameters data.frame
+  parameters[[inputStressorScenarioName]]$survival_decrement <<- TCEMOutput
+  
+}
+
+#-------------------------------------------------------------------------------
+# Return functions
+#-------------------------------------------------------------------------------
+return_stressor_parameters <- function(inputStressorScenarioName)
+{
+  return(parameters[[inputStressorScenarioName]])
+}
+
+
+#-------------------------------------------------------------------------------
+# Exposure Concentrations
+#-------------------------------------------------------------------------------
+generate_ExposureConcentration_Template <- function()
+{
+  expDF <- data.frame(ordinal_date = 1:365,
+                      exp_concentrations = NA)
+  return(expDF)
+}
+
+assign_exposure_concentrations <- function(scenario, input_file, input_name)
+{
+  upload_scenario <- read.csv(
+    file = input_file,
+    header = TRUE,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  print(input_name)
+  input_filename <- basename(input_name)
+  ExposureConcentrations[[input_filename]] <<- upload_scenario
+  parameters[[scenario]]$exp_concentrations <<- upload_scenario$exp_concentrations
+}
+
+assign_old_exposure_concentration <- function(scenario, input_file)
+{
+  parameters[[scenario]]$exp_concentrations <<- ExposureConcentrations[[input_file]]$exp_concentrations
+}
+
+plot_exposure_concentrations <- function(scenario)
+{
+  plot(
+    parameters[[scenario]]$exp_concentrations,
+    main = "Daily Exposure Concentrations",
+    xlab = "Ordinal date",
+    ylab = "Concentration",
+    type = "l"
+  )
+}
+
+#-------------------------------------------------------------------------------
+# Pre-determined Effects
+#-------------------------------------------------------------------------------
+generate_Predetermined_Effects_Template <- function()
+{
+  # Create empty predetermined effects data.frame
+  predeteffDF <- data.frame(ordinal_date = 1:365,
+                            survival_decrement = NA)
+  return(predeteffDF)
+}
+
+assign_predetermined_effects <- function(inputStressorScenarioName, input_file)
+{
+  upload_scenario <- read.csv(
+    file = input_file,
+    header = TRUE,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  
+  parameters[[inputStressorScenarioName]]$survival_decrement <<- upload_scenario$survival_decrement
+  
+}
+
+generate_Predetermined_Growth_Effects_Template <- function()
+{
+  # Create empty predetermined growth effects data.frame
+  predeteffDF <- data.frame(ordinal_date = 1:365, growth_percent = NA)
+  return(predeteffDF)
+}
+
+assign_predetermined_growth_effects <- function(inputStressorScenarioName, input_file)
+{
+  inputPredeterminedGrowthEffectsData <<- read.csv(
+    file = input_file,
+    header = TRUE,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  
+  # Add predetermined growth effects (growth_percent) data to parameter data.frame
+  parameters[[inputStressorScenarioName]]$growth_percent <<- inputPredeterminedGrowthEffectsData$growth_percent
+  
+  # Set Growth Effect dates
+  growthEffectsDates <- SetExposureDates(parameters[[inputStressorScenarioName]]$growth_percent)
+  parameters[[inputStressorScenarioName]]$are_growth_effects <<- growthEffectsDates
+}
+
+
+store_chemicalID <- function(inputStressorScenarioName,
+                             inputChemical_id)
+{
+  parameters[[inputStressorScenarioName]]$chem_id <<- inputChemical_id
+}
+
+plot_survival_decrement <- function(inputStressorScenarioName)
+{
+  plot(
+    -parameters[[inputStressorScenarioName]]$survival_decrement,
+    main = paste("Daily Survival Decrement - ", parameters[[inputStressorScenarioName]]$chem_id[1], sep = ""),
+    xlab = "Ordinal date",
+    ylab = "Survival Decrement",
+    type = "l"
+  )
+}
+
+plot_growth_percent <- function(inputStressorScenarioName)
+{
+  # Plot input of growth percent
+  plot(
+    x = inputPredeterminedGrowthEffectsData[, 1],
+    y = inputPredeterminedGrowthEffectsData[, 2],
+    main = paste("Daily Growth Percent - ", parameters[[inputStressorScenarioName]]$chem_id[1], sep = ""),
+    xlab = "Ordinal date",
+    ylab = "Growth Percent",
+    type = "l"
+  )
+}
+
+#-------------------------------------------------------------------------------
+# Stressor's scenario name
+#-------------------------------------------------------------------------------
+enter_stressor_scenario_name <- function(baselineScenarioName,
+                                         stressorScenarioName,
+                                         currentScenarioDescription)
+{
+  CurrentStressorScenarioName <<- stressorScenarioName
+  # scenario_names <<- c(scenario_names, stressorScenarioName)
+  parameters[[stressorScenarioName]] <<- parameters[[baselineScenarioName]]
+  
+  CurrentScenarioDescription <<- currentScenarioDescription
+  scenarioDescriptions[[stressorScenarioName]] <<- currentScenarioDescription
+}
+
+#-------------------------------------------------------------------------------
+# Winter functions
+#-------------------------------------------------------------------------------
+store_winter_parameters <- function(inputStressorScenarioName,
+                                    inputWinterStart,
+                                    inputWinterEnd,
+                                    inputWinterSizeCutoff)
+{
+  parameters[[inputStressorScenarioName]]$z_winter <<- inputWinterSizeCutoff
+  
+  # Set winter dates
+  winterDates <- SetWinterDates(winterStartDate = inputWinterStart, winterEndDate =
+                                  inputWinterEnd)
+  parameters[[inputStressorScenarioName]]$is_winter <<- winterDates
+  
+  # Calculate Winter daily survival: Needs winter start and end dates
+  winterSurvivalProbs <- GenerateWinterSurvival(winterStartDate = inputWinterStart, winterEndDate =
+                                                  inputWinterEnd)
+  parameters[[inputStressorScenarioName]]$s_winter <<- winterSurvivalProbs
+  
+  result <- tolower(inputStressorScenarioName) %in% tolower(scenario_names)
+  if (result == FALSE)
+  {
+    scenario_names <<- c(scenario_names, CurrentStressorScenarioName)
+  }
+}
+
+plot_winter_decreasing_survival <- function(inputStressorScenarioName,
+                                            inputWinterStart,
+                                            inputWinterEnd,
+                                            inputWinterSizeCutoff)
+{
+  # Plot decreasing survival over winter based on duration and size cutoff
+  winterLength <- length(DateDuration(inputWinterStart, inputWinterEnd))
+  dailyWinterSurvival <- 0.0001 ^ (1 / winterLength)
+  plot(
+    dailyWinterSurvival ^ (1:winterLength),
+    xlab = "Winter day",
+    ylab = "Cumulative survival probability",
+    main = paste(
+      "Cumulative winter survival for individuals < ",
+      inputWinterSizeCutoff,
+      " mm",
+      sep = ""
+    )
+  )
+}
+
+#-------------------------------------------------------------------------------
+# Density dependent growth response
+#-------------------------------------------------------------------------------
+store_density_dependent_parameters <- function(inputStressorScenarioName, input_dd_g)
+{
+  parameters[[inputStressorScenarioName]]$dd_g <<- input_dd_g
+  parameters[[inputStressorScenarioName]]$is_density_dependent <<- 1
+  
+  result <- tolower(inputStressorScenarioName) %in% tolower(scenario_names)
+  if (result == FALSE)
+  {
+    scenario_names <<- c(scenario_names, CurrentStressorScenarioName)
+  }
+}
+
+#-------------------------------------------------------------------------------
+# TCEM functions
+#-------------------------------------------------------------------------------
+run_tcem <- function(inputStressorScenarioName, tcem1, tcem2)
+{
+  TCEMNeeds <- parameters_master$id[grepl("TCEM", parameters_master$called_by)]
+  
+  # Can filter this against known/entered parameters in the scenario to determine which are needed
+  TCEMInputsRequest <- TCEMNeeds[!TCEMNeeds %in% names(parameters[[inputStressorScenarioName]])]
+  parameters[[inputStressorScenarioName]][, as.character(TCEMInputsRequest)] <<- NA
+  
+  # GUI: Get TCEM Parameters and append to parameters data.frame
+  parameters[[inputStressorScenarioName]]$lc_percent <<- tcem2
+  parameters[[inputStressorScenarioName]]$lc_conc <<- tcem1
+  
+  # Run the TCEM algorithm
+  TCEMOutput <- TCEM(
+    exposure_concentrations = parameters[[inputStressorScenarioName]]$exp_concentrations,
+    lc_con = parameters[[inputStressorScenarioName]]$lc_con[1],
+    lc_percent = parameters[[inputStressorScenarioName]]$lc_percent[1]
+  )
+  
+  # Plot the TCEM predicted daily survival decrement
+  # Note: The negative of the TCEM function output is plotted here to show survival
+  # decrement (although that value is positive)
+  plot(
+    -TCEMOutput,
+    main = "TCEM Daily Survival Decrements",
+    xlab = "Ordinal Date",
+    ylab = "Daily Survival Decrement",
+    type = "l"
+  )
+  
+  # Add TCEM output to parameters data.frame
+  parameters[[inputStressorScenarioName]]$survival_decrement <<- TCEMOutput
+  
+}
+
+#-------------------------------------------------------------------------------
+# Return functions
+#-------------------------------------------------------------------------------
+return_stressor_parameters <- function(inputStressorScenarioName)
+{
+  return(parameters[[inputStressorScenarioName]])
+}
+
+
+#-------------------------------------------------------------------------------
+# Exposure Concentrations
+#-------------------------------------------------------------------------------
+generate_ExposureConcentration_Template <- function()
+{
+  expDF <- data.frame(ordinal_date = 1:365,
+                      exp_concentrations = NA)
+  return(expDF)
+}
+
+assign_exposure_concentrations <- function(scenario, input_file, input_name)
+{
+  upload_scenario <- read.csv(
+    file = input_file,
+    header = TRUE,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  print(input_name)
+  input_filename <- basename(input_name)
+  ExposureConcentrations[[input_filename]] <<- upload_scenario
+  parameters[[scenario]]$exp_concentrations <<- upload_scenario$exp_concentrations
+}
+
+assign_old_exposure_concentration <- function(scenario, input_file)
+{
+  parameters[[scenario]]$exp_concentrations <<- ExposureConcentrations[[input_file]]$exp_concentrations
+}
+
+plot_exposure_concentrations <- function(scenario)
+{
+  plot(
+    parameters[[scenario]]$exp_concentrations,
+    main = "Daily Exposure Concentrations",
+    xlab = "Ordinal date",
+    ylab = "Concentration",
+    type = "l"
+  )
+}
+
+#-------------------------------------------------------------------------------
+# Pre-determined Effects
+#-------------------------------------------------------------------------------
+generate_Predetermined_Effects_Template <- function()
+{
+  # Create empty predetermined effects data.frame
+  predeteffDF <- data.frame(ordinal_date = 1:365,
+                            survival_decrement = NA)
+  return(predeteffDF)
+}
+
+assign_predetermined_effects <- function(inputStressorScenarioName, input_file)
+{
+  upload_scenario <- read.csv(
+    file = input_file,
+    header = TRUE,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  
+  parameters[[inputStressorScenarioName]]$survival_decrement <<- upload_scenario$survival_decrement
+  
+}
+
+generate_Predetermined_Growth_Effects_Template <- function()
+{
+  # Create empty predetermined growth effects data.frame
+  predeteffDF <- data.frame(ordinal_date = 1:365, growth_percent = NA)
+  return(predeteffDF)
+}
+
+assign_predetermined_growth_effects <- function(inputStressorScenarioName, input_file)
+{
+  inputPredeterminedGrowthEffectsData <<- read.csv(
+    file = input_file,
+    header = TRUE,
+    stringsAsFactors = FALSE,
+    check.names = FALSE
+  )
+  
+  # Add predetermined growth effects (growth_percent) data to parameter data.frame
+  parameters[[inputStressorScenarioName]]$growth_percent <<- inputPredeterminedGrowthEffectsData$growth_percent
+  
+  # Set Growth Effect dates
+  growthEffectsDates <- SetExposureDates(parameters[[inputStressorScenarioName]]$growth_percent)
+  parameters[[inputStressorScenarioName]]$are_growth_effects <<- growthEffectsDates
+}
+
+
+store_chemicalID <- function(inputStressorScenarioName,
+                             inputChemical_id)
+{
+  parameters[[inputStressorScenarioName]]$chem_id <<- inputChemical_id
+}
+
+plot_survival_decrement <- function(inputStressorScenarioName)
+{
+  plot(
+    -parameters[[inputStressorScenarioName]]$survival_decrement,
+    main = paste("Daily Survival Decrement - ", parameters[[inputStressorScenarioName]]$chem_id[1], sep = ""),
+    xlab = "Ordinal date",
+    ylab = "Survival Decrement",
+    type = "l"
+  )
+}
+
+plot_growth_percent <- function(inputStressorScenarioName)
+{
+  # Plot input of growth percent
+  plot(
+    x = inputPredeterminedGrowthEffectsData[, 1],
+    y = inputPredeterminedGrowthEffectsData[, 2],
+    main = paste("Daily Growth Percent - ", parameters[[inputStressorScenarioName]]$chem_id[1], sep = ""),
+    xlab = "Ordinal date",
+    ylab = "Growth Percent",
+    type = "l"
+  )
+}
