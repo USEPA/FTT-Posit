@@ -1,10 +1,12 @@
 source("tabsPanel.R")
 
-fn <- "anti-clickjacking.js"
-fnpath <-
-  list.files(pattern = fn,
-             full.names = TRUE,
-             recursive = TRUE)
+# fn <- "anti-clickjacking.js"
+# fnpath <-
+#   list.files(pattern = fn,
+#              full.names = TRUE,
+#              recursive = TRUE)
+
+
 
 headerCallback <- c(
   "function(thead, data, start, end, display){",
@@ -33,9 +35,9 @@ headerCallback <- c(
 FT_UI <- function(req) {
   fluidPage(
     useShinyjs(),
-    tags$style(id = "antiClickjack", HTML("body{display:none !important;}")),
+    #tags$style(id = "antiClickjack", HTML("body{display:none !important;}")),
     
-    includeScript(fnpath, type = "text/javascript"),
+    #includeScript(fnpath, type = "text/javascript"),
     
     tags$script(
       "$(document).on('shiny:connected', function(event) {
