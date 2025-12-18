@@ -222,22 +222,28 @@ FT_UI <- function(req) {
     tags$head(
       tags$style(
         ".download_Button{
-                          background-color: #337ab7;
+                          background-color: #1a4480;
                           color: #ffffff;
                           border-color: #2e6da4;
                           align: left;
+                          width: fit-content;
+                          height: 37px;
                        }
                        .download_Button:hover {
-                          background-color: #337ab7;
+                          background-color: #1a4480;
                           color: #ff0000;
                           border-color: #2e6da4;
                           align: left;
+                          width: fit-content;
+                          height: 37px;
                           }
                        .download_Button:focus {
-                          background-color: #337ab7;
+                          background-color: #1a4480;
                           color: #00ff00;
                           border-color: #2e6da4;
                           align: left;
+                          width: fit-content;
+                          height: 37px;
                        }"
       )
     ),
@@ -260,6 +266,7 @@ FT_UI <- function(req) {
                        }"
       )
     ),
+    
     
     navbarPage(
       title = "Fish Toxicity Translator v0.1",

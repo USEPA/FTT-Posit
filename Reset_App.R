@@ -1,6 +1,6 @@
 observeEvent(input$reset_clear_app,
              {
-               # Delete all scenarios that are currenlty stored in memory.
+               # Delete all scenarios that are currently stored in memory.
                ns <- length(scenario_names)
                if (ns > 0)
                {
@@ -10,11 +10,9 @@ observeEvent(input$reset_clear_app,
                  }
                }
                
-               updateTextInput(session, "currentScenarioName", value = "Baseline")
+               updateTextInput(session, "currentScenarioName", value = "")
                updateTextAreaInput(session, inputId = "textBaselineDescription", value = "")
-               output$text_basename <- NULL
                output$text_load_fhm <- NULL
-               output$text_spawning_alg <- NULL
                
                updateSelectInput(session, "baselines",
                                  choices = "")
@@ -41,6 +39,12 @@ observeEvent(input$reset_clear_app,
                shinyjs::hide(id = "Visualization_SDEC")
                shinyjs::hide(id = "Show_SDEC")
                shinyjs::hide(id = "Show_GP")
+               shinyjs::hide(id = "Species_Growth_out_Main")
+               shinyjs::hide(id = "Species_Growth_Trajectory_out_Main")
+               shinyjs::hide(id = "Species_Survival_Trajectory_out_Main")
+               shinyjs::hide(id = "Species_Length_Mass_out_Main")
+               shinyjs::hide(id = "Species_Survival_out_Main")
+               shinyjs::hide(id = "Species_Reproduction_out_Main")
                shinyjs::hide(id = "Growth_out_Main")
                shinyjs::hide(id = "Survival_out_Main")
                shinyjs::hide(id = "Reproduction_out_Main")

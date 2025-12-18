@@ -468,7 +468,8 @@ output$Summary_Matrix_Data.csv <- downloadHandler(
     # summMats <- as.data.frame(SummaryMatrix(modelOutputs))
     summMats <- SummaryMatrix(unlist(modelRuns,recursive=F)[inputScenariosForResults])
     write.csv(summMats, file, row.names = FALSE)
-  }
+  },
+  contentType = "csv"
 )
 
 # Downloadable csv of selected dataset
@@ -479,7 +480,8 @@ output$Summary_Results_Table.csv <- downloadHandler(
   content = function(file) {
     summaryTable <- as.data.frame(SummaryTable(modelOutputs))
     write.csv(summaryTable, file, row.names = FALSE)
-  }
+  },
+  contentType = "csv"
 )
 
 ####################################################################################################
@@ -522,7 +524,8 @@ output$downloadPlotSummaryResults <- downloadHandler(
   {
     summaryTable <- as.data.frame(SummaryTable(modelOutputs))
     write.csv(summaryTable, file, row.names = FALSE)
-  }
+  },
+  contentType = "csv"
 ) 
 
 
@@ -557,11 +560,20 @@ observeEvent(input$export_summaryMatrix_modal,
                  output$textMessageSummaryMatrix <- NULL
                  summaryMatrix_flag <- TRUE
                  shinyjs::enable(id = "downloadPlotSummaryMatrix")
-                 output$plotSummaryMatrix <- renderPlot(
+                 output$plotSummaryMatrix <- renderPlot({
                    plot_Summary_Matrix(input$Check_Scenario_Names_Results)
-                 )
+                 }, height = function() {
+                   session$clientData$output_plotSummaryMatrix_width*0.8
+                 })
                }
              }
+)
+
+# Summary Matrix
+output$SMatrix <- renderUI(
+  {
+    plotOutput("plotSummaryMatrix", height = "auto")
+  }
 )
 
 output$downloadPlotSummaryMatrix <- downloadHandler(
@@ -577,7 +589,8 @@ output$downloadPlotSummaryMatrix <- downloadHandler(
         res = 300)
     plot_Summary_Matrix(input$Check_Scenario_Names_Results)
     dev.off()
-  }
+  },
+  contentType = "csv"
 ) 
 
 observeEvent(input$export_summaryMatrixTable_modal,
@@ -625,7 +638,8 @@ output$downloadPlotSummaryMatrixTable <- downloadHandler(
   {
     summMats <- as.data.frame(SummaryMatrix(modelOutputs))
     write.csv(summMats, file, row.names = FALSE)
-  }
+  },
+  contentType = "csv"
 ) 
 
 # Daily Population
@@ -655,7 +669,7 @@ observeEvent(input$export_dailyPopulation_modal,
 output$downloadPlotDailyPopulation <- downloadHandler(
   filename <- function()
   {
-    paste("Daily_Population", "png", sep = ".")
+    paste("Daily_Population", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -665,7 +679,8 @@ output$downloadPlotDailyPopulation <- downloadHandler(
         res = 300)
     plot_Daily_Population(input$Check_Scenario_Names_Results)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Population Biomass
@@ -695,7 +710,7 @@ observeEvent(input$export_populationBiomass_modal,
 output$downloadPlotPopulationBiomass <- downloadHandler(
   filename <- function()
   {
-    paste("Population_Biomass", "png", sep = ".")
+    paste("Population_Biomass", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -705,7 +720,8 @@ output$downloadPlotPopulationBiomass <- downloadHandler(
         res = 300)
     plot_Population_Biomass(input$Check_Scenario_Names_Results)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Mean Size
@@ -735,7 +751,7 @@ observeEvent(input$export_meanSize_modal,
 output$downloadPlotMeanSize <- downloadHandler(
   filename <- function()
   {
-    paste("Mean_Size", "png", sep = ".")
+    paste("Mean_Size", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -745,7 +761,8 @@ output$downloadPlotMeanSize <- downloadHandler(
         res = 300)
     plot_Mean_Size(input$Check_Scenario_Names_Results)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Growth Potential
@@ -775,7 +792,7 @@ observeEvent(input$export_growthPotential_modal,
 output$downloadPlotGrowthPotential <- downloadHandler(
   filename <- function()
   {
-    paste("Growth_Potential", "png", sep = ".")
+    paste("Growth_Potential", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -785,7 +802,8 @@ output$downloadPlotGrowthPotential <- downloadHandler(
         res = 300)
     plot_Growth_Potential(input$Check_Scenario_Names_Results)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 # Transitional Kernel
@@ -815,7 +833,7 @@ observeEvent(input$export_transitionalKernel_modal,
 output$downloadPlotTransitionalKernel <- downloadHandler(
   filename <- function()
   {
-    paste("Transitional_Kernel", "png", sep = ".")
+    paste("Transitional_Kernel", ".png", sep = "")
   },
   content = function(file) 
   {
@@ -825,13 +843,14 @@ output$downloadPlotTransitionalKernel <- downloadHandler(
         res = 300)
     plot_Transitional_Kernel(input$Check_Scenario_Names_Results)
     dev.off()
-  }
+  },
+  contentType = "png"
 ) 
 
 output$Download_Results_Report <- downloadHandler(
   filename <- function()
   {
-      paste("Results_Report", "xlsx", sep = ".")
+      paste("Results_Report", ".xlsx", sep = "")
   },
   content = function(file) 
   {
@@ -1001,23 +1020,23 @@ output$Download_Results_Report <- downloadHandler(
                        startColumn = 4)
                  
       # Sheet 8: Transition Kernel Image
-      sheet_8 <- xlsx::createSheet(Results_Workbook, sheetName = "Transition_Kernel_Image")
-      image_path6 <- tempfile(pattern = "", fileext = ".png")
-      png(image_path6,
-          width = input$shiny_width * 2,
-          height = input$shiny_height * 2,
-          res = 300)
-      plot_Transitional_Kernel(input$Check_Scenario_Names_Results)
-      dev.off()
-      xlsx::addPicture(file = image_path6,
-                       sheet = sheet_8, 
-                       scale = 1, 
-                       startRow = 4, 
-                       startColumn = 4)
+      # sheet_8 <- xlsx::createSheet(Results_Workbook, sheetName = "Transition_Kernel_Image")
+      # image_path6 <- tempfile(pattern = "", fileext = ".png")
+      # png(image_path6,
+      #     width = input$shiny_width * 2,
+      #     height = input$shiny_height * 2,
+      #     res = 300)
+      # plot_Transitional_Kernel(input$Check_Scenario_Names_Results)
+      # dev.off()
+      # xlsx::addPicture(file = image_path6,
+      #                  sheet = sheet_8, 
+      #                  scale = 1, 
+      #                  startRow = 4, 
+      #                  startColumn = 4)
       
       xlsx::saveWorkbook(Results_Workbook,file)
-    }
- 
+    },
+  contentType = "xlsx"
 ) 
 
 ################################################################################
@@ -1040,18 +1059,23 @@ output$results_markdown <- renderUI(
     if (generate_markdown() == TRUE)
     {
       path_rmd <- "Results_Report.Rmd"
-      # Render into www/ folder.
-      path_html <- "www\\Results_Report.html"
+
+      # Render into www folder.
+      system.name <- Sys.info()[["sysname"]]
+      path_html <- ifelse(system.name=="Windows", paste("www\\","Results_Report.html",sep = ""),paste("www/","Results_Report.html",sep = ""))
       render(
         path_rmd,
-        output_file = path_html
+        output_format = "html_document",
+        output_file = path_html,
+        envir = new.env()
       )
       tags$iframe(
         style = "border-width: 0;",
         width = "100%",
         height = 1200,
+        src = "Results_Report.html"
         # Filename relative to the www/ folder.
-        src = basename(path_html)
+
       )
     }
   }
@@ -1094,20 +1118,16 @@ output$results_markdown <- renderUI(
 
 # R markdown
 output$downloadResultsMarkdown <- downloadHandler(
-  filename <- function()
+  pdf_filename <- function()
   {
-    paste("Results_Report", "pdf", sep = ".")
+    paste("Results_Report", ".pdf", sep = "")
   },
-  content = function(file) 
+  content = function(pdf_filename) 
   {
-    # src <- normalizePath('Species_Profile.Rmd')
-    # owd <- setwd(tempdir())
-    # on.exit(setwd(owd))
-    # file.copy(src, 'Species_Profile.Rmd')
-    # library(rmarkdown)
-    # library(tinytex)
-    # out <- render('Species_Profile.Rmd',pdf_document())
-    # file.rename(out, file)
-    file.rename(html_to_pdf(file_path = "www\\Results_Report.html"), file)
-  }
+    system.name <- Sys.info()[["sysname"]]
+    report_html <- "Results_Report.html"
+    path_html <- ifelse(system.name=="Windows", paste("www\\",report_html,sep = ""), paste("www/",report_html,sep = ""))
+    file.rename(html_to_pdf(file_path = path_html, dir = "www", render_exist = TRUE), pdf_filename)
+  },
+  contentType = "pdf"
 ) 

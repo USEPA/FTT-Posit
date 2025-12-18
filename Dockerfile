@@ -1,14 +1,14 @@
-# Base image https://hub.docker.com/u/rocker/
+# Base image from https://hub.docker.com/u/rocker/
 FROM ghcr.io/usepa/r_studio:latest
 
 WORKDIR /home/app/
 
 COPY . .
 
-# Install xlsx package
-RUN R -e "install.packages('xlsx', repos='https://cloud.r-project.org/')"
-
+# List directory contents for debugging
 RUN ls -la
+
+# Execute additional R script for package installation
 RUN Rscript install_packages.R
 
 EXPOSE 3838
