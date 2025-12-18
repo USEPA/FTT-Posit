@@ -1,6 +1,11 @@
 # Welcome to the Fish Toxicity Translator R Shiny GUI App
 # If you have any problems running this code - contact Nate Pollesch (pollesch.nathan@epa.gov)
 
+
+list.files()
+
+rsconnect::writeManifest()
+
 # Install and load all necessary packages from CRAN/Bioconductor
 rm(list = ls())
 
