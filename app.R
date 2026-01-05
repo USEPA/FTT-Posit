@@ -1,8 +1,6 @@
 # Welcome to the Fish Toxicity Translator R Shiny GUI App
 # If you have any problems running this code - contact Nate Pollesch (pollesch.nathan@epa.gov)
 
-
-
 ## For building a manifest to use on PositConnect
 
 rsconnect::writeManifest() ## RUN ONCE BEFORE EACH GitHub Push ##
