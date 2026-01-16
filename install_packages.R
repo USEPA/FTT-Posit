@@ -1,6 +1,6 @@
 install.packages("tidyverse")
 
-#install.packages("FishToxTranslator_0.1.19.5.tar.gz",type="source")
+install.packages("FishToxTranslator_0.1.19.5.tar.gz",type="source")
 
 install.packages("shiny")
 install.packages("shinyjs")
@@ -37,3 +37,4 @@ install.packages("psycModel")
 install.packages("pagedown")
 install.packages("pixiedust")
 install.packages("sentryR")
+install.packages("openxlsx2")
