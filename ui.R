@@ -1,4 +1,9 @@
-source("tabsPanel.R")
+source("tab_About_ui.R")
+source("tab_Build_ui.R")
+source("tab_Visualize_ui.R")
+source("tab_Run_ui.R")
+source("tab_Results_ui.R")
+source("tab_Reset_ui.R")
 
 fn <- "anti-clickjacking.js"
 fnpath <-
@@ -43,15 +48,6 @@ FT_UI <- function(req) {
                 Shiny.onInputChange('shiny_width',myWidth)});"
     ),
     
-    # 
-    # tags$head(tags$style(HTML('#scenario_summary_results_table table {border-collapse:collapse;} 
-    #                          #scenario_summary_results_table table th {
-    #                            height: 200px;
-    #                            width: 5px;
-    #                            transform: 
-    #                              translate(0px, 5px)
-    #                              rotate(-90deg);
-    #                          }'))),
     
     tags$script(
       "$(document).on('shiny:connected', function(event) {
@@ -277,11 +273,11 @@ FT_UI <- function(req) {
         icon = "/www/FTT_PWA_512x512.png"
       ),
       tabHome,
-      tab1,
-      tab2,
-      tab3,
-      tab4,
-      tab5,
+      tabBuild,
+      tabVisualize,
+      tabRunScenarios,
+      tabResults,
+      tabReset,
       id = "fish_toxicity_app"
     ),
     
