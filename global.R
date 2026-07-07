@@ -1,29 +1,12 @@
 # Install and load all necessary packages from CRAN/Bioconductor
 rm(list = ls())
 
-# # This command installs and loads the FishToxTranslator Package from the local tar.gz file
-# install.packages("FishToxTranslator_0.1.19.5.tar.gz",type="source")
-#Install Sentry package
-#install.packages("sentryR")
-#devtools::install_github('npollesch/FishToxTranslator', upgrade="never")
+# cat("JAVA_HOME = ", Sys.getenv("JAVA_HOME"), "\n")
+# cat("Pandoc location = ", find.package("pandoc"), "\n")
 
-# #### Non-web hosted package manager ####
-#
-# # This package manager makes installing and running other packages easier
-# # install.packages("pacman") # This line can be commented out after it is installed once.
-# # library(openxlsx)
-# library(pacman)
-# # This command loads all the necssary packages for the app and the FishToxTranslator
-# pacman::p_load("shiny","shinyjs","plotly","lubridate",
-#                "readr","DT","shinyWidgets","shinydashboard",
-#                "shinyBS","purrr","stringr", "Matrix",
-#                "statmod", "truncnorm", "tibble", "plot.matrix",
-#                "shinybusy", "readxl", "writexl",
-#                "xlsx", "magick")
-#
+devtools::install_github('https://github.com/USEPA/FTT-R/blob/324d0874c567887b46b2dc64268ffed165d098f9/FishToxTranslator_0.1.20.1.tar.gz', upgrade="never")
+devtools::install_github('jasonmoy28/psycModel')
 
-cat("JAVA_HOME = ", Sys.getenv("JAVA_HOME"), "\n")
-cat("Pandoc location = ", find.package("pandoc"), "\n")
 #### Web hosted package management ####
 library("shiny")
 library("shinyjs")
@@ -57,12 +40,10 @@ library("kableExtra")
 library("psycModel")
 library("pagedown")
 library("pixiedust")
+library("tinytex")
 library("FishToxTranslator")
 
 pandoc_activate()
-
-# Add Sentry library
-# library(sentryR)
 
 ## Intialize data.frames and lists used throughout code
 parameters <- list() #list to store parameters for different scenarios
@@ -126,21 +107,10 @@ helper_Color <- "#4d8055"
 
 # Read Excel file and corresponding tabs.
 GUI_Tooltip <- read.xlsx2(file = "Tooltip_and_input_database.xlsx",
-                         sheetName = "Sheet1",
-                         check.names = FALSE,
-                         detectDates = FALSE)
+                          sheetName = "Sheet1",
+                          check.names = FALSE,
+                          detectDates = FALSE)
 
 # This loads the local App Source Files
 source("ui.R")
 source("server.R")
-
-
-## configure Sentry error handling
-# configure_sentry(dsn = "https://3d3c74380d1a43e73b33b78dee00fb27@ccte-app-monitoring.epa.gov/57",
-#                  app_name = "fish-tox-translator", app_version = "1.0.0")
-# 
-# error_handler <- function() {
-#   capture_exception(error = geterrmessage())
-# }
-# 
-# options(shiny.error = error_handler)

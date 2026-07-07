@@ -1377,27 +1377,20 @@ observeEvent(input$export_results_markdown_modal, {
 })
 
 output$downloadResultsMarkdown <- downloadHandler(
-  pdf_filename <- function()
+  filename <- function()
   {
     paste("Results_Report", ".pdf", sep = "")
   },
-  content = function(pdf_filename)
+  content = function(file)
   {
-    system.name <- Sys.info()[["sysname"]]
-    report_html <- "Results_Report.html"
-    path_html <- ifelse(
-      system.name == "Windows",
-      paste("www\\", report_html, sep = ""),
-      paste("www/", report_html, sep = "")
+    path_rmd <- "Results_Report_PDF.Rmd"
+    rmarkdown::render(
+      path_rmd,
+      output_format = "pdf_document",
+      output_file = file,
+      envir = new.env()
     )
-    file.rename(html_to_pdf(
-      file_path = path_html,
-      dir = "www",
-      render_exist = TRUE
-    ),
-    pdf_filename)
-  },
-  contentType = "pdf"
+  }
 )
 
 

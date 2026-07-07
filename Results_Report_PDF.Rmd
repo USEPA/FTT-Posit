@@ -1,0 +1,132 @@
+---
+title: "Summary Resolts Report"
+header-includes:
+  - \usepackage{caption}
+  - \captionsetup{font = LARGE}
+  - \captionsetup[table]{skip=1pt} 
+  - \usepackage{placeins}
+  - \usepackage{colortbl}
+  - \usepackage{array}
+output: 
+  pdf_document: 
+    keep_tex: yes
+classoption: x11names
+---
+
+\FloatBarrier
+
+```{r, echo=FALSE}
+index <- which(species_library$common_name == CurrentSpeciesName, arr.ind = TRUE)
+sname <- species_library$common_name[index]
+scname <- species_library$scientific_name[index]
+```
+
+\begin{center}
+
+\begingroup
+\LARGE 
+
+ `r paste(sname," (",scname, ")" ,sep = "")`
+
+ Visual Results Report
+
+ FishToxTranslator `r packageVersion("FishToxTranslator")`
+
+ Generated: `r format(Sys.time(), '%m/%d/%Y')`
+ 
+\endgroup
+
+\end{center}
+
+\vspace{-2cm}
+
+\FloatBarrier
+
+\begin{center}
+
+```{r, results='asis', echo=FALSE}
+
+dfr <- as.data.frame(return_summary_results_table(SelectedSimulationRunScenarios))
+
+new_names <- c("Scenario Name", "Starting Population", "Final Population", 
+               "Starting Biomass", "Final Biomass", "Starting Mean Size", 
+               "Final Mean Size", "Minimum Daily Growth Potential", 
+               "Maximum Daily Growth Potential", "Annual Lambda", 
+               "Annual Minimum Growth Potential", "Annual Maximum Growth Potential")
+
+colnames(dfr) <- new_names
+
+dfr1 <- dfr[, 1:6]
+cols1 <- c(1, 7:9)
+cols2 <- c(1, 10:12)
+dfr2 <- dfr[, cols1]
+dfr3 <- dfr[, cols2]
+
+dfr1 %>%
+  kbl(format = "latex", align = "l", booktabs = FALSE, vline = "", caption = "Summary Results") %>%
+  kable_styling(font_size = 8, latex_options = "striped", stripe_color = "Snow3") %>%
+  row_spec(row = 0, bold = TRUE, italic = FALSE) %>%
+  kableExtra::column_spec(column = 1, width = "5.0em") %>%
+  kableExtra::column_spec(column = 2, width = "7.0em") %>%
+  kableExtra::column_spec(column = 3, width = "7.0em") %>%
+  kableExtra::column_spec(column = 4, width = "5.0em") %>%
+  kableExtra::column_spec(column = 5, width = "5.0em") %>%
+  kableExtra::column_spec(column = 6, width = "7.0em")
+
+dfr2 %>%
+  kbl(format = "latex", align = "l", booktabs = FALSE, vline = "", caption = "Summary Results") %>%
+  kable_styling(font_size = 8, latex_options = "striped", stripe_color = "Snow3") %>%
+  row_spec(row = 0, bold = TRUE, italic = FALSE) %>%
+  kableExtra::column_spec(column = 1, width = "8.0em") %>%
+  kableExtra::column_spec(column = 2, width = "10.0em") %>%
+  kableExtra::column_spec(column = 3, width = "10.0em") %>%
+  kableExtra::column_spec(column = 4, width = "10.0em")
+
+dfr3 %>%
+  kbl(format = "latex", align = "l", booktabs = FALSE, vline = "", caption = "Summary Results") %>%
+  kable_styling(font_size = 8, latex_options = "striped", stripe_color = "Snow3") %>%
+  row_spec(row = 0, bold = TRUE, italic = FALSE) %>%
+  kableExtra::column_spec(column = 1, width = "8.0em") %>%
+  kableExtra::column_spec(column = 2, width = "10.0em") %>%
+  kableExtra::column_spec(column = 3, width = "10.0em") %>%
+  kableExtra::column_spec(column = 4, width = "10.0em")
+```
+
+\end{center}
+
+\FloatBarrier
+
+
+```{r, echo=FALSE, fig.width=11, fig.height=10}
+if (length(SelectedSimulationRunScenarios) > 1) 
+{
+  plot_Summary_Matrix(SelectedSimulationRunScenarios)
+}else
+{
+  cat("There is no summary matrix to display because only one scenario was selected.")
+}
+```
+
+\FloatBarrier
+
+```{r, echo=FALSE, fig.width=9.5, fig.height=5.0}
+plot_Daily_Population(SelectedSimulationRunScenarios)
+```
+
+\FloatBarrier
+
+```{r, echo=FALSE, fig.width=9.5, fig.height=5.0}
+plot_Population_Biomass(SelectedSimulationRunScenarios)
+```
+
+\FloatBarrier
+
+```{r, echo=FALSE, fig.width=9.5, fig.height=5.0}
+plot_Mean_Size(SelectedSimulationRunScenarios)
+```
+
+\FloatBarrier
+
+```{r, echo=FALSE, fig.width=9.5, fig.height=5.0}
+plot_Growth_Potential(SelectedSimulationRunScenarios)
+```
