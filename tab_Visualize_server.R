@@ -428,29 +428,53 @@ observe({
 #-------------------------------------------------------------------------------
 # R markdown
 output$downloadSpeciesProfile <- downloadHandler(
-  pdf_filename <- function()
-  {
+  filename = function() {
     fish_name <- sub(" ", "_", CurrentSpeciesName)
     paste(fish_name, "_Profile.pdf", sep = "")
   },
-  content = function(pdf_filename)
-  {
-    system.name <- Sys.info()[["sysname"]]
-    fish_name <- sub(" ", "_", CurrentSpeciesName)
-    path_html <- ifelse(
-      system.name == "Windows",
-      paste("www\\", fish_name, "_Profile.html", sep = ""),
-      paste("www/", fish_name, "_Profile.html", sep = "")
+  content = function(file) {
+    # Temporarily switch to a temp dir, in case of permission issues
+    # owd <- setwd(tempdir())
+    # on.exit(setwd(owd))
+    # file.copy(src, 'report.Rmd', overwrite = TRUE)
+    
+    # Render the Rmd file to PDF
+    path_rmd <- "Species_Profile_PDF.Rmd"
+    # pagedown::chrome_print(path_rmd, output = file)
+    rmarkdown::render(
+      path_rmd,
+      output_format = "pdf_document",
+      output_file = file,
+      envir = new.env()
     )
-    file.rename(html_to_pdf(
-      file_path = path_html,
-      dir = "www",
-      render_exist = TRUE
-    ),
-    pdf_filename)
-  },
-  contentType = "pdf"
+  }
 )
+
+
+# output$downloadSpeciesProfile <- downloadHandler(
+#   pdf_filename <- function()
+#   {
+#     fish_name <- sub(" ", "_", CurrentSpeciesName)
+#     paste(fish_name, "_Profile.pdf", sep = "")
+#   },
+#   content = function(pdf_filename)
+#   {
+#     system.name <- Sys.info()[["sysname"]]
+#     fish_name <- sub(" ", "_", CurrentSpeciesName)
+#     path_html <- ifelse(
+#       system.name == "Windows",
+#       paste("www\\", fish_name, "_Profile.html", sep = ""),
+#       paste("www/", fish_name, "_Profile.html", sep = "")
+#     )
+#     file.rename(html_to_pdf(
+#       file_path = path_html,
+#       dir = "www",
+#       render_exist = TRUE
+#     ),
+#     pdf_filename)
+#   },
+#   contentType = "pdf"
+# )
 
 #-------------------------------------------------------------------------------
 # Growth Functions

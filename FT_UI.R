@@ -1,41 +1,41 @@
 source("tabsPanel.R")
 
-fn <- "anti-clickjacking.js"
-fnpath <-
-  list.files(pattern = fn,
-             full.names = TRUE,
-             recursive = TRUE)
+# fn <- "anti-clickjacking.js"
+# fnpath <-
+#   list.files(pattern = fn,
+#              full.names = TRUE,
+#              recursive = TRUE)
 
-headerCallback <- c(
-  "function(thead, data, start, end, display){",
-  "  var $ths = $(thead).find('th');",
-  "  $ths.css({'vertical-align': 'bottom', 'white-space': 'nowrap'});",
-  "  var betterCells = [];",
-  "  $ths.each(function(){",
-  "    var cell = $(this);",
-  "    var newDiv = $('<div>', {height: 'auto', width: cell.height()});",
-  "    var newInnerDiv = $('<div>', {text: cell.text()});",
-  "    newDiv.css({margin: 'auto'});",
-  "    newInnerDiv.css({",
-  "      transform: 'rotate(180deg)',",
-  "      'writing-mode': 'tb-rl',",
-  "      'white-space': 'nowrap'",
-  "    });",
-  "    newDiv.append(newInnerDiv);",
-  "    betterCells.push(newDiv);",
-  "  });",
-  "  $ths.each(function(i){",
-  "    $(this).html(betterCells[i]);",
-  "  });",
-  "}"
-)
+# headerCallback <- c(
+#   "function(thead, data, start, end, display){",
+#   "  var $ths = $(thead).find('th');",
+#   "  $ths.css({'vertical-align': 'bottom', 'white-space': 'nowrap'});",
+#   "  var betterCells = [];",
+#   "  $ths.each(function(){",
+#   "    var cell = $(this);",
+#   "    var newDiv = $('<div>', {height: 'auto', width: cell.height()});",
+#   "    var newInnerDiv = $('<div>', {text: cell.text()});",
+#   "    newDiv.css({margin: 'auto'});",
+#   "    newInnerDiv.css({",
+#   "      transform: 'rotate(180deg)',",
+#   "      'writing-mode': 'tb-rl',",
+#   "      'white-space': 'nowrap'",
+#   "    });",
+#   "    newDiv.append(newInnerDiv);",
+#   "    betterCells.push(newDiv);",
+#   "  });",
+#   "  $ths.each(function(i){",
+#   "    $(this).html(betterCells[i]);",
+#   "  });",
+#   "}"
+# )
 
 FT_UI <- function(req) {
   fluidPage(
     useShinyjs(),
-    tags$style(id = "antiClickjack", HTML("body{display:none !important;}")),
-    
-    includeScript(fnpath, type = "text/javascript"),
+    # tags$style(id = "antiClickjack", HTML("body{display:none !important;}")),
+    # 
+    # includeScript(fnpath, type = "text/javascript"),
     
     tags$script(
       "$(document).on('shiny:connected', function(event) {

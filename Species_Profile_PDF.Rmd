@@ -1,16 +1,19 @@
 ---
+title: "Species Profile"
+header-includes:
+  - \usepackage{caption}
+  - \captionsetup{font = LARGE}
+  - \captionsetup[table]{skip=1pt} 
+  - \usepackage{placeins}
+  - \usepackage{colortbl}
+  - \usepackage{array}
 output: 
-  html_document: default
-  pdf_document:
-    includes:
-      in_header: my_header.tex
+  pdf_document: 
+    keep_tex: yes
+classoption: x11names
 ---
 
-```{css, echo=FALSE}
-h1, h2, h3 {
-  text-align: center;
-}
-```
+\FloatBarrier
 
 ```{r echo=FALSE}
 index <- which(species_library$common_name == CurrentSpeciesName, arr.ind = TRUE)
@@ -18,14 +21,26 @@ sname <- species_library$common_name[index]
 scname <- species_library$scientific_name[index]
 ```
 
-## `r paste(sname," (",scname, ")" ,sep = "")`
+\begin{center}
 
-## Visual Species Profile
+\begingroup
+\LARGE 
 
-## FishToxTranslator `r packageVersion("FishToxTranslator")`
+ `r paste(sname," (",scname, ")" ,sep = "")`
 
-## Generated: `r format(Sys.time(), '%m/%d/%Y')`
+ Visual Species Profile
 
+ FishToxTranslator `r packageVersion("FishToxTranslator")`
+
+ Generated: `r format(Sys.time(), '%m/%d/%Y')`
+ 
+\endgroup
+
+\end{center}
+
+\vspace{-2cm}
+
+\FloatBarrier
 
 ```{r echo=FALSE}
 cSDO <- as.character(species_library$parameter_data[which(species_library$common_name==sname)])
@@ -33,12 +48,8 @@ cLHP <- get(cSDO)
 dfs <<- FishToxTranslator::TemplateToParameters(cLHP)
 ```
 
-### Growth Parameters
-:::: {style="display: flex;"}
-
-::: {}
-
-```{r echo=FALSE}
+\begin{center}
+```{r, echo=FALSE}
 zhatch <- format_number(dfs$z_hatch[1])
 zinf <- format_number(dfs$z_inf[1])
 kg <- format_number(dfs$k_g[1])
@@ -53,67 +64,46 @@ parameters_master[["name"]][parameters_master$id == "allo_slope"],
 parameters_master[["name"]][parameters_master$id == "allo_slope"]))
 
 dfnew1 %>%
-  kbl(caption = "Growth Parameters") %>%
-  kable_material(c("striped", "hover"))
+  kbl(format = "latex", align = "l", booktabs = FALSE, vline = "", caption = "Growth Parameters") %>%
+  kable_styling(font_size = 16) %>%
+  row_spec(row = 0, bold = TRUE, italic = FALSE) %>%
+  row_spec(row = 2, background = "Snow3") %>%
+  row_spec(row = 4, background = "Snow3") %>%
+  row_spec(row = 6, background = "Snow3") %>%
+  kableExtra::column_spec(column = 1, border_left = TRUE, width = "3.5em") %>%
+  kableExtra::column_spec(column = 2, border_right = TRUE, width = "14em") 
 ```
-:::
+\end{center}
 
-::: {}
-<div style="margin-left:60px;">
-</div>
-:::
+\FloatBarrier
 
-::: {}
-
-```{r  echo=FALSE}
+```{r,  echo=FALSE}
 FishToxTranslator::PlotGrowth(forProfile = TRUE, species = sname)
 ```
-:::
 
-::::
-
-### Growth Trajectory
-:::: {style="display: fixed;"}
-
-::: {}
+\FloatBarrier
 
 ```{r, echo=FALSE, warnings=FALSE, message=FALSE,fig.align='right'}
 FishToxTranslator::PlotGrowthTrajectory(species = sname)
 ```
-:::
 
-::::
+\FloatBarrier
 
-### Survival Trajectory
-:::: {style="display: fixed;"}
-
-::: {}
-
-```{r echo=FALSE, fig.align='right', warning=FALSE, warnings=FALSE}
+```{r, echo=FALSE, fig.align='right', warning=FALSE, warnings=FALSE}
 FishToxTranslator:::PlotSurvivalTrajectory(species = sname)
 ```
-:::
 
-::::
+\FloatBarrier
 
-### Length to Mass
-:::: {style="display: fixed;"}
-
-::: {}
 
 ```{r, echo=FALSE, fig.align='right'}
 FishToxTranslator::PlotLengthToMass(species = sname)
 ```
-:::
 
-::::
+\FloatBarrier
 
-### Survival Parameters
-:::: {style="display: flex;"}
-
-::: {}
-
-```{r echo=FALSE}
+\begin{center}
+```{r, echo=FALSE}
 smin <- format_number(dfs$s_min[1])
 smax <- format_number(dfs$s_max[1])
 sa <- format_number(dfs$s_a[1])
@@ -124,31 +114,25 @@ dfnew2 <- data.frame(Value = c(smin, smax, sa, sb, psmort), Name = c(parameters_
 parameters_master[["name"]][parameters_master$id == "post_spawning_mortality"]))
 
 dfnew2 %>%
-  kbl(caption = "Survival Parameters") %>%
-  kable_material(c("striped", "hover"))
+  kbl(format = "latex", align = "l", booktabs = FALSE, vline = "", caption = "Survival Parameters") %>%
+  kable_styling(font_size = 16) %>%
+  row_spec(row = 0, bold = TRUE, italic = FALSE) %>%
+  row_spec(row = 2, background = "Snow3") %>%
+  row_spec(row = 4, background = "Snow3") %>%
+  kableExtra::column_spec(column = 1, border_left = TRUE, width = "3.5em") %>%
+  kableExtra::column_spec(column = 2, border_right = TRUE, width = "14em") 
 ```
-:::
+\end{center}
 
-::: {}
-<div style="margin-left:60px;">
-</div>
-:::
+\FloatBarrier
 
-::: {}
-
-```{r  echo=FALSE}
+```{r,  echo=FALSE}
 FishToxTranslator::PlotSurvival(forProfile = TRUE, species = sname)
 ```
-:::
+\FloatBarrier
 
-::::
-
-### Reproduction Parameters
-:::: {style="display: flex;"}
-
-::: {}
-
-```{r echo=FALSE}
+\begin{center}
+```{r, echo=FALSE}
 zrepro <- format_number(dfs$z_repro[1])
 sexratio <- format_number(dfs$sex_ratio[1])
 fecuslope <- format_number(dfs$fecu_slope[1])
@@ -162,22 +146,20 @@ reproend <- format_number(dfs$repro_end[1])
 dfnew3 <- data.frame(Value = c(zrepro, sexratio, fecuslope, fecuintercept, hatchrate, pawnint, spawnsmaxseason, reprostart, reproend), Name = c(parameters_master[["name"]][parameters_master$id == "z_repro"], parameters_master[["name"]][parameters_master$id == "sex_ratio"], parameters_master[["name"]][parameters_master$id == "fecu_slope"], parameters_master[["name"]][parameters_master$id == "fecu_intercept"], parameters_master[["name"]][parameters_master$id == "hatch_rate"], parameters_master[["name"]][parameters_master$id == "spawn_int"], parameters_master[["name"]][parameters_master$id == "spawns_max_season"], parameters_master[["name"]][parameters_master$id == "repro_start"], parameters_master[["name"]][parameters_master$id == "repro_end"]))
 
 dfnew3 %>%
-  kbl(caption = "Reproduction Parameters") %>%
-  kable_material(c("striped", "hover"))
+  kbl(format = "latex", align = "l", booktabs = FALSE, vline = "", caption = "Reproduction Parameters") %>%
+  kable_styling(font_size = 16) %>%
+  row_spec(row = 0, bold = TRUE, italic = FALSE) %>%
+  row_spec(row = 2, background = "Snow3") %>%
+  row_spec(row = 4, background = "Snow3") %>%
+  row_spec(row = 6, background = "Snow3") %>%
+  row_spec(row = 8, background = "Snow3") %>%
+  kableExtra::column_spec(column = 1, border_left = TRUE, width = "3.5em") %>%
+  kableExtra::column_spec(column = 2, border_right = TRUE, width = "14em")
 ```
-:::
+\end{center}
 
-::: {}
-<div style="margin-left:60px;">
-</div>
-:::
-
-::: {}
+\FloatBarrier
 
 ```{r, echo=FALSE}
 FishToxTranslator::PlotReproduction(forProfile = TRUE, species = sname)
 ```
-
-:::
-
-::::
